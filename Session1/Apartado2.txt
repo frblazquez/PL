@@ -1,0 +1,45 @@
+% Fichero input.txt
+
+evalua
+166.386 * euros + 1.66386 * (centimos1 + centimos2)
+donde
+euros = 567,
+centimos1 = 456,
+centimos2 = 10,
+0x001,
+0b001
+
+
+
+u:\hlocal\FJBM\analizadorLexico(implementacion JLex)>java alex/Main input.txt
+
+[clase:EVALUA,fila:1,col:0]
+[clase:REAL,fila:2,col:0,lexema:166.386]
+[clase:POR,fila:2,col:0]
+[clase:IDEN,fila:2,col:0,lexema:euros]
+[clase:MAS,fila:2,col:0]
+[clase:REAL,fila:2,col:0,lexema:1.66386]
+[clase:POR,fila:2,col:0]
+[clase:PAP,fila:2,col:0]
+[clase:IDEN,fila:2,col:0,lexema:centimos1]
+[clase:MAS,fila:2,col:0]
+[clase:IDEN,fila:2,col:0,lexema:centimos2]
+[clase:PCIERRE,fila:2,col:0]
+[clase:DONDE,fila:3,col:0]
+[clase:IDEN,fila:4,col:0,lexema:euros]
+[clase:IGUAL,fila:4,col:0]
+[clase:ENT,fila:4,col:0,lexema:567]
+[clase:COMA,fila:4,col:0]
+[clase:IDEN,fila:5,col:0,lexema:centimos1]
+[clase:IGUAL,fila:5,col:0]
+[clase:ENT,fila:5,col:0,lexema:456]
+[clase:COMA,fila:5,col:0]
+[clase:IDEN,fila:6,col:0,lexema:centimos2]
+[clase:IGUAL,fila:6,col:0]
+[clase:ENT,fila:6,col:0,lexema:10]
+[clase:COMA,fila:6,col:0]
+[clase:HEXADECIMAL,fila:7,col:0,lexema:0x001]
+[clase:COMA,fila:7,col:0]
+[clase:BINARIO,fila:8,col:0,lexema:0b001]
+[clase:EOF,fila:9,col:0]
+
