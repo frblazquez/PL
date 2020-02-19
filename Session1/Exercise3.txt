@@ -1,0 +1,25 @@
+% File input.txt
+
+Hola
+HolaMundo
+Hola*
+Cara*cola
+a*
+Palabra
+palabra*
+asg1234792'36"·$&
+/·$"·&%"·!12358758asdfh
+
+u:\hlocal\FJBM\analizadorLexico(implementacion JLex)>java alex/Main input.txt
+
+[clase:PALABRA,fila:1,col:0,lexema:Hola]
+[clase:PALABRA,fila:2,col:0,lexema:HolaMundo]
+[clase:PATRON,fila:3,col:0,lexema:Hola*]
+[clase:PATRON,fila:4,col:0,lexema:Cara*cola]
+[clase:PATRON,fila:5,col:0,lexema:a*]
+[clase:PALABRA,fila:6,col:0,lexema:Palabra]
+[clase:PATRON,fila:7,col:0,lexema:palabra*]
+[clase:OTRO,fila:8,col:0,lexema:asg1234792'36"�$&]
+[clase:OTRO,fila:9,col:0,lexema:/�$"�&%"�!12358758asdfh]
+[clase:EOF,fila:10,col:0]
+

@@ -1,17 +1,13 @@
-u:\hlocal\FJBM\analizadorLexico(implementacion JLex)>java -cp jlex.jar JLex.Main alex/ejemplo.l
+% File input.txt
 
-Processing first section -- user code.
-Processing second section -- JLex declarations.
-Processing third section -- lexical rules.
-Creating NFA machine representation.
-NFA comprised of 111 states.
-Working on character classes.::::::::.:::..::..:::.......:..:::::::...
-NFA has 26 distinct character classes.
-Creating DFA transition table.
-Working on DFA states.......................................
-Minimizing DFA transition table.
-28 states after removal of redundant states.
-Outputting lexical analyzer code.
+evalua
+166.386 * euros + 1.66386 * (centimos1 + centimos2)
+donde
+euros = 567,
+centimos1 = 456,
+centimos2 = 10,
+0x001,
+0b001
 
 
 
@@ -41,4 +37,9 @@ u:\hlocal\FJBM\analizadorLexico(implementacion JLex)>java alex/Main input.txt
 [clase:IDEN,fila:6,col:0,lexema:centimos2]
 [clase:IGUAL,fila:6,col:0]
 [clase:ENT,fila:6,col:0,lexema:10]
-[clase:EOF,fila:7,col:0]
+[clase:COMA,fila:6,col:0]
+[clase:HEXADECIMAL,fila:7,col:0,lexema:0x001]
+[clase:COMA,fila:7,col:0]
+[clase:BINARIO,fila:8,col:0,lexema:0b001]
+[clase:EOF,fila:9,col:0]
+
