@@ -1,0 +1,50 @@
+% File input.txt
+evalua
+    166.386 * euros + 1.66386 * (centimos1 + centimos2)
+donde
+    euros = 567,
+    centimos1 = 456,
+    centimos2 = 10
+
+
+/hlocal/FJBM/Session2/Example CUP/asint> java -cp ../../cup.jar java_cup.Main -parser AnalizadorSintacticoTiny -symbols ClaseLexica -nopositions Tiny.cup 
+
+------- CUP v0.11b beta 20140220 Parser Generation Summary -------
+  0 errors and 0 warnings
+  15 terminals, 9 non-terminals, and 19 productions declared, 
+  producing 30 unique parse states.
+  0 terminals declared but not used.
+  0 non-terminals declared but not used.
+  0 productions never reduced.
+  0 conflicts detected (0 expected).
+  Code written to "asint/AnalizadorSintacticoTiny.java", and "asint/ClaseLexica.java".
+---------------------------------------------------- (v0.11b beta 20140220)
+
+/hlocal/FJBM/Session2/Example CUP> javac -cp ../cup.jar alex/*.java errors/*.java asint/*.java 
+/hlocal/FJBM/Session2/Example CUP> java asint.Main
+
+% Si creamos un error sintáctico, como que se nos olvide una coma
+% File input.txt
+evalua
+    166.386 * euros + 1.66386 * (centimos1 + centimos2)
+donde
+    euros = 567,
+    centimos1 = 456
+    centimos2 = 10
+
+/hlocal/FJBM/Session2/Example CUP/asint> java -cp ../../cup.jar java_cup.Main -parser AnalizadorSintacticoTiny -symbols ClaseLexica -nopositions Tiny.cup 
+
+------- CUP v0.11b beta 20140220 Parser Generation Summary -------
+  0 errors and 0 warnings
+  15 terminals, 9 non-terminals, and 19 productions declared, 
+  producing 30 unique parse states.
+  0 terminals declared but not used.
+  0 non-terminals declared but not used.
+  0 productions never reduced.
+  0 conflicts detected (0 expected).
+  Code written to "asint/AnalizadorSintacticoTiny.java", and "asint/ClaseLexica.java".
+---------------------------------------------------- (v0.11b beta 20140220)
+
+/hlocal/FJBM/Session2/Example CUP> javac -cp ../cup.jar alex/*.java errors/*.java asint/*.java 
+/hlocal/FJBM/Session2/Example CUP> java asint.Main
+ERROR fila 6: Elemento inexperado centimos2
