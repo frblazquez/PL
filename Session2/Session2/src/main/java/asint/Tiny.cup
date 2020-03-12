@@ -1,0 +1,44 @@
+package asint;
+
+import java_cup.runtime.*;
+import alex.AnalizadorLexicoTiny;
+import alex.UnidadLexica;
+import errors.GestionErroresTiny;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+   private GestionErroresTiny errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+
+terminal     PRINT, IDEN, ENT, MAS, MENOS, POR, DIV, IGUAL, COMA, PAP, PCIERRE,
+             CAP, CCIERRE, ALMOHADILLA, LFILTER, LMAP, LREDUCE, MAYOR, MENOR, 
+             DISTINTO, IGUALIGUAL;
+
+non terminal  S, LInst, Inst, Lista1, Lista2, Elemento, SucEls, OpRel, OpArit, 
+			  OpLista, LFilter, LReduce, LMap;
+
+S ::= LInst ;
+LInst ::= Inst LInst | ;
+Inst ::= IDEN IGUAL Lista1 | PRINT Lista1 ;
+
+Lista1 ::= Lista2 | Lista2 ALMOHADILLA Lista2 ;
+Lista2 ::= PAP Lista1 PCIERRE | IDEN | CAP SucEls CCIERRE | OpLista ;
+Elemento ::= ENT | Lista1 ;
+SucEls ::= Elemento | Elemento COMA SucEls | ;
+ 
+OpLista ::= LFilter | LReduce | LMap ;
+OpRel ::= MAYOR | MENOR | IGUALIGUAL | DISTINTO ;
+OpArit ::= MAS | MENOS | POR | DIV ;
+LFilter ::= LFILTER OpRel ENT Lista2 ;
+LReduce ::= LREDUCE OpArit Lista2 ;
+LMap ::= LMAP OpArit ENT Lista2 ;
+
