@@ -1,0 +1,51 @@
+L1 = []
+L2 = [1]
+L3 = [2,3,4,5]
+L4 = [3, []]
+L5 = [[[1,2],3],4]
+L6 = [[[4]],[1,2],5,6,7,[[8,9]]]
+print L1
+print [[[4]],[1,2],5,6,7,[[8,9]]]
+L7 = lfilter > 715 [2,3,4,5]
+L8 = lfilter < 219 [[[4]],[1,2],5,6,7,[[8,9]]]
+L9 = lfilter == 12 L4
+L10 = lfilter != 9 L12
+L7 = lreduce + [2,3,4,5]
+L8 = lreduce - [[[4]],[1,2],5,6,7,[[8,9]]]
+L9 = lreduce *  L4
+L10 = lreduce / L12
+L7 = lmap + 1 [2,3,4,5]
+L8 = lmap - 2 [[[4]],[1,2],5,6,7,[[8,9]]]
+L9 = lmap * 3 L4
+L10 = lmap / 4 L12
+L7 = lmap + 1 lfilter > 715 [2,3,4,5]
+L8 = lmap - 2 lreduce - [[[4]],[1,2],5,6,7,[[8,9]]]
+L7 = lfilter > 1  lfilter < 5 [2,3,4,5]
+L8 = lfilter == 2 lmap - 19 [[[4]],[1,2],5,6,7,[[8,9]]]
+L7 = lmap + 1 (lfilter > 715 [2,3,4,5])
+L8 = (lmap - 2 ((lreduce - [[[4]],[1,2],5,6,7,[[8,9]]])))
+L7 = lfilter > 1  (lfilter < 5 (lmap * 2 [2,3,4,5]))
+L8 = lfilter == 2 lmap - 19 [[[4]],[1,2],5,6,7,[[8,9]]]
+L9 = lmap + 1 ([1,2,3,4])
+
+L1 = [] 				// comentario
+L2 = [1,2,3]			// lista de enteros
+L4 = [[[1,2],3],4]		// lista heterogénea
+L5 = lreduce + L4		// lreduce
+L6 = lmap - 1 L4		// lmap
+print L5				// imprimir
+print L6
+L7 = lfilter != 1 L4	// lfilter
+print L7
+L8 = lfilter > 2 L7
+
+L1 = L1#L1
+L3 = (L1#L2)
+L3 = ((L1#L2)#L3)
+L3 = (L1#(L2#L3))	
+L9 = lfilter != 1 (L4 # L2)
+L9 = (lfilter != 1 L4) # L2
+L9 = lfilter != 1 L4 # L2
+L8 = lfilter == 2 lmap - 19 [[[4]],[1,2],5,6,7,[[8,9]],L1#L2, lreduce + [[L1#L3]]]
+
+
