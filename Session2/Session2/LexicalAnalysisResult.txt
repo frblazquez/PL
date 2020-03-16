@@ -1,0 +1,93 @@
+% File:
+L1 = [] 				// comentario
+L2 = [1,2,3]			// lista de enteros
+L3 = L1#L2				// concatenación
+L4 = [[[1,2],3],4]		// lista heterogénea
+L5 = lreduce + L4		// lreduce
+L6 = lmap - 1 L4		// lmap
+print L5				// imprimir
+print L6
+L7 = lfilter != 1 L4	// lfilter
+print L7
+L8 = lfilter > 2 L7
+
+/home/frblazquez/Prácticas/Session2/Session2> java -cp ../jlex.jar JLex.Main src/main/java/alex/AnalizadorLexicoTiny.l
+Processing first section -- user code.
+Processing second section -- JLex declarations.
+Processing third section -- lexical rules.
+Creating NFA machine representation.
+NFA comprised of 130 states.
+Working on character classes.::.:::::.:::::..::.:.....:.::..:::...:.:.::::::::::.....
+NFA has 35 distinct character classes.
+Creating DFA transition table.
+Working on DFA states......................................................
+Minimizing DFA transition table.
+45 states after removal of redundant states.
+Outputting lexical analyzer code.
+
+
+
+Resultado del análisis léxico>
+[clase:IDEN,fila:1,lexema:L1]
+[clase:IGUAL,fila:1,lexema:=]
+[clase:CAP,fila:1,lexema:[]
+[clase:CCIERRE,fila:1,lexema:]]
+[clase:IDEN,fila:2,lexema:L2]
+[clase:IGUAL,fila:2,lexema:=]
+[clase:CAP,fila:2,lexema:[]
+[clase:ENT,fila:2,lexema:1]
+[clase:COMA,fila:2,lexema:,]
+[clase:ENT,fila:2,lexema:2]
+[clase:COMA,fila:2,lexema:,]
+[clase:ENT,fila:2,lexema:3]
+[clase:CCIERRE,fila:2,lexema:]]
+[clase:IDEN,fila:3,lexema:L3]
+[clase:IGUAL,fila:3,lexema:=]
+[clase:IDEN,fila:3,lexema:L1]
+[clase:ALMOHADILLA,fila:3,lexema:#]
+[clase:IDEN,fila:3,lexema:L2]
+[clase:IDEN,fila:4,lexema:L4]
+[clase:IGUAL,fila:4,lexema:=]
+[clase:CAP,fila:4,lexema:[]
+[clase:CAP,fila:4,lexema:[]
+[clase:CAP,fila:4,lexema:[]
+[clase:ENT,fila:4,lexema:1]
+[clase:COMA,fila:4,lexema:,]
+[clase:ENT,fila:4,lexema:2]
+[clase:CCIERRE,fila:4,lexema:]]
+[clase:COMA,fila:4,lexema:,]
+[clase:ENT,fila:4,lexema:3]
+[clase:CCIERRE,fila:4,lexema:]]
+[clase:COMA,fila:4,lexema:,]
+[clase:ENT,fila:4,lexema:4]
+[clase:CCIERRE,fila:4,lexema:]]
+[clase:IDEN,fila:5,lexema:L5]
+[clase:IGUAL,fila:5,lexema:=]
+[clase:LREDUCE,fila:5,lexema:lreduce]
+[clase:MAS,fila:5,lexema:+]
+[clase:IDEN,fila:5,lexema:L4]
+[clase:IDEN,fila:6,lexema:L6]
+[clase:IGUAL,fila:6,lexema:=]
+[clase:LMAP,fila:6,lexema:lmap]
+[clase:MENOS,fila:6,lexema:-]
+[clase:ENT,fila:6,lexema:1]
+[clase:IDEN,fila:6,lexema:L4]
+[clase:PRINT,fila:7,lexema:print]
+[clase:IDEN,fila:7,lexema:L5]
+[clase:PRINT,fila:8,lexema:print]
+[clase:IDEN,fila:8,lexema:L6]
+[clase:IDEN,fila:9,lexema:L7]
+[clase:IGUAL,fila:9,lexema:=]
+[clase:LFILTER,fila:9,lexema:lfilter]
+[clase:DISTINTO,fila:9,lexema:!=]
+[clase:ENT,fila:9,lexema:1]
+[clase:IDEN,fila:9,lexema:L4]
+[clase:PRINT,fila:10,lexema:print]
+[clase:IDEN,fila:10,lexema:L7]
+[clase:IDEN,fila:11,lexema:L8]
+[clase:IGUAL,fila:11,lexema:=]
+[clase:LFILTER,fila:11,lexema:lfilter]
+[clase:MAYOR,fila:11,lexema:>]
+[clase:ENT,fila:11,lexema:2]
+[clase:IDEN,fila:11,lexema:L7]
+[clase:EOF,fila:11,lexema:<EOF>]
