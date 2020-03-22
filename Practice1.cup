@@ -1,0 +1,87 @@
+terminal     (Luego los pongo, los que están en mayúsculas)
+non terminal (Luego los pongo, están claros)
+
+// -------------------- SINTAXIS DE INSTRUCCIONES --------------------
+S ::= ListaInst ListaFun
+
+Inst ::= Declaracion | Asignacion | If | IfElse | While | Invoke ;
+ListaInst ::= Inst ListaInst | ;
+ListaFun ::= Fun ListaFun | ;
+BloqueInst ::= CAP ListaInst CCIERRE ;
+
+Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | ASTERISCO Tipo ;
+
+// Instrucciones básicas permitidas (Invoke en la sección de funciones)
+Declaracion ::= Tipo IDENTIFICADOR  PTCOMA | Tipo Asignacion ;                    
+Asignacion ::=  IDENTIFICADOR IGUAL Exp PTCOMA ;   
+If ::= IF PAP Eb PCIERRE BloqueInst ;                                           
+IfElse ::= If ELSE BloqueInst ;
+While ::= WHILE PAP Eb PCIERRE BloqueInst ;                              
+
+
+// --------------------  SINTAXIS DE EXPRESIONES  --------------------
+Exp ::= Ea | Eb | Ep ;
+
+// Constantes
+Cte ::= CteBool | CteInt | CtePunt ;
+CteBool ::= TRUE | FALSE ;
+CteInt  ::= ENT ;
+CtePunt ::= NULL ;
+
+// Operadores aritméticos
+Opa0 ::= MAS | MENOS ;
+Opa1 ::= POR | DIV ;
+
+// Expresiones aritméticas
+Ea  ::= Ea1 Opa0 Ea1 | Ea1 ;
+Ea1 ::= Ea1 Opa1 Ea2 | Ea2 ;  
+Ea2 ::= CteInt | IDEN | AccesoArray | PAP Ea PCIERRE ;                          
+
+// Operadores booleanos y relacionales
+Opb0  ::= OR ;
+Opb1  ::= AND ;
+Opb2  ::= NOT ;   
+OpRel ::= MAYOR | MENOR | IGUALIGUAL | DISTINTO | MAYORIGUAL | MENORIGUAL ;
+
+// Expresiones booleanas                                                        
+Eb  ::= Eb1 Opb0 Eb1 | Eb1 ;
+Eb1 ::= Eb1 Opb1 Eb2 | Eb2 ; 
+Eb2 ::= Opb2 Eb3 | Eb3 ;  
+Eb3 ::= CteBool | IDEN | Ea OpRel Ea | AccesoArray | PAP Eb PCIERRE ;           
+
+// Expresiones de punteros
+Ep ::= CtePunt | IDEN ;
+
+// Expresiones de arrays
+AccesoArray ::= IDEN CAP ENT CCIERRE ;
+
+// --------------------  SINTAXIS DE FUNCIONES  --------------------
+Fun ::= Tipo IDEN PAP DefArgs PCIERRE BloqueInst ;
+Invoke ::= IDEN PAP Args PCIERRE PTCOMA ;  
+
+DefArgs ::= Tipo IDEN DefArgsAux | ;
+DefArgsAux ::= COMA Tipo IDEN DefArgsAux | ;
+Args ::= IDEN ArgsAux | ;
+ArgsAux ::= COMA IDEN ArgsAux | ;
+
+// DUDAS:
+    -> Separador de instrucciones?
+    -> Distinguir entre expresiones booleanas y enteras?
+    -> Si distinguimos entre expr. booleanas y enteras distinguimos también asignaciones?
+    -> Inicialización de arrays?
+    -> Inicialización de punteros?
+    -> No genera ambigüedad la regla Ea ::= Ea1 OpArit0 Ea1 | Ea1 ?
+    -> Son realmente necesarios los puntos y comas? Dónde deberían ir?
+
+// PROBLEMAS:
+    -> int x = True     
+    -> int x = A[5]  (aunque el array sea de booleanos)
+    -> not x+1 == 5  (revisar esta sintáxis, pero creo que no da problemas)
+    -> [int, -5] x; 
+
+
+// Con esta sintaxis para las declaraciones podríamos detectar errores
+Declaracion ::= Tipo IDENTIFICADOR  PTCOMA ; 
+Declaracion ::= INT  IDEN IGUAL Ea | BOOL IDEN IGUAL Eb ;
+                // | ASTERISCO Tipo IDEN IGUAL Ep 
+                // | CAP Tipo COMA ENT CCIERRE IDEN IGUAL Earr
