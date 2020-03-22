@@ -1,0 +1,54 @@
+package asint;
+
+import java_cup.runtime.*;
+import alex.AnalizadorLexicoTiny;
+import alex.UnidadLexica;
+import errors.GestionErroresTiny;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+   private GestionErroresTiny errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+terminal	IDEN, ENT, REAL, MAS, MENOS, POR, DIV, IGUAL,
+			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE,
+			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, 
+			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, 
+			INT, BOOL, TRUE, FALSE, RETURN ;
+
+non terminal	S0, S1, S2, S0NB, Asignacion, Declaracion, Bloque,
+				While, Funcion, Llamada, Sentencias,
+				Tipo, ListaArgumentos, ComaDecls, E0, E1, E2, E3, E4,
+				Op0, Op1, Op2, Op3 ;
+
+S0 ::= Asignacion PUNTOCOMA | Declaracion PUNTOCOMA | Bloque | While | Funcion | Llamada PUNTOCOMA | S1 ;
+S1 ::= IF PAP E0 PCIERRE Bloque | S2 ;
+S2 ::= S1 ELSE S0 Bloque ;
+Asignacion ::= IDEN IGUAL E0 | IDEN CAP ENT CCIERRE IGUAL E0 ;
+Declaracion ::= Tipo IDEN | Tipo IDEN IGUAL E0 ;
+Bloque ::= LLAP Sentencias LLCIERRE ;
+While ::= WHILE PAP E0 PCIERRE S0 ;
+Funcion ::= Tipo IDEN PAP ListaArgumentos PCIERRE LLAP Sentencias RETURN E0 LLCIERRE ;
+Llamada ::= IDEN PAP ListaArgumentos PCIERRE ;
+Sentencias ::= S0 Sentencias | ;
+Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo ;
+ListaArgumentos ::= Declaracion ComaDecls | ;
+ComaDecls ::= COMA Declaracion ComaDecls | ;
+E0 ::= E1 Op0 E1 | E1 ;
+E1 ::= E1 Op1 E2 | E2 ;
+E2 ::= E2 Op2 E3 | E3 ;
+E3 ::= Op3 E3 | E4 ;
+E4 ::= IDEN | REAL | TRUE | FALSE | PAP E0 PCIERRE ;
+Op0 ::= IGUALIGUAL | DISTINTO | MAYOR | MENOR | MENORIGUAL | MAYORIGUAL ;
+Op1 ::= MAS | MENOS | OR ;
+Op2 ::= POR | DIV | AND ;
+Op3 ::= MENOS | NOT ;
+
