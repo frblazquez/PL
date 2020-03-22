@@ -1,0 +1,38 @@
+// Encontrar el máximo común divisor entre dos enteros
+int mcd(int a, int b)
+{
+	while ((a != 0) and (b != 0))
+	{
+		if (a < b)
+			{ b = b - a; }
+		else
+			{ a = a - b; }
+	}
+	int mcd;
+	if (a == 0)
+		{ mcd = b ; }
+	else { mcd = a ; }
+	return mcd ;
+}
+// Búsqueda binaria en un vector
+int busqbin([int,10] vector, int iz, int de, int elem)
+{
+	int devuelve = -1;
+	while(iz <= de)
+	{
+		int m = iz + (de - iz) / 2;
+		if (vector[m] == x)
+		{ 
+			devuelve = m; 
+		}
+		else
+		{
+			if (vector[m] < x)
+			{ 
+				iz = m + 1 ; 
+			}
+			else { de = m - 1 ; }
+		}
+	}
+	return devuelve ;
+}
