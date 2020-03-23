@@ -36,3 +36,25 @@ int busqbin([int,10] vector, int iz, int de, int elem)
 	}
 	return devuelve ;
 }
+// Anomalías para el análisis de semántica estática
+bool anomalias([int,10] vector, bool x, *int elem)
+{
+    int x = true;     
+    [bool,100] A;
+    bool y = A[101];				// esto lo permitiremos?
+    int y = A[5];  					// aunque el array sea de booleanos
+    [int, -5] x; 
+    [int, 4] x = True;
+    x[true]=false;
+    x[2][5]=9;       				// aunque el array sea unidimensional
+    x(3,7);        					// aunque x no sea una función
+    int work = inProcess; 			// Variable inProcess NO definida
+
+    bool b = not not true;
+    bool b = not (x + 1==5);
+   	bool b = not (x + true == false);
+   	bool b = A[2][3]*5 + 9 and not (y[true]);
+   	
+    int j = 3;
+    return j;      					// debería retornar tipo bool!
+}
