@@ -38,6 +38,10 @@ true = true
 false = false
 int = int
 bool = bool
+switch = switch
+case = case
+default = default
+void = void
 letra  = ([A-Z]|[a-z])
 digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
@@ -45,9 +49,8 @@ parteEntera = {digitoPositivo}{digito}*
 parteDecimal = {digito}* {digitoPositivo}
 separador = [ \t\r\b\n]
 comentario = //[^\n]* 
-identificador = {letra}({letra}|{digito})*
+identificador = {letra}({letra}|{digito}|{barrabaja})*
 numeroEntero = ([\+\-]?{parteEntera}|0)
-numeroReal = [\+\-]?{parteEntera}\.{parteDecimal}
 operadorSuma = \+
 operadorResta = \-
 operadorMultiplicacion = \*
@@ -56,8 +59,11 @@ parentesisApertura = \(
 parentesisCierre = \)
 igual = \=
 igualigual = \=\=
+barrabaja = _
 coma  = \,
+punto = \.
 puntocoma = \;
+dospuntos = \:
 mayor = >
 menor = <
 mayorigual = >\=
@@ -81,6 +87,10 @@ llaveCierre = \}
 {false}					  {return ops.unidadFalse();}
 {int}					  {return ops.unidadInt();}
 {bool}					  {return ops.unidadBool();}
+{switch}				  {return ops.unidadSwitch();}
+{case}					  {return ops.unidadCase();}
+{default}				  {return ops.unidadDefault();}
+{void}					  {return ops.unidadVoid();}
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
 {operadorSuma}            {return ops.unidadSuma();}
@@ -92,7 +102,9 @@ llaveCierre = \}
 {igual}                   {return ops.unidadIgual();}
 {igualigual}			  {return ops.unidadIgualIgual();} 
 {coma}                    {return ops.unidadComa();}
+{punto}					  {return ops.unidadPunto();}
 {puntocoma}				  {return ops.unidadPuntoComa();}
+{dospuntos}				  {return ops.unidadDosPuntos();}
 {mayor}					  {return ops.unidadMayor();}
 {menor}					  {return ops.unidadMenor();}
 {mayorigual}			  {return ops.unidadMayorIgual();}

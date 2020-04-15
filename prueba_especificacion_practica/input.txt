@@ -1,60 +1,71 @@
-// Encontrar el máximo común divisor entre dos enteros
-int mcd(int a, int b)
-{
-	while ((a != 0) and (b != 0))
-	{
-		if (a < b)
-			{ b = b - a; }
-		else
-			{ a = a - b; }
-	}
-	int mcd;
-	if (a == 0)
-		{ mcd = b ; }
-	else { mcd = a ; }
-	return mcd ;
-}
 // Búsqueda binaria en un vector
-int busqbin([int,10] vector, int iz, int de, int elem)
-{
-	int devuelve = -1;
-	while(iz <= de)
-	{
-		int m = iz + (de - iz) / 2;
-		if (vector[m] == x)
-		{ 
-			devuelve = m; 
-		}
-		else
-		{
-			if (vector[m] < x)
-			{ 
-				iz = m + 1 ; 
-			}
-			else { de = m - 1 ; }
-		}
-	}
-	return devuelve ;
+int busqbin(*int vector, int iz, int de, int elem){
+int devuelve = -1;
+while(iz <= de){
+int m = iz + (de - iz) / 2;
+if (vector[m] == x){
+devuelve = m;
+}else {
+if (vector[m] < x) {
+iz = m + 1 ;
+}else { de = m - 1 ; }
 }
-// Anomalías para el análisis de semántica estática
-bool anomalias([int,10] vector, bool x, *int elem)
-{
-    int x = true;     
-    [bool,100] A;
-    bool y = A[101];				// esto lo permitiremos?
-    int y = A[5];  					// aunque el array sea de booleanos
-    [int, -5] x; 
-    [int, 4] x = True;
-    x[true]=false;
-    x[2][5]=9;       				// aunque el array sea unidimensional
-    x(3,7);        					// aunque x no sea una función
-    int work = inProcess; 			// Variable inProcess NO definida
+}
+return devuelve ;
+}
 
-    bool b = not not true;
-    bool b = not (x + 1==5);
-   	bool b = not (x + true == false);
-   	bool b = A[2][3]*5 + 9 and not (y[true]);
-   	
-    int j = 3;
-    return j;      					// debería retornar tipo bool!
+// blbalblal
+int fibonacci(int n){
+	<int,int> lasts;
+	lasts[0] = 0;
+	lasts[1] = 1;
+	int aux;
+
+	while (n >= 1){
+		aux = lasts.0 + lasts.1;
+		lasts.0 = lasts.1;
+		lasts.1 = aux;
+		n = n - 1;
+	}
+	return lasts.1;
+}
+
+void inicializaMatriz(*int matriz, int n, int m){
+	int i = 0;
+	int j = 0;
+	while (i < n)
+	{
+		while (j < m){
+			matriz[i][j] = i + n*j;
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+}
+
+int main(){
+	[int, 10] array;
+	int k = 0;
+	while (k < 10) {array[k] = k*k; k = k + 1;}
+	//int j = busqbin(array,0,SIZE-1,16);
+
+	switch(j){
+		case 0:	{print(string_primer_elemento);}
+		case -1: {print(string_no_encontrado);}
+		default: {print(string_encontrado);}
+	}
+
+	[[int, 10], 8] matriz;
+	inicializaMatriz(matriz,8,10);
+	int i = 0;
+	int j = 0;
+	while (i < 8){
+		j = 0;
+		while (j < 10){
+			print(matriz[i][j]);
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	return 0;
 }

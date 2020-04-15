@@ -107,4 +107,24 @@ public UnidadLexica unidadFalse() {
 public UnidadLexica unidadReturn() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.RETURN, "return");
 }
+public UnidadLexica unidadDosPuntos() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.DOSPUNTOS, ":");
+}
+public UnidadLexica unidadCase() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.CASE, "case");
+}
+public UnidadLexica unidadSwitch() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.SWITCH, "switch");
+}
+public UnidadLexica unidadDefault() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.DEFAULT, "default");
+}
+public UnidadLexica unidadVoid() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.VOID, "void");
+}
+public UnidadLexica unidadPunto() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.PUNTO, ".");
+}
+
+
 }

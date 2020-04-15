@@ -20,18 +20,19 @@ init with {:
 
 terminal	IDEN, ENT, MAS, MENOS, POR, DIV, IGUAL,
 			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE,
-			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, 
-			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, 
-			INT, BOOL, TRUE, FALSE, RETURN ;
+			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
+			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
+			INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID;
 
 non terminal	S0, S1, S2, S, Asignacion, Declaracion, Bloque,
-				While, Funcion, Llamada, Sentencias, Funciones,
+				While, Funcion, Procedimiento, Llamada, Sentencias,
 				Tipo, Argumentos, Args, DefArgumentos, TipoIden,
 				ComaTI, E0, E1, E2, E3, E4,
-				Op0, Op1, Op2, Op3, AccesoVariable, Acceso ;
+				Op0, Op1, Op2, Op3, AccesoVariable, Acceso,
+				Switch, Cases, Default, Tipos ;
 
-S ::= Funcion S | ;
-S0 ::= Asignacion | Declaracion | While | Llamada | S1 ;
+S ::= Funcion S | Procedimiento S | ;
+S0 ::= Asignacion | Declaracion | While | Llamada | Switch | S1 ;
 S1 ::= IF PAP E0 PCIERRE Bloque | S2 ;
 S2 ::= S1 ELSE Bloque ;
 Asignacion ::= AccesoVariable IGUAL E0 PUNTOCOMA ;
@@ -40,22 +41,27 @@ TipoIden ::= Tipo IDEN ;
 Bloque ::= LLAP Sentencias LLCIERRE ;
 While ::= WHILE PAP E0 PCIERRE Bloque ;
 Funcion ::= TipoIden PAP DefArgumentos PCIERRE LLAP Sentencias RETURN E0 PUNTOCOMA LLCIERRE ;
+Procedimiento ::= VOID IDEN PAP DefArgumentos PCIERRE LLAP Sentencias LLCIERRE ;
 Llamada ::= IDEN PAP Argumentos PCIERRE PUNTOCOMA ;
+Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;
+Cases ::= CASE E0 DOSPUNTOS LLAP Sentencias LLCIERRE ;
+Default ::= DEFAULT DOSPUNTOS LLAP Sentencias LLCIERRE | ;
 Sentencias ::= S0 Sentencias | ;
-Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo ;
+Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
+Tipos ::= Tipo COMA Tipos | Tipo ;
 DefArgumentos ::= TipoIden ComaTI | ;
 ComaTI ::= COMA TipoIden ComaTI | ;
 Argumentos ::= E0 Args | ;
 Args ::= COMA E0 Args | ;
 
 AccesoVariable ::= IDEN Acceso ;
-Acceso ::= CAP E0 CCIERRE Acceso | ;
+Acceso ::= CAP E0 CCIERRE Acceso | PUNTO ENT Acceso | ;
 
 E0 ::= E1 Op0 E1 | E1 ;
 E1 ::= E1 Op1 E2 | E2 ;
 E2 ::= E2 Op2 E3 | E3 ;
 E3 ::= Op3 E3 | E4 ;
-E4 ::= ENT | TRUE | FALSE | PAP E0 PCIERRE | AccesoVariable ;
+E4 ::= ENT | TRUE | FALSE | PAP E0 PCIERRE | AccesoVariable | Llamada ;
 Op0 ::= IGUALIGUAL | DISTINTO | MAYOR | MENOR | MENORIGUAL | MAYORIGUAL ;
 Op1 ::= MAS | MENOS | OR ;
 Op2 ::= POR | DIV | AND ;
