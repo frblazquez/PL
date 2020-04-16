@@ -47,8 +47,8 @@ int main(){
 	[int, 10] array;
 	int k = 0;
 	while (k < 10) {array[k] = k*k; k = k + 1;}
-	//int j = busqbin(array,0,SIZE-1,16);
-
+	int j = busqbin(array,0,SIZE - 1,16);
+	
 	switch(j){
 		case 0:	{print(string_primer_elemento);}
 		case -1: {print(string_no_encontrado);}

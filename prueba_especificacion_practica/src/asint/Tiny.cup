@@ -29,10 +29,10 @@ non terminal	S0, S1, S2, S, Asignacion, Declaracion, Bloque,
 				Tipo, Argumentos, Args, DefArgumentos, TipoIden,
 				ComaTI, E0, E1, E2, E3, E4,
 				Op0, Op1, Op2, Op3, AccesoVariable, Acceso,
-				Switch, Cases, Default, Tipos ;
+				Switch, Case, Cases, Default, Tipos ;
 
 S ::= Funcion S | Procedimiento S | ;
-S0 ::= Asignacion | Declaracion | While | Llamada | Switch | S1 ;
+S0 ::= Asignacion | Declaracion | While | Llamada PUNTOCOMA | Switch | S1 ;
 S1 ::= IF PAP E0 PCIERRE Bloque | S2 ;
 S2 ::= S1 ELSE Bloque ;
 Asignacion ::= AccesoVariable IGUAL E0 PUNTOCOMA ;
@@ -42,9 +42,10 @@ Bloque ::= LLAP Sentencias LLCIERRE ;
 While ::= WHILE PAP E0 PCIERRE Bloque ;
 Funcion ::= TipoIden PAP DefArgumentos PCIERRE LLAP Sentencias RETURN E0 PUNTOCOMA LLCIERRE ;
 Procedimiento ::= VOID IDEN PAP DefArgumentos PCIERRE LLAP Sentencias LLCIERRE ;
-Llamada ::= IDEN PAP Argumentos PCIERRE PUNTOCOMA ;
+Llamada ::= IDEN PAP Argumentos PCIERRE ;
 Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;
-Cases ::= CASE E0 DOSPUNTOS LLAP Sentencias LLCIERRE ;
+Cases ::= Case Cases | ;
+Case ::= CASE E0 DOSPUNTOS LLAP Sentencias LLCIERRE ;
 Default ::= DEFAULT DOSPUNTOS LLAP Sentencias LLCIERRE | ;
 Sentencias ::= S0 Sentencias | ;
 Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
