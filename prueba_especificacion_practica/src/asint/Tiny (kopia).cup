@@ -32,26 +32,26 @@ non terminal	Llamada, Instruccion,
 				Argumentos, Args, DefArgumentos, Bloque, BloqueReturn, Tipo, 
                 Tipos, TiposIdens, E0, E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
 
-non terminal FunProc Funcion ;
-non terminal FunProc Procedimiento;
+non terminal Funcion ;
+non terminal Procedimiento;
 non terminal Programa S ;
 non terminal FunProcList FunsProcs ;
-non terminal MainFunction main ;
+non terminal MainFunction Main ;
 non terminal String TipoIden ;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
-S ::= FunsProcs:fp main:mf {: RESULT = new Programa(); RESULT.setMain(mf); RESULT.setFunProcList(fp); :};
+S ::= FunsProcs:fplist Main:mf
+	{: RESULT=new Programa(); RESULT.SetMain(mf); RESULT.SetFunProcList(fplist); :};
 
-//FunsProcs ::= FunsProcs Funcion | FunsProcs Procedimiento | ;
-FunsProcs ::= FunsProcs:fp Funcion:fun {: RESULT = fp; fp.add(fun); :} ;
-FunsProcs ::= FunsProcs:fp Procedimiento:fun {: RESULT = fp; fp.add(fun); :} ;
-FunsProcs ::= {: RESULT = new FunProcList(); :} ;
-main ::= INT MAIN PAP PCIERRE BloqueReturn 
-		{: RESULT = new MainFunction();  RESULT.setIdentifier("main"); :};
+FunsProcs ::= FunsProcs:fp Funcion {: RESULT = fp; :} ;
+FunsProcs ::= FunsProcs:fp Procedimiento {: RESULT = fp; :} ;
+FunsProcs ::= {: RESULT = new FunsProcList(); :} ; 
 
-// Declaración de funciones y procedimientos
-Funcion ::= TipoIden:nom PAP DefArgumentos PCIERRE BloqueReturn {: RESULT = new Function(nom); :};
-Procedimiento ::= VOID IDEN:nom PAP DefArgumentos PCIERRE Bloque {: RESULT = new Procedure(nom); :};
+Main ::= INT MAIN PAP PCIERRE BloqueReturn 
+		{: RESULT = new MainFunction(); RESULT.SetIdentifier("main"); :};
+
+Funcion ::= TipoIden:nom PAP DefArgumentos PCIERRE BloqueReturn ; 
+Procedimiento ::= VOID IDEN:nom PAP DefArgumentos PCIERRE Bloque ;
 
 DefArgumentos ::= TiposIdens | ;
 
@@ -85,7 +85,7 @@ BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
 // Tipos permitidos
 Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
 Tipos ::= Tipos COMA Tipo | Tipo ;
-TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
+TipoIden ::= Tipo IDEN ;
 TiposIdens ::= TiposIdens COMA TipoIden | TipoIden ;
 
 // Expresiones, operadores y prioridades

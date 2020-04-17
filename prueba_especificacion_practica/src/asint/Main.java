@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import alex.AnalizadorLexicoTiny;
+import ast_packages.Programa;
 
 public class Main {
    public static void main(String[] args) throws Exception {
@@ -11,7 +12,10 @@ public class Main {
 	 AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	 AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 	 //asint.setScanner(alex);
-	 asint.parse();
+	 //asint.parse();
+	 Programa pr = (Programa) asint.parse().value;
+	 System.out.println(pr);
+	 //System.out.println(((Programa) asint.parse().value));
  }
 }   
    
