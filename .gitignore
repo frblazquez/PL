@@ -2,7 +2,15 @@ target/
 bin/
 .metadata/
 .settings/
+JLex/
+
 .project
 .classpath
 *.class
+*.jar
+
+# Files automatically generated with the scripts in prueba_especificacion_practica
+prueba_especificacion_practica/src/alex/AnalizadorLexicoTiny.java
+prueba_especificacion_practica/src/asint/ClaseLexica.java
+prueba_especificacion_practica/src/asint/AnalizadorSintacticoTiny.java
 
