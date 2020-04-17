@@ -1,17 +1,17 @@
 // Búsqueda binaria en un vector
 int busqbin(*int vector, int iz, int de, int elem){
-int devuelve = -1;
-while(iz <= de){
-int m = iz + (de - iz) / 2;
-if (vector[m] == x){
-devuelve = m;
-}else {
-if (vector[m] < x) {
-iz = m + 1 ;
-}else { de = m - 1 ; }
-}
-}
-return devuelve ;
+	int devuelve = -1;
+	while(iz <= de){
+		int m = iz + (de - iz) / 2;
+		if (vector[m] == x){
+			devuelve = m;
+		}else {
+			if (vector[m] < x) {
+			iz = m + 1 ;
+			}else { de = m - 1 ; }
+		}
+	}
+	return devuelve ;
 }
 
 // blbalblal
@@ -41,6 +41,16 @@ void inicializaMatriz(*int matriz, int n, int m){
 		}
 		i = i + 1;
 	}
+}
+
+*int funcionConPunteros(){
+
+	int x = 7;
+	*int intPtr = &x;
+	*int intPtr = null;
+	*int intPtr; 
+	
+	return &x;
 }
 
 int main(){

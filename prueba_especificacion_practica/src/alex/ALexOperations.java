@@ -32,6 +32,9 @@ public class ALexOperations {
   public UnidadLexica unidadPCierre() {
      return new UnidadLexica(alex.fila(),ClaseLexica.PCIERRE,")"); 
   } 
+  public UnidadLexica unidadAmpersand() {
+	     return new UnidadLexica(alex.fila(),ClaseLexica.AMPERSAND,"&"); 
+  } 
   public UnidadLexica unidadIgual() {
      return new UnidadLexica(alex.fila(),ClaseLexica.IGUAL,"="); 
   } 
@@ -89,6 +92,9 @@ public UnidadLexica unidadNot() {
 public UnidadLexica unidadInt() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.INT, "int");
 }
+public UnidadLexica unidadNull() {
+    return new UnidadLexica(alex.fila(),ClaseLexica.NULL,"null"); 
+} 
 public UnidadLexica unidadTrue() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.TRUE, "true");
 }
@@ -121,6 +127,9 @@ public UnidadLexica unidadDefault() {
 }
 public UnidadLexica unidadVoid() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.VOID, "void");
+}
+public UnidadLexica unidadMain() {
+	return new UnidadLexica(alex.fila(), ClaseLexica.MAIN, "main");
 }
 public UnidadLexica unidadPunto() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.PUNTO, ".");

@@ -18,53 +18,75 @@ init with {:
    alex.fijaGestionErrores(errores);
 :};
 
-terminal	IDEN, ENT, MAS, MENOS, POR, DIV, IGUAL,
-			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE,
+terminal	IDEN, ENT, MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN, 
+			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
 			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
 			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
 			INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID;
 
-non terminal	S0, S1, S2, S, Asignacion, Declaracion, Bloque,
-				While, Funcion, Procedimiento, Llamada, Sentencias,
-				Tipo, Argumentos, Args, DefArgumentos, TipoIden,
-				ComaTI, E0, E1, E2, E3, E4,
-				Op0, Op1, Op2, Op3, AccesoVariable, Acceso,
-				Switch, Case, Cases, Default, Tipos ;
+non terminal	S, FunsProcs, main, Funcion, Procedimiento, Llamada, Instruccion,
+                Instrucciones, Asignacion, Declaracion, If, IfElse, While, 
+                Invoke, Switch, AccesoVariable, Acceso, Case, Cases, Default,
+				Argumentos, Args, DefArgumentos, Bloque, BloqueReturn, Tipo, 
+                Tipos, TipoIden, TiposIdens, E0, E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
 
-S ::= Funcion S | Procedimiento S | ;
-S0 ::= Asignacion | Declaracion | While | Llamada PUNTOCOMA | Switch | S1 ;
-S1 ::= IF PAP E0 PCIERRE Bloque | S2 ;
-S2 ::= S1 ELSE Bloque ;
+// Estructura de un programa: definiciones de funciones/procedimientos y una función main.
+S ::= FunsProcs main ;
+
+FunsProcs ::= FunsProcs Funcion | FunsProcs Procedimiento | ;
+main ::= INT MAIN PAP PCIERRE BloqueReturn ;
+
+// Declaración de funciones y procedimientos
+Funcion ::= TipoIden PAP DefArgumentos PCIERRE BloqueReturn ;
+Procedimiento ::= VOID IDEN PAP DefArgumentos PCIERRE Bloque ;
+
+DefArgumentos ::= TiposIdens | ;
+
+// Instrucciones permitidas
+Instruccion ::= Asignacion | Declaracion | If | IfElse | While | Llamada | Switch ;
 Asignacion ::= AccesoVariable IGUAL E0 PUNTOCOMA ;
 Declaracion ::= TipoIden PUNTOCOMA | TipoIden IGUAL E0 PUNTOCOMA ;
-TipoIden ::= Tipo IDEN ;
-Bloque ::= LLAP Sentencias LLCIERRE ;
+If ::= IF PAP E0 PCIERRE Bloque ;
+IfElse ::= If ELSE Bloque ;
 While ::= WHILE PAP E0 PCIERRE Bloque ;
-Funcion ::= TipoIden PAP DefArgumentos PCIERRE LLAP Sentencias RETURN E0 PUNTOCOMA LLCIERRE ;
-Procedimiento ::= VOID IDEN PAP DefArgumentos PCIERRE LLAP Sentencias LLCIERRE ;
-Llamada ::= IDEN PAP Argumentos PCIERRE ;
-Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;
-Cases ::= Case Cases | ;
-Case ::= CASE E0 DOSPUNTOS LLAP Sentencias LLCIERRE ;
-Default ::= DEFAULT DOSPUNTOS LLAP Sentencias LLCIERRE | ;
-Sentencias ::= S0 Sentencias | ;
-Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
-Tipos ::= Tipo COMA Tipos | Tipo ;
-DefArgumentos ::= TipoIden ComaTI | ;
-ComaTI ::= COMA TipoIden ComaTI | ;
-Argumentos ::= E0 Args | ;
-Args ::= COMA E0 Args | ;
+Invoke ::= IDEN PAP Argumentos PCIERRE ;
+Llamada ::= Invoke PUNTOCOMA ;
+Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases LLCIERRE |
+           SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;                  
 
 AccesoVariable ::= IDEN Acceso ;
-Acceso ::= CAP E0 CCIERRE Acceso | PUNTO ENT Acceso | ;
+Acceso ::= Acceso CAP E0 CCIERRE | Acceso PUNTO ENT | ;
 
+Cases ::= Cases Case | ;
+Case ::= CASE E0 DOSPUNTOS Bloque ;
+Default ::= DEFAULT DOSPUNTOS Bloque ; 
+
+Argumentos ::= Args | ;
+Args ::=  Args COMA E0 | E0 ;
+
+// Bloques de instrucciones 
+Instrucciones ::= Instrucciones Instruccion | ;
+Bloque ::= LLAP Instrucciones LLCIERRE ;
+BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
+
+// Tipos permitidos
+Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
+Tipos ::= Tipos COMA Tipo | Tipo ;
+TipoIden ::= Tipo IDEN ;
+TiposIdens ::= TiposIdens COMA TipoIden | TipoIden ;
+
+// Expresiones, operadores y prioridades
 E0 ::= E1 Op0 E1 | E1 ;
 E1 ::= E1 Op1 E2 | E2 ;
 E2 ::= E2 Op2 E3 | E3 ;
 E3 ::= Op3 E3 | E4 ;
-E4 ::= ENT | TRUE | FALSE | PAP E0 PCIERRE | AccesoVariable | Llamada ;
+E4 ::= ENT | TRUE | FALSE | NULL | PAP E0 PCIERRE | AccesoVariable | Invoke ;
 Op0 ::= IGUALIGUAL | DISTINTO | MAYOR | MENOR | MENORIGUAL | MAYORIGUAL ;
 Op1 ::= MAS | MENOS | OR ;
 Op2 ::= POR | DIV | AND ;
-Op3 ::= MENOS | NOT ;
+Op3 ::= MENOS | NOT | AMPERSAND ;
+
+
+
+
 

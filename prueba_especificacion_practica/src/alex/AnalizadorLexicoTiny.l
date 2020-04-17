@@ -42,21 +42,21 @@ switch = switch
 case = case
 default = default
 void = void
+main = main
+null = null
 letra  = ([A-Z]|[a-z])
-digitoPositivo = [1-9]
-digito = ({digitoPositivo}|0)
-parteEntera = {digitoPositivo}{digito}*
-parteDecimal = {digito}* {digitoPositivo}
+digito = [0-9]
 separador = [ \t\r\b\n]
 comentario = //[^\n]* 
 identificador = {letra}({letra}|{digito}|{barrabaja})*
-numeroEntero = ([\+\-]?{parteEntera}|0)
+numeroEntero = ([\+\-]?{digito}*)
 operadorSuma = \+
 operadorResta = \-
 operadorMultiplicacion = \*
 operadorDivision = /
 parentesisApertura = \(
 parentesisCierre = \)
+ampersand = &
 igual = \=
 igualigual = \=\=
 barrabaja = _
@@ -91,6 +91,8 @@ llaveCierre = \}
 {case}					  {return ops.unidadCase();}
 {default}				  {return ops.unidadDefault();}
 {void}					  {return ops.unidadVoid();}
+{main}					  {return ops.unidadMain();}
+{null}                    {return ops.unidadNull();}  
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
 {operadorSuma}            {return ops.unidadSuma();}
@@ -99,6 +101,7 @@ llaveCierre = \}
 {operadorDivision}        {return ops.unidadDiv();}
 {parentesisApertura}      {return ops.unidadPAp();}
 {parentesisCierre}        {return ops.unidadPCierre();} 
+{ampersand}               {return ops.unidadAmpersand();}
 {igual}                   {return ops.unidadIgual();}
 {igualigual}			  {return ops.unidadIgualIgual();} 
 {coma}                    {return ops.unidadComa();}
