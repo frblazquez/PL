@@ -1,0 +1,10 @@
+int main(){
+	
+	switch(j){
+		case 0:	{print(string_primer_elemento);}
+		case -1: {print(string_no_encontrado);}
+		default: {print(string_encontrado);}
+	}
+	
+	return 0;
+}
