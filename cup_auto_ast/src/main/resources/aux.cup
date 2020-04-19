@@ -1,0 +1,62 @@
+/* Minijava Grammar */
+package asint;
+import alex.Lexer;
+
+import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory;
+import java_cup.runtime.ScannerBuffer;
+import java_cup.runtime.XMLElement;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.*;
+
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+
+parser code {: 
+  public Parser(Lexer lex, ComplexSymbolFactory sf) {
+    super(lex,sf);
+  }
+  public static void main(String[] args) throws Exception {
+      // initialize the symbol factory
+      ComplexSymbolFactory csf = new ComplexSymbolFactory();
+      // create a buffering scanner wrapper
+      ScannerBuffer lexer = new ScannerBuffer(new Lexer(new BufferedReader(new FileReader("src/main/resources/simple.minijava")),csf));
+      // start parsing
+      Parser p = new Parser(lexer,csf);
+      XMLElement e = (XMLElement)p.parse().value;
+
+      // create XML output file 
+      XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
+      XMLStreamWriter sw = outFactory.createXMLStreamWriter(new FileOutputStream("src/main/resources/output/simple.xml"));
+      // dump XML output to the file
+      XMLElement.dump(lexer,sw,e,"expr","stmt");
+      
+       // transform the parse tree into an AST and a rendered HTML version
+      Transformer transformer = TransformerFactory.newInstance()
+	    .newTransformer(new StreamSource(new File("src/main/resources/tree.xsl")));
+      Source text = new StreamSource(new File(args[1]));
+      transformer.transform(text, new StreamResult(new File("src/main/resources/output/output.xml")));
+      transformer = TransformerFactory.newInstance()
+	    .newTransformer(new StreamSource(new File("src/main/resources/tree-view.xsl")));
+      text = new StreamSource(new File("src/main/resources/output/output.xml"));
+      transformer.transform(text, new StreamResult(new File("src/main/resources/output/ast.html")));
+  }
+:}; 
+
+terminal	IDEN, ENT, MAS, MENOS, POR, DIV, IGUAL, PAP, PCIERRE ;
+
+non terminal	S, E1, E2, E3, E4, Op1, Op2, Op3 ;
+
+// Estructura de un programa: definicion de una única expresión
+S ::= IDEN IGUAL E1 ;
+
+// Expresiones, operadores y prioridades
+E1 ::= E1 Op1 E2 | E2 ;
+E2 ::= E2 Op2 E3 | E3 ;
+E3 ::= Op3 E3 | E4 ;
+E4 ::= ENT | IDEN | PAP E1 PCIERRE ;
+
+Op1 ::= MAS | MENOS ;
+Op2 ::= POR | DIV ;
+Op3 ::= MENOS ;
