@@ -1,31 +1,29 @@
-package ast_packages;
-import java.util.LinkedList;
-import java.util.ListIterator; 
+package ast;
+import java.util.Vector; 
 
 public class FunProcList {
-	private LinkedList<FunProc> functions;
-	FunProc funs[];
-	int nfuns = 0;
+	private Vector<FunProc> functions;
+	
 	public FunProcList()
 	{
-		functions = new LinkedList<FunProc>();
-		funs = new FunProc[100];
+		functions = new Vector<FunProc>();
 	}
 	
 	public void add(FunProc fp)
 	{
 		functions.add(fp);
-		funs[nfuns] = fp;
-		nfuns += 1;
 	}
 	
-	public String toString()
+	public String astString(String prefix)
 	{
-		String str = "";
-		for (int i = 0; i < nfuns; ++i)
+		String ret = "", blanks = "", title = "";
+		title = "\\__FunProcList";
+		ret = prefix.substring(0,prefix.length()-1) + title + "\n";
+		for (int j = 0; j < title.length(); ++j) blanks += " ";
+		for (int i = 0; i < functions.size(); ++i)
 		{
-			str += funs[i].toString() + '\n';
+			ret += functions.elementAt(i).astString(prefix + blanks + "|");
 		}
-		return str;
+		return ret;
 	}
 }

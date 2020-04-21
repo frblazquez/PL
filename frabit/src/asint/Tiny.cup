@@ -3,7 +3,7 @@ package asint;
 import java_cup.runtime.*;
 import alex.AnalizadorLexicoTiny;
 import alex.UnidadLexica;
-import ast_packages.*;
+import ast.*;
 import errors.GestionErroresTiny;
 
 scan with {: return getScanner().next_token(); :};
@@ -40,7 +40,7 @@ non terminal MainFunction main ;
 non terminal String TipoIden ;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
-S ::= FunsProcs:fp main:mf {: RESULT = new Programa(); RESULT.setMain(mf); RESULT.setFunProcList(fp); :};
+S ::= FunsProcs:fp main:mf {: RESULT = new Programa(fp,mf); :};
 
 //FunsProcs ::= FunsProcs Funcion | FunsProcs Procedimiento | ;
 FunsProcs ::= FunsProcs:fp Funcion:fun {: RESULT = fp; fp.add(fun); :} ;

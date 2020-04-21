@@ -1,4 +1,4 @@
-package ast_packages;
+package ast;
 
 public class Procedure extends FunProc{
 	public Procedure()

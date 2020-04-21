@@ -1,4 +1,4 @@
-package ast_packages;
+package ast;
 
 public class Function extends FunProc{
 	public Function()

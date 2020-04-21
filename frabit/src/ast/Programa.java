@@ -1,23 +1,13 @@
-package ast_packages;
+package ast;
 
 public class Programa {
 	public int x;
 	private FunProcList functions;
 	private MainFunction main_function;
 	
-	public Programa()
+	public Programa(FunProcList fplist, MainFunction mf)
 	{
-		functions = new FunProcList();
-		main_function = new MainFunction();
-	}
-	
-	public void setFunProcList(FunProcList list)
-	{
-		functions = list;
-	}
-	
-	public void setMain(MainFunction mf)
-	{
+		functions = fplist;
 		main_function = mf;
 	}
 	
@@ -28,6 +18,6 @@ public class Programa {
 	
 	public String toString()
 	{
-		return functions.toString();
+		return "Programa" + "\n" + functions.astString("  |") + main_function.astString("  |");
 	}
 }

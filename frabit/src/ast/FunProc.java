@@ -1,7 +1,9 @@
-package ast_packages;
+package ast;
 
 public abstract class FunProc {
-	public String identifier;
+	protected String identifier;
+	private Instructions instructions;
+	private Expression ret_expression;
 	
 	public FunProc()
 	{
@@ -16,8 +18,13 @@ public abstract class FunProc {
 		identifier = id;
 	}
 	
+	public String astString(String prefix)
+	{
+		return prefix.substring(0,prefix.length() - 1) + "\\__"+ this.toString() + "\n";
+	}
+	
 	public String toString()
 	{
-		return identifier;
+		return "\"" + identifier + "\"";
 	}
 }
