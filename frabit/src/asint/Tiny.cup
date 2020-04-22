@@ -1,9 +1,16 @@
 package asint;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
 import java_cup.runtime.*;
-import alex.AnalizadorLexicoTiny;
-import alex.UnidadLexica;
 import ast.*;
+import ast.instructions.*;
+import ast.types.*;
+import alex.UnidadLexica;
+import alex.AnalizadorLexicoTiny;
 import errors.GestionErroresTiny;
 
 scan with {: return getScanner().next_token(); :};
@@ -19,82 +26,126 @@ init with {:
    alex.fijaGestionErrores(errores);
 :};
 
-terminal	ENT, MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN, 
+terminal	MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN, 
 			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
 			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
 			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
 			INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID;
+
 terminal String IDEN ;
+terminal int ENT;
 
-non terminal	Llamada, Instruccion,
-                Instrucciones, Asignacion, Declaracion, If, IfElse, While, 
-                Invoke, Switch, AccesoVariable, Acceso, Case, Cases, Default,
-				Argumentos, Args, DefArgumentos, Bloque, BloqueReturn, Tipo, 
-                Tipos, TiposIdens, E0, E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
+non terminal	Llamada, Asignacion, Declaracion, If, IfElse, While, 
+                Invoke, Switch, Acceso, Case, Cases, Default,
+				E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
 
-non terminal FunProc Funcion ;
-non terminal FunProc Procedimiento;
-non terminal Programa S ;
-non terminal FunProcList FunsProcs ;
-non terminal MainFunction main ;
-non terminal String TipoIden ;
+non terminal Program S ;
+non terminal List<Procedure> Metodos ;
+non terminal Procedure Procedimiento;
+non terminal Function Funcion ;
+non terminal Function Main ;
+non terminal List<Instruction> Instrucciones;
+non terminal List<Instruction> Bloque;
+non terminal Instruction Instruccion;
+non terminal Map<String, Type> TiposIdens;
+non terminal Type Tipo;
+non terminal List<Type> Tipos;
+non terminal Map<String, Type> DefArgumentos;
+non terminal List<Expression> Argumentos;
+non terminal List<Expression> Args;
+non terminal Expression E0;
+
+// TODO: Permitir accesos a variables tipo array y registros
+non terminal String AccesoVariable;
+
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
-S ::= FunsProcs:fp main:mf {: RESULT = new Programa(fp,mf); :};
+S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf); :};
 
 //FunsProcs ::= FunsProcs Funcion | FunsProcs Procedimiento | ;
-FunsProcs ::= FunsProcs:fp Funcion:fun {: RESULT = fp; fp.add(fun); :} ;
-FunsProcs ::= FunsProcs:fp Procedimiento:fun {: RESULT = fp; fp.add(fun); :} ;
-FunsProcs ::= {: RESULT = new FunProcList(); :} ;
-main ::= INT MAIN PAP PCIERRE BloqueReturn 
-		{: RESULT = new MainFunction();  RESULT.setIdentifier("main"); :};
+Metodos ::= Metodos:fp Funcion:f        {: RESULT = fp; fp.add(f); :} ;
+Metodos ::= Metodos:fp Procedimiento:p  {: RESULT = fp; fp.add(p); :} ;
+Metodos ::=                             {: RESULT = new ArrayList<Procedure>(); :} ;
+
+// TODO: Revisar cuando los tipos y argumentos estén fijados
+Main ::= INT MAIN PAP PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE 
+        {: RESULT = new Function("main", null, ins, new Type(), e); :};
 
 // Declaración de funciones y procedimientos
-Funcion ::= TipoIden:nom PAP DefArgumentos PCIERRE BloqueReturn {: RESULT = new Function(nom); :};
-Procedimiento ::= VOID IDEN:nom PAP DefArgumentos PCIERRE Bloque {: RESULT = new Procedure(nom); :};
+Funcion ::= Tipo:t IDEN:id PAP DefArgumentos:args PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE			
+			{: RESULT = new Function(id, args, ins, t, e); :};
+Procedimiento ::= VOID IDEN:id PAP DefArgumentos:args PCIERRE Bloque:ins 	
+			{: RESULT = new Procedure(id, args, ins); :};
 
 DefArgumentos ::= TiposIdens | ;
 
 // Instrucciones permitidas
 Instruccion ::= Asignacion | Declaracion | If | IfElse | While | Llamada | Switch ;
-Asignacion ::= AccesoVariable IGUAL E0 PUNTOCOMA ;
-Declaracion ::= TipoIden PUNTOCOMA | TipoIden IGUAL E0 PUNTOCOMA ;
-If ::= IF PAP E0 PCIERRE Bloque ;
-IfElse ::= If ELSE Bloque ;
-While ::= WHILE PAP E0 PCIERRE Bloque ;
+// TODO: Accesos a variables!
+Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
+Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Definition(t,id); :}
+            |   Tipo:t IDEN:id IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,id,e); :};
+If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); :};
+IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
+While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
 Invoke ::= IDEN PAP Argumentos PCIERRE ;
 Llamada ::= Invoke PUNTOCOMA ;
 Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases LLCIERRE |
            SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;                  
 
-AccesoVariable ::= IDEN Acceso ;
+AccesoVariable ::= IDEN:id Acceso {: RESULT = id; :};
 Acceso ::= Acceso CAP E0 CCIERRE | Acceso PUNTO ENT | ;
 
 Cases ::= Cases Case | ;
 Case ::= CASE E0 DOSPUNTOS Bloque ;
 Default ::= DEFAULT DOSPUNTOS Bloque ; 
 
-Argumentos ::= Args | ;
-Args ::=  Args COMA E0 | E0 ;
+Argumentos ::= Args:args        {: RESULT = args; :} 
+            |                   {: RESULT = new ArrayList<Expression>(); :};
+Args ::=  Args:args COMA E0:e   {: RESULT = args; args.add(e); :}     
+            | E0:e              {: RESULT = new ArrayList<Expression>(); RESULT.add(e); :}   ;
 
 // Bloques de instrucciones 
 Instrucciones ::= Instrucciones Instruccion | ;
 Bloque ::= LLAP Instrucciones LLCIERRE ;
-BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
+//BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
 
 // Tipos permitidos
-Tipo ::= INT | BOOL | CAP Tipo COMA ENT CCIERRE | POR Tipo | MENOR Tipos MAYOR ;
-Tipos ::= Tipos COMA Tipo | Tipo ;
-TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
-TiposIdens ::= TiposIdens COMA TipoIden | TipoIden ;
+Tipo ::= INT                            {: RESULT = new IntType(); :}
+    | BOOL                              {: RESULT = new BoolType(); :}
+    | POR Tipo:t                        {: RESULT = new PointerType(t); :}
+    | CAP Tipo:t COMA ENT:ent CCIERRE   {: RESULT = new ArrayType(t, ent); :}
+    | MENOR Tipos:ts MAYOR              {: RESULT = new RegisterType(ts); :};
+Tipos ::= Tipos:ts COMA Tipo:t      {: RESULT = ts; ts.add(t); :}
+    | Tipo:t                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
+//TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
+TiposIdens ::= TiposIdens COMA Tipo:t IDEN:id   {: RESULT.put(id, t); :}    // TODO: Identificadores repetidos?
+            |  Tipo:t IDEN:id                   {: RESULT = new HashMap<String,Type>(); RESULT.put(id, t); :};
 
 // Expresiones, operadores y prioridades
 E0 ::= E1 Op0 E1 | E1 ;
 E1 ::= E1 Op1 E2 | E2 ;
 E2 ::= E2 Op2 E3 | E3 ;
-E3 ::= Op3 E3 | E4 ;
-E4 ::= ENT | TRUE | FALSE | NULL | PAP E0 PCIERRE | AccesoVariable | Invoke ;
-Op0 ::= IGUALIGUAL | DISTINTO | MAYOR | MENOR | MENORIGUAL | MAYORIGUAL ;
-Op1 ::= MAS | MENOS | OR ;
-Op2 ::= POR | DIV | AND ;
-Op3 ::= MENOS | NOT | AMPERSAND ;
+E3 ::= Op3 E3    | E4 ;
+E4 ::= ENT 
+	| TRUE 
+	| FALSE 
+	| NULL 
+	| PAP E0 PCIERRE 
+	| AccesoVariable 
+	| Invoke ;
+Op0 ::= MAYOR 
+	| DISTINTO 
+	| MENOR  
+	| IGUALIGUAL 
+	| MENORIGUAL 
+	| MAYORIGUAL ;
+Op1 ::= MAS 
+	| MENOS 
+	| OR ;
+Op2 ::= POR 
+	| DIV 
+	| AND ;
+Op3 ::= MENOS 
+	| NOT 
+	| AMPERSAND ;
