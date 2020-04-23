@@ -35,16 +35,15 @@ terminal	MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,
 terminal String IDEN ;
 terminal String ENT;
 
-non terminal	Invoke, Acceso, Case, Cases, Default,
-				E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
+non terminal	Invoke, Acceso, Case, Cases, Default;
 
 non terminal Program S ;
 non terminal List<Procedure> Metodos ;
 non terminal Procedure Procedimiento;
 non terminal Function Funcion ;
 non terminal Function Main ;
-non terminal List<Instruction> Instrucciones;
-non terminal List<Instruction> Bloque;
+non terminal Instructions Instrucciones;
+non terminal Instructions Bloque;
 non terminal Instruction Instruccion;
 non terminal HashMap<String, Type> TiposIdens;
 non terminal Type Tipo;
@@ -53,6 +52,10 @@ non terminal HashMap<String, Type> DefArgumentos;
 non terminal List<Expression> Argumentos;
 non terminal List<Expression> Args;
 non terminal Expression E0;
+non terminal Expression E1;
+non terminal Expression E2;
+non terminal Expression E3;
+non terminal Expression E4;
 non terminal Call Llamada;
 non terminal Assignment Asignacion;
 non terminal Definition Declaracion;
@@ -60,6 +63,11 @@ non terminal IfElse If;
 non terminal IfElse IfElse;
 non terminal While While;
 non terminal Switch Switch;
+non terminal String Op0;
+non terminal String Op1;
+non terminal String Op2;
+non terminal String Op3;
+
 // TODO: Permitir accesos a variables tipo array y registros
 non terminal String AccesoVariable;
 
@@ -120,7 +128,7 @@ Args ::=  Args:args COMA E0:e   {: RESULT = args; args.add(e); :}
 
 // Bloques de instrucciones 
 Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.add(ins); :} 
-					| 									{: RESULT = new ArrayList<Instruction>(); :};
+					| 									{: RESULT = new Instructions(); :};
 Bloque ::= LLAP Instrucciones:insts LLCIERRE {: RESULT = insts; :};
 //BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
 
@@ -137,29 +145,33 @@ TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.put(id
             |  Tipo:t IDEN:id                   {: RESULT = new HashMap<String,Type>(); RESULT.put(id, t); :};
 
 // Expresiones, operadores y prioridades
-E0 ::= E1 Op0 E1 {: RESULT = new Expression(); :}| E1 {: RESULT = new Expression(); :};
-E1 ::= E1 Op1 E2 | E2 ;
-E2 ::= E2 Op2 E3 | E3 ;
-E3 ::= Op3 E3    | E4 ;
-E4 ::= ENT 
-	| TRUE 
-	| FALSE 
-	| NULL 
-	| PAP E0 PCIERRE 
-	| AccesoVariable 
-	| Invoke ;
-Op0 ::= MAYOR 
-	| DISTINTO 
-	| MENOR  
-	| IGUALIGUAL 
-	| MENORIGUAL 
-	| MAYORIGUAL ;
-Op1 ::= MAS 
-	| MENOS 
-	| OR ;
-Op2 ::= POR 
-	| DIV 
-	| AND ;
-Op3 ::= MENOS 
-	| NOT 
-	| AMPERSAND ;
+E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new Expression(op,2, new Expression[] {expa,expb} ); :}
+		| E1:exp 					{: RESULT = exp; :};
+E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new Expression(op,2, new Expression[] {expa, expb}); :}
+		| E2:exp 					{: RESULT = exp; :};
+E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new Expression(op,2,new Expression[] {expa,expb}); :}  
+		| E3:exp 					{: RESULT = exp; :};
+E3 ::= Op3:op E3:exp	{: RESULT = new Expression(op, 1, new Expression[] {exp}); :}			   
+		 | E4:exp		{: RESULT = exp; :} ;
+E4 ::= ENT:str  {: RESULT = new Expression(str); :}
+	| TRUE 		{: RESULT = new Expression("true"); :}
+	| FALSE 	{: RESULT = new Expression("false"); :}
+	| NULL 		{: RESULT = new Expression("null"); :}
+	| PAP E0:exp PCIERRE {: RESULT = exp; :}
+	| AccesoVariable {: RESULT = new Expression("accesovariable"); :} // TODO
+	| Invoke {: RESULT = new Expression("invoke"); :};	// TODO
+Op0 ::= MAYOR 		{: RESULT = ">"; :}
+	| DISTINTO 		{: RESULT = "!="; :}
+	| MENOR  		{: RESULT = "<"; :}
+	| IGUALIGUAL 	{: RESULT = "=="; :}
+	| MENORIGUAL 	{: RESULT = "<="; :}
+	| MAYORIGUAL 	{: RESULT = ">="; :};
+Op1 ::= MAS 		{: RESULT = "+"; :}
+	| MENOS 		{: RESULT = "-"; :}
+	| OR 			{: RESULT = "or"; :};	
+Op2 ::= POR 		{: RESULT = "*"; :}
+	| DIV 			{: RESULT = "\\"; :}
+	| AND 			{: RESULT = "and"; :};
+Op3 ::= MENOS 		{: RESULT = "-"; :}
+	| NOT 			{: RESULT = "not"; :}
+	| AMPERSAND 	{: RESULT = "&"; :};

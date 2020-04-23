@@ -15,11 +15,11 @@ public class Assignment extends Instruction {
 
     public String astString(String prefix)
     {
-    	String ret, tab = "    ", nprefix;
-    	nprefix = prefix + tab + "|";
+    	String ret, nprefix;
+    	nprefix = prefix + "    ";
     	ret = prefix.substring(0,prefix.length()-1) + "\\__=\n"; 
-    	ret += nprefix.substring(0,nprefix.length()-1) + "\\__" + identifier + "\n";
-    	ret += expression.astString(nprefix);
+    	ret += nprefix + "\\__" + identifier + "\n";
+    	ret += expression.astString(nprefix + " ");
     	return ret; 
     }
 }

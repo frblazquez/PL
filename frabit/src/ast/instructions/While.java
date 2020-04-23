@@ -7,9 +7,9 @@ import ast.Expression;
 public class While extends Instruction {
 
     private Expression condition;
-    private List<Instruction> instructions;
+    private Instructions instructions;
 
-    public While(Expression e, List<Instruction> ins) {
+    public While(Expression e, Instructions ins) {
 	condition = e;
 	instructions = ins;
     }
@@ -18,14 +18,8 @@ public class While extends Instruction {
     {
     	String ret = "", tab = "    ", nprefix = prefix + tab;
     	ret = prefix.substring(0,prefix.length() - 1) + "\\__while\n";
-    	ret += condition.astString(nprefix);
-    	for (int i = 0; i < instructions.size(); ++i)
-    	{
-    		if (i < instructions.size() - 1)
-    			ret += instructions.get(i).astString(nprefix.substring(0, nprefix.length()-1) + "|");
-    		else
-    			ret += instructions.get(i).astString(nprefix.substring(0, nprefix.length()-1) + " ");
-    	}
+    	ret += condition.astString(nprefix + "|");
+    	ret += instructions.astString(prefix);
     	return ret;
     }
 }
