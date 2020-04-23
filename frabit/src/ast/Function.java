@@ -32,11 +32,14 @@ public class Function extends Procedure {
     String astString(String prefix)
     {
     	String ret; String tab = "    ";
-    	String nprefix = prefix +"|"+ tab;
-    	ret = prefix.concat("\\__" + return_type.toString() + " " + identifier + "\n");
-    	for (Instruction ins : instructions)
+    	String nprefix = prefix+ tab;
+    	ret = prefix.substring(0,prefix.length()-1).concat("\\__" + return_type.toString() + " " + identifier + "\n");
+    	for (int i = 0; i < instructions.size(); ++i)
     	{
-    		ret += ins.astString(nprefix);
+    		if (i < instructions.size() - 1)
+    			ret += instructions.get(i).astString(nprefix + "|");
+    		else
+    			ret += instructions.get(i).astString(nprefix + " ");
     	}
     	return ret;
     }

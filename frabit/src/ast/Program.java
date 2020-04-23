@@ -16,12 +16,11 @@ public class Program {
     {
     	String ret = "\\Program\n"; 
     	String tab = "    ";
-    	String prefix = "|" + tab;
     	for(Procedure p : methods) 
     	{
-    		ret += p.astString(prefix);
+    		ret += p.astString(tab + "|");
     	}
-    	ret += main_function.astString(prefix);
+    	ret += main_function.astString(tab + " ");
     	return ret;
     }
 }

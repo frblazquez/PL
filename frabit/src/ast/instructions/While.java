@@ -16,12 +16,15 @@ public class While extends Instruction {
 
     public String astString(String prefix)
     {
-    	String ret = "", tab = "    ", nprefix = prefix + "|" + tab;
-    	ret = prefix + "\\__while\n";
+    	String ret = "", tab = "    ", nprefix = prefix + tab;
+    	ret = prefix.substring(0,prefix.length() - 1) + "\\__while\n";
     	ret += condition.astString(nprefix);
-    	for (Instruction inst : instructions)
+    	for (int i = 0; i < instructions.size(); ++i)
     	{
-    		ret += inst.astString(nprefix);
+    		if (i < instructions.size() - 1)
+    			ret += instructions.get(i).astString(nprefix.substring(0, nprefix.length()-1) + "|");
+    		else
+    			ret += instructions.get(i).astString(nprefix.substring(0, nprefix.length()-1) + " ");
     	}
     	return ret;
     }
