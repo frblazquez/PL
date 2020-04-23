@@ -28,7 +28,7 @@ public class Procedure {
     {
     	String ret; String tab = "    ";
     	String nprefix = prefix +"|"+ tab;
-    	ret = prefix.concat("\\void " + identifier + "\n");
+    	ret = prefix.concat("\\__void " + identifier + "\n");
     	for (Instruction ins : instructions)
     	{
     		ret += ins.astString(nprefix);

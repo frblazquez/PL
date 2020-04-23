@@ -33,7 +33,7 @@ public class Function extends Procedure {
     {
     	String ret; String tab = "    ";
     	String nprefix = prefix +"|"+ tab;
-    	ret = prefix.concat(return_type.toString() + " " + identifier + "\n");
+    	ret = prefix.concat("\\__" + return_type.toString() + " " + identifier + "\n");
     	for (Instruction ins : instructions)
     	{
     		ret += ins.astString(nprefix);

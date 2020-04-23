@@ -14,4 +14,15 @@ public class While extends Instruction {
 	instructions = ins;
     }
 
+    public String astString(String prefix)
+    {
+    	String ret = "", tab = "    ", nprefix = prefix + "|" + tab;
+    	ret = prefix + "\\__while\n";
+    	ret += condition.astString(nprefix);
+    	for (Instruction inst : instructions)
+    	{
+    		ret += inst.astString(nprefix);
+    	}
+    	return ret;
+    }
 }

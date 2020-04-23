@@ -137,7 +137,7 @@ TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.put(id
             |  Tipo:t IDEN:id                   {: RESULT = new HashMap<String,Type>(); RESULT.put(id, t); :};
 
 // Expresiones, operadores y prioridades
-E0 ::= E1 Op0 E1 | E1 ;
+E0 ::= E1 Op0 E1 {: RESULT = new Expression(); :}| E1 {: RESULT = new Expression(); :};
 E1 ::= E1 Op1 E2 | E2 ;
 E2 ::= E2 Op2 E3 | E3 ;
 E3 ::= Op3 E3    | E4 ;

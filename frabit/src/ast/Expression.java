@@ -5,6 +5,6 @@ public class Expression {
 	
 	public String astString(String prefix)
 	{
-		return prefix + "expresion\n";
+		return prefix + "\\__expresion\n";
 	}
 }
