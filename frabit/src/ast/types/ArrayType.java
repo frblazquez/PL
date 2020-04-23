@@ -9,5 +9,9 @@ public class ArrayType extends Type {
 	base_type = t;
 	size = n;
     }
-
+    
+    public String toString()
+    {
+    	return "[" + base_type.toString() + "," + String.valueOf(size) + "]";
+    }
 }

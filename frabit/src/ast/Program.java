@@ -11,4 +11,17 @@ public class Program {
 	this.methods = methods;
 	this.main_function = main;
     }
+    
+    public String toString()
+    {
+    	String ret = "\\Program\n"; 
+    	String tab = "    ";
+    	String prefix = "|" + tab;
+    	for(Procedure p : methods) 
+    	{
+    		ret += p.astString(prefix);
+    	}
+    	ret += main_function.astString(prefix);
+    	return ret;
+    }
 }

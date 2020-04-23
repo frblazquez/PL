@@ -10,4 +10,16 @@ public class RegisterType extends Type {
 	base_types = types;
     }
 
+    public String toString()
+    {
+    	String ret = "<";
+    	boolean first = true;
+    	for (Type t : base_types)
+    	{
+    		if (!first) ret += ",";
+    		else first = false;
+    		ret += t.toString();
+    	}
+    	return ret;
+    }
 }

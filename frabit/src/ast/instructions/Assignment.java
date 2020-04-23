@@ -13,4 +13,10 @@ public class Assignment extends Instruction {
 	expression = e;
     }
 
+//    public String astString(String prefix)
+//    {
+//    	String ret, tab = "    ", nprefix;
+//    	nprefix = prefix + "|" + tab;
+//    	return "\\=\n" + nprefix + "\\" + identifier + "\n" + expression.astString(nprefix); 
+//    }
 }

@@ -33,10 +33,9 @@ terminal	MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,
 			INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID;
 
 terminal String IDEN ;
-terminal int ENT;
+terminal String ENT;
 
-non terminal	Llamada, Asignacion, Declaracion, If, IfElse, While, 
-                Invoke, Switch, Acceso, Case, Cases, Default,
+non terminal	Invoke, Acceso, Case, Cases, Default,
 				E1, E2, E3, E4, Op0, Op1, Op2, Op3 ;
 
 non terminal Program S ;
@@ -47,14 +46,20 @@ non terminal Function Main ;
 non terminal List<Instruction> Instrucciones;
 non terminal List<Instruction> Bloque;
 non terminal Instruction Instruccion;
-non terminal Map<String, Type> TiposIdens;
+non terminal HashMap<String, Type> TiposIdens;
 non terminal Type Tipo;
 non terminal List<Type> Tipos;
-non terminal Map<String, Type> DefArgumentos;
+non terminal HashMap<String, Type> DefArgumentos;
 non terminal List<Expression> Argumentos;
 non terminal List<Expression> Args;
 non terminal Expression E0;
-
+non terminal Call Llamada;
+non terminal Assignment Asignacion;
+non terminal Definition Declaracion;
+non terminal IfElse If;
+non terminal IfElse IfElse;
+non terminal While While;
+non terminal Switch Switch;
 // TODO: Permitir accesos a variables tipo array y registros
 non terminal String AccesoVariable;
 
@@ -69,7 +74,7 @@ Metodos ::=                             {: RESULT = new ArrayList<Procedure>(); 
 
 // TODO: Revisar cuando los tipos y argumentos estén fijados
 Main ::= INT MAIN PAP PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE 
-        {: RESULT = new Function("main", null, ins, new Type(), e); :};
+        {: RESULT = new Function("main", null, ins, new IntType(), e); :};
 
 // Declaración de funciones y procedimientos
 Funcion ::= Tipo:t IDEN:id PAP DefArgumentos:args PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE			
@@ -80,8 +85,16 @@ Procedimiento ::= VOID IDEN:id PAP DefArgumentos:args PCIERRE Bloque:ins
 DefArgumentos ::= TiposIdens | ;
 
 // Instrucciones permitidas
-Instruccion ::= Asignacion | Declaracion | If | IfElse | While | Llamada | Switch ;
+Instruccion ::= Asignacion:ass 				{: RESULT = ass; :} 
+			 	 | Declaracion:decl			{: RESULT = decl; :}
+			 	 | If:iff					{: RESULT = iff; :} 
+				 | IfElse:ifelse			{: RESULT = ifelse; :} 					
+				 | While:wh					{: RESULT = wh; :} 
+				 | Llamada:ll 				{: RESULT = ll; :}
+				 | Switch:sw				{: RESULT = sw; :} ;
+
 // TODO: Accesos a variables!
+
 Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
 Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Definition(t,id); :}
             |   Tipo:t IDEN:id IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,id,e); :};
@@ -89,9 +102,9 @@ If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfEl
 IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
 While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
 Invoke ::= IDEN PAP Argumentos PCIERRE ;
-Llamada ::= Invoke PUNTOCOMA ;
-Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases LLCIERRE |
-           SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE ;                  
+Llamada ::= Invoke PUNTOCOMA {: RESULT = new Call(); :};
+Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases LLCIERRE {: RESULT = new Switch(); :}
+			| SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE {: RESULT = new Switch(); :};                  
 
 AccesoVariable ::= IDEN:id Acceso {: RESULT = id; :};
 Acceso ::= Acceso CAP E0 CCIERRE | Acceso PUNTO ENT | ;
@@ -106,20 +119,21 @@ Args ::=  Args:args COMA E0:e   {: RESULT = args; args.add(e); :}
             | E0:e              {: RESULT = new ArrayList<Expression>(); RESULT.add(e); :}   ;
 
 // Bloques de instrucciones 
-Instrucciones ::= Instrucciones Instruccion | ;
-Bloque ::= LLAP Instrucciones LLCIERRE ;
+Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.add(ins); :} 
+					| 									{: RESULT = new ArrayList<Instruction>(); :};
+Bloque ::= LLAP Instrucciones:insts LLCIERRE {: RESULT = insts; :};
 //BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
 
 // Tipos permitidos
 Tipo ::= INT                            {: RESULT = new IntType(); :}
     | BOOL                              {: RESULT = new BoolType(); :}
     | POR Tipo:t                        {: RESULT = new PointerType(t); :}
-    | CAP Tipo:t COMA ENT:ent CCIERRE   {: RESULT = new ArrayType(t, ent); :}
+    | CAP Tipo:t COMA ENT:ent CCIERRE   {: RESULT = new ArrayType(t, Integer.parseInt(ent)); :}
     | MENOR Tipos:ts MAYOR              {: RESULT = new RegisterType(ts); :};
 Tipos ::= Tipos:ts COMA Tipo:t      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
 //TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
-TiposIdens ::= TiposIdens COMA Tipo:t IDEN:id   {: RESULT.put(id, t); :}    // TODO: Identificadores repetidos?
+TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.put(id, t); :}    // TODO: Identificadores repetidos?(eso va en el codigo java)
             |  Tipo:t IDEN:id                   {: RESULT = new HashMap<String,Type>(); RESULT.put(id, t); :};
 
 // Expresiones, operadores y prioridades
