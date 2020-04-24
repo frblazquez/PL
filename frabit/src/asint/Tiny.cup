@@ -7,8 +7,10 @@ import java.util.HashMap;
 
 import java_cup.runtime.*;
 import ast.*;
-import ast.instructions.*;
 import ast.types.*;
+import ast.expressions.*;
+import ast.instructions.*;
+import ast.instructions.access.*;
 import alex.UnidadLexica;
 import alex.AnalizadorLexicoTiny;
 import errors.GestionErroresTiny;
@@ -35,8 +37,6 @@ terminal	MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,
 terminal String IDEN ;
 terminal String ENT;
 
-non terminal	Invoke, Acceso, Case, Cases, Default;
-
 non terminal Program S ;
 non terminal List<Procedure> Metodos ;
 non terminal Procedure Procedimiento;
@@ -57,20 +57,22 @@ non terminal Expression E2;
 non terminal Expression E3;
 non terminal Expression E4;
 non terminal Call Llamada;
+non terminal Call Invoke;
 non terminal Assignment Asignacion;
 non terminal Definition Declaracion;
 non terminal IfElse If;
 non terminal IfElse IfElse;
 non terminal While While;
 non terminal Switch Switch;
+non terminal Case Case;
+non terminal Case Default;
+non terminal List<Case> Cases; 
 non terminal String Op0;
 non terminal String Op1;
 non terminal String Op2;
 non terminal String Op3;
-
-// TODO: Permitir accesos a variables tipo array y registros
-non terminal String AccesoVariable;
-
+non terminal VariableAccess AccesoVariable;
+non terminal List<Access> Accesos;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
 S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf); :};
@@ -109,17 +111,20 @@ Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Defi
 If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); :};
 IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
 While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
-Invoke ::= IDEN PAP Argumentos PCIERRE ;
-Llamada ::= Invoke PUNTOCOMA {: RESULT = new Call(); :};
-Switch ::= SWITCH PAP E0 PCIERRE LLAP Cases LLCIERRE {: RESULT = new Switch(); :}
-			| SWITCH PAP E0 PCIERRE LLAP Cases Default LLCIERRE {: RESULT = new Switch(); :};                  
+Invoke ::= IDEN:id PAP Argumentos:args PCIERRE              {: RESULT = new Call(id, args); :};
+Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = i; :};
+Switch ::= SWITCH PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE               {: RESULT = new Switch(e,cs); :}
+			| SWITCH PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE  {: RESULT = new Switch(e,cs,d); :};                  
 
-AccesoVariable ::= IDEN:id Acceso {: RESULT = id; :};
-Acceso ::= Acceso CAP E0 CCIERRE | Acceso PUNTO ENT | ;
+AccesoVariable ::= IDEN:id Accesos:as       {: RESULT = new VariableAccess(id, as); :};
+Accesos ::= Accesos:as CAP E0:e CCIERRE     {: RESULT = as; as.add(new ArrayAccess(e)); :}
+        |   Accesos:as PUNTO ENT:ent        {: RESULT = as; as.add(new RegisterAccess(Integer.parseInt(ent))); :}
+        |                                   {: RESULT = new ArrayList<Access>(); :};
 
-Cases ::= Cases Case | ;
-Case ::= CASE E0 DOSPUNTOS Bloque ;
-Default ::= DEFAULT DOSPUNTOS Bloque ; 
+Cases ::= Cases:cs Case:c   {: RESULT = cs; cs.add(c); :}
+        |                   {: RESULT = new ArrayList<Case>(); :};
+Case ::= CASE E0:e DOSPUNTOS Bloque:ins     {: RESULT = new Case(e, ins); :};
+Default ::= DEFAULT DOSPUNTOS Bloque:ins    {: RESULT = new Case(ins); :} ; 
 
 Argumentos ::= Args:args        {: RESULT = args; :} 
             |                   {: RESULT = new ArrayList<Expression>(); :};

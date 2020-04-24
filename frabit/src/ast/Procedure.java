@@ -11,12 +11,6 @@ public class Procedure {
     protected Instructions instructions;
     protected HashMap<String, Type> arguments;
 
-    // TODO: Remove constructor when possible
-    public Procedure(String id, Instructions insts) {
-	identifier = id;
-	instructions = insts;
-    }
-
     public Procedure(String id, HashMap<String, Type> args, Instructions insts) {
 	identifier = id;
 	instructions = insts;

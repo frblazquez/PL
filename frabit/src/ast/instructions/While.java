@@ -2,7 +2,7 @@ package ast.instructions;
 
 import java.util.List;
 
-import ast.Expression;
+import ast.expressions.Expression;
 
 public class While extends Instruction {
 

@@ -1,6 +1,6 @@
 package ast.instructions;
 
-import ast.Expression;
+import ast.expressions.Expression;
 import ast.types.Type;
 
 public class Definition extends Instruction {

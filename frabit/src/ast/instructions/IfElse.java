@@ -1,7 +1,7 @@
 package ast.instructions;
 
 
-import ast.Expression;
+import ast.expressions.Expression;
 
 public class IfElse extends Instruction {
 
