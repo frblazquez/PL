@@ -163,8 +163,8 @@ E4 ::= ENT:str  {: RESULT = new Expression(str); :}
 	| FALSE 	{: RESULT = new Expression("false"); :}
 	| NULL 		{: RESULT = new Expression("null"); :}
 	| PAP E0:exp PCIERRE {: RESULT = exp; :}
-	| AccesoVariable {: RESULT = new Expression("accesovariable"); :} // TODO
-	| Invoke {: RESULT = new Expression("invoke"); :};	// TODO
+	| AccesoVariable:av {: RESULT = av; :} // TODO
+	| Invoke {: RESULT = new Expression("invoke"); :};
 Op0 ::= MAYOR 		{: RESULT = ">"; :}
 	| DISTINTO 		{: RESULT = "!="; :}
 	| MENOR  		{: RESULT = "<"; :}
@@ -175,7 +175,7 @@ Op1 ::= MAS 		{: RESULT = "+"; :}
 	| MENOS 		{: RESULT = "-"; :}
 	| OR 			{: RESULT = "or"; :};	
 Op2 ::= POR 		{: RESULT = "*"; :}
-	| DIV 			{: RESULT = "/"; :}
+	| DIV 			{: RESULT = "\\"; :}
 	| AND 			{: RESULT = "and"; :};
 Op3 ::= MENOS 		{: RESULT = "-"; :}
 	| NOT 			{: RESULT = "not"; :}

@@ -12,4 +12,8 @@ public class ArrayAccess extends Access {
     
     public Expression getIndex() { return index; }
 
+	public Expression getExpression() {
+		return index;
+	}
+
 }

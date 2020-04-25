@@ -1,5 +1,7 @@
 package ast.instructions.access;
+import ast.expressions.*;
 
-public class Access {
-
+public abstract class Access
+{
+	public abstract Expression getExpression();
 }

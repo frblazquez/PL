@@ -26,7 +26,7 @@ public class Function extends Procedure {
     	ret +=  prefix + blanks + "\\" + identifier + "\n";
     	ret += instructions.astString(prefix + blanks + "|");
     	ret += prefix + blanks + "\\return\n";
-    	ret += return_expression.astString(prefix + blanks);
+    	ret += return_expression.astString(prefix + blanks + " ");
     	return ret;
     }
 }

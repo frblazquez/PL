@@ -1,42 +1,38 @@
 package ast.expressions;
 
+import ast.AstAux;
+
 public class Expression 
 {
-	protected Operation operation;
-	protected int noperands;
-	protected Expression [] operands;
-	TypeOfExpression expr_type;
+	private String operator;
+	private int noperands;
+	private Expression [] operands;
 	
 	public Expression() {}
 	
 	// Note that a constant is the same as a 0-ary operation
 	public Expression(String constant)
 	{
-		operation = null;
+		operator = constant;
 		noperands = 0;
 		operands = null;
-		expr_type = null;
 	}
 	
-	public Expression(String operstr, int noperands, Expression [] operands)
+	public Expression(String op, int nop, Expression [] opers)
 	{
-		this.operation = Operation.strToOp(operstr);
-		this.noperands = noperands;
-		this.operands = operands;
+		operator = op;
+		noperands = nop;
+		operands = opers;
 	}
 	
 	public String astString(String prefix)
 	{
-		//String ret = prefix.substring(0,prefix.length()-1) + "\\__" + Operation.toString(operation) + "\n";
-		
-		String ret = "";
-		if (operation == Operation.SUM) ret = prefix.substring(0,prefix.length()-1) + "\\__" + "+" + "\n";
-		else ret= prefix.substring(0,prefix.length()-1) + "\\__" + operation + "\n";
-		String nprefix = prefix + "    ";
+		String ret = AstAux.popLast(prefix) + "\\__" + operator + "\n";
+		String blanks = AstAux.blanks(4);
 		for (int i = 0; i < noperands - 1; ++i)
-			ret += operands[i].astString(nprefix + "|");
+			ret += operands[i].astString(prefix + blanks + "|");
 		if (noperands > 0)
-			ret += operands[noperands - 1].astString(nprefix + " ");
+			ret += operands[noperands - 1].astString(prefix + blanks + " ");
 		
 		return ret;
 	}
