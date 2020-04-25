@@ -2,28 +2,36 @@ package ast.expressions;
 
 public class Expression 
 {
-	private String operator;
-	private int noperands;
-	private Expression [] operands;
+	protected Operation operation;
+	protected int noperands;
+	protected Expression [] operands;
+	TypeOfExpression expr_type;
+	
+	public Expression() {}
 	
 	// Note that a constant is the same as a 0-ary operation
 	public Expression(String constant)
 	{
-		operator = constant;
+		operation = null;
 		noperands = 0;
 		operands = null;
+		expr_type = null;
 	}
 	
-	public Expression(String op, int nop, Expression [] opers)
+	public Expression(String operstr, int noperands, Expression [] operands)
 	{
-		operator = op;
-		noperands = nop;
-		operands = opers;
+		this.operation = Operation.strToOp(operstr);
+		this.noperands = noperands;
+		this.operands = operands;
 	}
 	
 	public String astString(String prefix)
 	{
-		String ret = prefix.substring(0,prefix.length()-1) + "\\__" + operator + "\n";
+		//String ret = prefix.substring(0,prefix.length()-1) + "\\__" + Operation.toString(operation) + "\n";
+		
+		String ret = "";
+		if (operation == Operation.SUM) ret = prefix.substring(0,prefix.length()-1) + "\\__" + "+" + "\n";
+		else ret= prefix.substring(0,prefix.length()-1) + "\\__" + operation + "\n";
 		String nprefix = prefix + "    ";
 		for (int i = 0; i < noperands - 1; ++i)
 			ret += operands[i].astString(nprefix + "|");

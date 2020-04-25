@@ -20,8 +20,13 @@ public class Function extends Procedure {
     String astString(String prefix)
     {
     	String ret;
-    	ret = prefix.substring(0,prefix.length()-1).concat("\\__" + return_type.toString() + " " + identifier + "\n");
-    	ret += instructions.astString(prefix);
+    	ret = AstAux.popLast(prefix) + "\\__Function\n";
+    	String blanks = AstAux.blanks("Function".length());
+    	ret += prefix + blanks + "\\" + return_type.toString() + "\n";
+    	ret +=  prefix + blanks + "\\" + identifier + "\n";
+    	ret += instructions.astString(prefix + blanks + "|");
+    	ret += prefix + blanks + "\\return\n";
+    	ret += return_expression.astString(prefix + blanks);
     	return ret;
     }
 }

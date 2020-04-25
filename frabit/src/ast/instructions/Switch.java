@@ -2,6 +2,7 @@ package ast.instructions;
 
 import java.util.List;
 
+import ast.AstAux;
 import ast.expressions.Expression;
 
 public class Switch extends Instruction {
@@ -30,4 +31,21 @@ public class Switch extends Instruction {
 //
 //	this.cases = cases;
 //    }
+    
+    public String astString(String prefix)
+    {
+    	String ret = prefix.substring(0,prefix.length()-1) + "\\__switch\n";
+    	String blanks = AstAux.blanks("switch".length());
+    	ret += base_expression.astString(prefix + blanks + "|");
+    	for (int i = 0; i < cases.size(); ++i)
+		{
+    		if (i < cases.size() - 1 || default_case != null)
+    			ret += cases.get(i).astString(prefix + blanks + "|");
+    		else
+        		ret += cases.get(i).astString(prefix + blanks + " ");
+		}
+    	if (default_case != null)
+    		ret += default_case.astString(prefix + blanks + " ");
+    	return ret;
+    }
 }

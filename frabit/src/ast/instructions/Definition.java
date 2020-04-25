@@ -1,5 +1,6 @@
 package ast.instructions;
 
+import ast.AstAux;
 import ast.expressions.Expression;
 import ast.types.Type;
 
@@ -23,10 +24,12 @@ public class Definition extends Instruction {
     
     public String astString(String prefix)
     {
-    	String ret = prefix.substring(0,prefix.length()-1) + "\\__" + type.toString() + " " + identifier;
+    	String ret = AstAux.popLast(prefix) + "\\__Definition\n";
+    	String blanks = AstAux.blanks("Definition".length());
+    	ret += prefix + blanks + "\\" + type.toString() + "\n";
+    	ret += prefix + blanks + "\\" + identifier + "\n";
     	if (initialization != null)
-    		ret += "=\n" + initialization.astString(prefix + "     ");
-    	else ret += "\n";
+    		ret += initialization.astString(prefix + blanks + " ");
     	return ret;
     }
 }

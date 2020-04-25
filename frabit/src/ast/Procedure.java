@@ -20,8 +20,10 @@ public class Procedure {
     String astString(String prefix)
     {
     	String ret;
-    	ret = prefix.substring(0,prefix.length()-1).concat("\\__void " + identifier + "\n");
-    	ret += instructions.astString(prefix);
+    	ret = prefix.substring(0,prefix.length()-1) + "\\__Procedure\n";
+    	ret += prefix + "    \\void\n";
+    	ret +=  prefix + "    \\" + identifier + "\n";
+    	ret += instructions.astString(prefix + "     ");
     	return ret;
     }
-}
+   }

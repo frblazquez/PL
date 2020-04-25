@@ -175,7 +175,7 @@ Op1 ::= MAS 		{: RESULT = "+"; :}
 	| MENOS 		{: RESULT = "-"; :}
 	| OR 			{: RESULT = "or"; :};	
 Op2 ::= POR 		{: RESULT = "*"; :}
-	| DIV 			{: RESULT = "\\"; :}
+	| DIV 			{: RESULT = "/"; :}
 	| AND 			{: RESULT = "and"; :};
 Op3 ::= MENOS 		{: RESULT = "-"; :}
 	| NOT 			{: RESULT = "not"; :}

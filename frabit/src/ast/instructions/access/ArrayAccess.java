@@ -9,5 +9,7 @@ public class ArrayAccess extends Access {
     public ArrayAccess(Expression e) {
 	index = e;
     }
+    
+    public Expression getIndex() { return index; }
 
 }

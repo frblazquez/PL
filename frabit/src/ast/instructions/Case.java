@@ -1,5 +1,6 @@
 package ast.instructions;
 
+import ast.AstAux;
 import ast.expressions.Expression;
 
 public class Case {
@@ -19,5 +20,12 @@ public class Case {
 
     public boolean isDefault() {
 	return exp == null;
+    }
+    
+    public String astString(String prefix)
+    {
+    	String ret = AstAux.popLast(prefix) + "\\case\n";
+    	ret += ins.astString(prefix + AstAux.blanks("case".length()));
+    	return ret;
     }
 }

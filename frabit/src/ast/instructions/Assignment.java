@@ -1,5 +1,6 @@
 package ast.instructions;
 
+import ast.AstAux;
 import ast.expressions.Expression;
 import ast.instructions.access.VariableAccess;
 
@@ -15,11 +16,10 @@ public class Assignment extends Instruction {
 
     public String astString(String prefix)
     {
-    	String ret, nprefix;
-    	nprefix = prefix + "    ";
-    	ret = prefix.substring(0,prefix.length()-1) + "\\__=\n"; 
-	ret += nprefix + "\\__" + variable.getIdentifier() + "\n";
-    	ret += expression.astString(nprefix + " ");
+    	String ret = AstAux.popLast(prefix) + "\\__Assignment\n";
+    	String blanks = AstAux.blanks("Assignment".length());
+    	ret += variable.astString(prefix + blanks + "|");
+    	ret += expression.astString(prefix + blanks  + " ");
     	return ret; 
     }
 }

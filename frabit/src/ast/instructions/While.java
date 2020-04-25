@@ -19,7 +19,7 @@ public class While extends Instruction {
     	String ret = "", tab = "    ", nprefix = prefix + tab;
     	ret = prefix.substring(0,prefix.length() - 1) + "\\__while\n";
     	ret += condition.astString(nprefix + "|");
-    	ret += instructions.astString(prefix);
+    	ret += instructions.astString(prefix + "     ");
     	return ret;
     }
 }

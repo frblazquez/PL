@@ -20,6 +20,6 @@ public class RegisterType extends Type {
     		else first = false;
     		ret += t.toString();
     	}
-    	return ret;
+    	return ret + ">";
     }
 }

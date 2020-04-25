@@ -30,16 +30,13 @@ public class IfElse extends Instruction {
     	String ret = prefix.substring(0,prefix.length()-1) + "\\__if\n";
     	
     	ret += condition.astString(prefix + "    |");
-    	ret += if_instructions.astString(prefix);
-    	if (this.hasElseClause()) ret += else_instructions.astString(prefix);
-//    	ret += condition.astString(prefix + "    ");
-//    	if (this.hasElseClause())
-//    	{
-//    		ret += if_instructions.astString(prefix + "    ");
-//    		ret += prefix + "    \\__else\n";
-//    		ret += else_instructions.astString(prefix + "    ");
-//    	}
-//    	else ret += if_instructions.astString(prefix);
+    	if (this.hasElseClause()) 
+    	{
+    		ret += if_instructions.astString(prefix + "    |");
+    		ret += prefix + "    \\else\n";
+    		ret += else_instructions.astString(prefix + "          ");
+    	}
+    	else ret += if_instructions.astString(prefix + "     ");
     	return ret;
     }
 }
