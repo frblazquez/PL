@@ -1,4 +1,4 @@
-package ast.instructions.access;
+package ast.expressions.access;
 
 import ast.expressions.Expression;
 
@@ -9,11 +9,13 @@ public class ArrayAccess extends Access {
     public ArrayAccess(Expression e) {
 	index = e;
     }
-    
-    public Expression getIndex() { return index; }
 
-	public Expression getExpression() {
-		return index;
-	}
+    public Expression getIndex() {
+	return index;
+    }
+
+    public Expression getExpression() {
+	return index;
+    }
 
 }

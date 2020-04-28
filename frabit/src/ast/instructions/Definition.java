@@ -1,6 +1,6 @@
 package ast.instructions;
 
-import ast.AstAux;
+import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.Type;
 
@@ -11,25 +11,23 @@ public class Definition extends Instruction {
     private Expression initialization;
 
     public Definition(Type t, String id) {
-	type = t;
-	identifier = id;
-	initialization = null;
+	this(t, id, null);
     }
 
     public Definition(Type t, String id, Expression e) {
+	super(AstUtils.DEFINITION_HEADER + "\"" + id + "\"");
 	type = t;
 	identifier = id;
 	initialization = e;
-    }
-    
-    public String astString(String prefix)
-    {
-    	String ret = AstAux.popLast(prefix) + "\\__Definition\n";
-    	String blanks = AstAux.blanks("Definition".length());
-    	ret += prefix + blanks + "\\" + type.toString() + "\n";
-    	ret += prefix + blanks + "\\" + identifier + "\n";
-    	if (initialization != null)
-    		ret += initialization.astString(prefix + blanks + " ");
-    	return ret;
+
+	children.add(t);
+
+	// TODO: Again reconsider the possibility of placing the identifier as a child
+	// instead of placing it at the header
+	// children.add(id);
+
+	// TODO: Add the initialization (if not null!) when it has a proper astToString
+	// children.add(e);
+
     }
 }

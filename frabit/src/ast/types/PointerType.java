@@ -8,8 +8,8 @@ public class PointerType extends Type {
 	base_type = t;
     }
 
-    public String toString()
-    {
-    	return "*" + base_type.toString();
+    @Override
+    public String toString() {
+	return "*" + base_type.toString();
     }
 }

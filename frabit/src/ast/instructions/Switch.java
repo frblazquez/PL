@@ -2,7 +2,7 @@ package ast.instructions;
 
 import java.util.List;
 
-import ast.AstAux;
+import ast.AstUtils;
 import ast.expressions.Expression;
 
 public class Switch extends Instruction {
@@ -12,40 +12,21 @@ public class Switch extends Instruction {
     private Case default_case;
 
     public Switch(Expression exp, List<Case> cases, Case default_case) {
+	super(AstUtils.SWITCH_HEADER);
 	this.base_expression = exp;
 	this.cases = cases;
 	this.default_case = default_case;
+
+	// TODO: Add base expression to header or children when possible
+	// children.add(base_expression);
+
+	children.addAll(cases);
+	if (default_case != null)
+	    children.add(default_case);
     }
 
     public Switch(Expression exp, List<Case> cases) {
-	this.base_expression = exp;
-	this.cases = cases;
-	this.default_case = null;
+	this(exp, cases, null);
     }
 
-//    public Switch(List<Case> cases) {
-//	if (cases.get(cases.size() - 1).isDefault())
-//	    default_case = cases.remove(cases.size() - 1);
-//	else
-//	    default_case = null;
-//
-//	this.cases = cases;
-//    }
-    
-    public String astString(String prefix)
-    {
-    	String ret = prefix.substring(0,prefix.length()-1) + "\\__switch\n";
-    	String blanks = AstAux.blanks("switch".length());
-    	ret += base_expression.astString(prefix + blanks + "|");
-    	for (int i = 0; i < cases.size(); ++i)
-		{
-    		if (i < cases.size() - 1 || default_case != null)
-    			ret += cases.get(i).astString(prefix + blanks + "|");
-    		else
-        		ret += cases.get(i).astString(prefix + blanks + " ");
-		}
-    	if (default_case != null)
-    		ret += default_case.astString(prefix + blanks + " ");
-    	return ret;
-    }
 }

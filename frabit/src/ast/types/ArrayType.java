@@ -10,8 +10,8 @@ public class ArrayType extends Type {
 	size = n;
     }
     
-    public String toString()
-    {
-    	return "[" + base_type.toString() + "," + String.valueOf(size) + "]";
+    @Override
+    public String toString() {
+	return "[" + base_type.toString() + "," + size + "]";
     }
 }

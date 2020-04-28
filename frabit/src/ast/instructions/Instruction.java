@@ -1,9 +1,16 @@
 package ast.instructions;
 
-public class Instruction {
+import ast.AstNode;
 
-	public String astString(String prefix) {
-		return prefix.substring(0,prefix.length()-1) + "\\__instruccion\n";
-	}
+public class Instruction extends AstNode {
 
+    /**
+     * Constructor designed to be a bridge with AstNode class.
+     */
+    public Instruction(String header) {
+	super(header);
+    }
+
+    public Instruction() {
+    }
 }

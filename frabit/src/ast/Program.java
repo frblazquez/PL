@@ -2,25 +2,27 @@ package ast;
 
 import java.util.List;
 
-public class Program {
+public class Program extends AstNode {
 
+    // We keep full references for later stages of development. For the moment it's
+    // only necessary to deal with AstNode instances.
     private List<Procedure> methods;
     private Function main_function;
 
     public Program(List<Procedure> methods, Function main) {
+	super(AstUtils.PROGRAM_HEADER);
 	this.methods = methods;
 	this.main_function = main;
+
+	// TODO: Check the order is kept and the correction
+	children.addAll(methods);
+	children.add(main);
     }
-    
-    public String toString()
-    {
-    	String ret = "\\Program\n"; 
-    	String tab = "    ";
-    	for(Procedure p : methods) 
-    	{
-    		ret += p.astString(tab + "|");
-    	}
-    	ret += main_function.astString(tab + " ");
-    	return ret;
+
+    @Override
+    public String toString() {
+	StringBuilder sb = new StringBuilder();
+	astToString(sb, "", "");
+	return sb.toString();
     }
 }

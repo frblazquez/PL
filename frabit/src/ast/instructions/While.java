@@ -1,7 +1,6 @@
 package ast.instructions;
 
-import java.util.List;
-
+import ast.AstUtils;
 import ast.expressions.Expression;
 
 public class While extends Instruction {
@@ -10,16 +9,14 @@ public class While extends Instruction {
     private Instructions instructions;
 
     public While(Expression e, Instructions ins) {
+	super(AstUtils.WHILE_HEADER);
 	condition = e;
 	instructions = ins;
+
+	// TODO: Add condition when possible
+	// children.add(condition);
+
+	children.add(instructions);
     }
 
-    public String astString(String prefix)
-    {
-    	String ret = "", tab = "    ", nprefix = prefix + tab;
-    	ret = prefix.substring(0,prefix.length() - 1) + "\\__while\n";
-    	ret += condition.astString(nprefix + "|");
-    	ret += instructions.astString(prefix + "     ");
-    	return ret;
-    }
 }

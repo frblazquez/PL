@@ -1,8 +1,8 @@
 package ast.instructions;
 
-import ast.AstAux;
+import ast.AstUtils;
 import ast.expressions.Expression;
-import ast.instructions.access.VariableAccess;
+import ast.expressions.access.VariableAccess;
 
 public class Assignment extends Instruction {
 
@@ -10,16 +10,13 @@ public class Assignment extends Instruction {
     private Expression expression;
 
     public Assignment(VariableAccess va, Expression e) {
+	super(AstUtils.ASSIGNMENT_HEADER);
 	variable = va;
 	expression = e;
+
+	// TODO: Add the variable access and the expression when enabled
+	// children.add(variable);
+	// children.add(expression);
     }
 
-    public String astString(String prefix)
-    {
-    	String ret = AstAux.popLast(prefix) + "\\__Assignment\n";
-    	String blanks = AstAux.blanks("Assignment".length());
-    	ret += variable.astString(prefix + blanks + "|");
-    	ret += expression.astString(prefix + blanks  + " ");
-    	return ret; 
-    }
 }

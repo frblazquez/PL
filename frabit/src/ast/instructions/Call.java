@@ -1,36 +1,24 @@
 package ast.instructions;
 
-import java.util.List;
+import ast.AstUtils;
+import ast.arguments.Arguments;
 
-import ast.AstAux;
-import ast.expressions.Expression;
-
-public class Call extends Instruction{
+public class Call extends Instruction {
 
     private String identifier;
-    private List<Expression> arguments;
+    private Arguments arguments;
 
-    public Call(String id, List<Expression> args) {
+    public Call(String id, Arguments args) {
+	super(AstUtils.INVOKE_HEADER + "\"" + id + "\"");
 	identifier = id;
 	arguments = args;
-    }
-    
-    public String astString(String prefix)
-    {
-    	String ret = AstAux.popLast(prefix) + "\\Call\n";
-    	String blanks = AstAux.blanks("Call".length());
-    	ret += prefix + blanks + "\\" + identifier + "\n";
-    	if (arguments.size() > 0)
-    	{
-    		ret += prefix + blanks + "\\__Arguments\n";
-    		for (int i = 0; i < arguments.size(); ++i)
-    		{
-    			if (i < arguments.size() - 1)
-    				ret += arguments.get(i).astString(prefix + blanks + "|" + blanks);
-    			else
-    				ret += arguments.get(i).astString(prefix + blanks + " " + blanks);
-    		}
-    	}
-    	return ret;
+
+	// TODO: Again is the header the best place for the idientifier?
+	// children.add(id);
+
+	// TODO: Should we add arguments section to the tree if there are no parameters?
+	// TODO: Furthermore, even if we don't want to print this section when there are
+	// no parameters, is the best way of doing this not adding it to the tree?
+	children.add(args);
     }
 }
