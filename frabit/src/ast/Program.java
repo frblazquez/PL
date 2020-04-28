@@ -14,7 +14,6 @@ public class Program extends AstNode {
 	this.methods = methods;
 	this.main_function = main;
 
-	// TODO: Check the order is kept and the correction
 	children.addAll(methods);
 	children.add(main);
     }

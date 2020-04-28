@@ -14,8 +14,6 @@ public class PairArgumentType extends AstNode {
 	type = t;
     }
 
-    // TODO: Check separation id-type
-    // TODO: Should types be printed in another non-plain way?
     @Override
     public void astToString(StringBuilder sb, String prefix, String children_prefix) {
 	sb.append(prefix);

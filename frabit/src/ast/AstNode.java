@@ -18,17 +18,12 @@ public class AstNode {
 	children = new ArrayList<AstNode>();
     }
 
-    // TODO: Remove constructor when possible
+    // TODO: Remove constructor when possible. More important than what it seems.
     public AstNode() {
 	NODE_NAME = "NULL";
 	children = null;
     }
 
-    // TODO: Remove constructor when possible
-    public AstNode(String node_name, List<AstNode> nodes) {
-	NODE_NAME = node_name;
-	children = nodes;
-    }
 
     /**
      * This method should be valid for all non-leaf nodes. Varying NODE_NAME

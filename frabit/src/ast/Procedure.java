@@ -25,8 +25,6 @@ public class Procedure extends AstNode {
 	// TODO: Should parameters section appear in the tree representation if the
 	// function has no parameters? If not add "arguments" under that condition.
 	children.add(arguments);
-
-	// TODO: Print also the instructions (keep this order)
 	children.add(instructions);
     }
 

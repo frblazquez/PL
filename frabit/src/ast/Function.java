@@ -15,7 +15,7 @@ public class Function extends Procedure {
 	return_type = t;
 	return_expression = e;
 
-	// TODO: Add return expression when it has a proper astToString
 	children.add(return_type);
+	children.add(return_expression);
     }
 }

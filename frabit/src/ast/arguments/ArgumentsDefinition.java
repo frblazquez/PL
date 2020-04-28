@@ -20,7 +20,6 @@ public class ArgumentsDefinition extends AstNode {
 	super(AstUtils.PARAMS_DEF_HEADER);
 	arguments = args;
 
-	// TODO: Check the order is kept and the correction
 	children.addAll(args);
     }
 }

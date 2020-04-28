@@ -20,4 +20,10 @@ public class Arguments extends AstNode {
 	super(AstUtils.PARAMS_HEADER);
 	arguments = args;
     }
+
+    @Override
+    public String toString() {
+	String aux = arguments.toString();
+	return aux.substring(1, aux.length() - 1);
+    }
 }

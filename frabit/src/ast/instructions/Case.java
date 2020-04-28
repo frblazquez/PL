@@ -14,9 +14,7 @@ public class Case extends AstNode {
 	exp = e;
 	ins = is;
 
-	// TODO: Add expressions to header or to the children when possible
-	// children.add(e);
-
+	children.add(e);
 	children.add(is);
     }
 

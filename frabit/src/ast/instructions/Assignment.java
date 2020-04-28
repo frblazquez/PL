@@ -14,9 +14,8 @@ public class Assignment extends Instruction {
 	variable = va;
 	expression = e;
 
-	// TODO: Add the variable access and the expression when enabled
-	// children.add(variable);
-	// children.add(expression);
+	children.add(variable);
+	children.add(expression);
     }
 
 }

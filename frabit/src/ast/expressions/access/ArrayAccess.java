@@ -14,8 +14,9 @@ public class ArrayAccess extends Access {
 	return index;
     }
 
-    public Expression getExpression() {
-	return index;
+    @Override
+    public String toString() {
+	return "[" + index + "]";
     }
 
 }

@@ -68,10 +68,10 @@ non terminal Switch Switch;
 non terminal Case Case;
 non terminal Case Default;
 non terminal List<Case> Cases; 
-non terminal String Op0;
-non terminal String Op1;
-non terminal String Op2;
-non terminal String Op3;
+non terminal Operators Op0;
+non terminal Operators Op1;
+non terminal Operators Op2;
+non terminal Operators Op3;
 non terminal VariableAccess AccesoVariable;
 non terminal List<Access> Accesos;
 
@@ -152,33 +152,33 @@ TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.add(ne
             |  Tipo:t IDEN:id                   {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :};
 
 // Expresiones, operadores y prioridades
-E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new Expression(op,2, new Expression[] {expa,expb} ); :}
+E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
 		| E1:exp 					{: RESULT = exp; :};
-E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new Expression(op,2, new Expression[] {expa, expb}); :}
+E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
 		| E2:exp 					{: RESULT = exp; :};
-E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new Expression(op,2,new Expression[] {expa,expb}); :}  
+E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new BinaryExpression(op,expa,expb); :}  
 		| E3:exp 					{: RESULT = exp; :};
-E3 ::= Op3:op E3:exp	{: RESULT = new Expression(op, 1, new Expression[] {exp}); :}			   
+E3 ::= Op3:op E3:exp	{: RESULT = new UnaryExpression(op,exp); :}			   
 		 | E4:exp		{: RESULT = exp; :} ;
-E4 ::= ENT:str  {: RESULT = new Expression(str); :}
-	| TRUE 		{: RESULT = new Expression("true"); :}
-	| FALSE 	{: RESULT = new Expression("false"); :}
-	| NULL 		{: RESULT = new Expression("null"); :}
-	| PAP E0:exp PCIERRE {: RESULT = exp; :}
-	| AccesoVariable:av {: RESULT = av; :} // TODO
-	| Invoke {: RESULT = new Expression("invoke"); :};
-Op0 ::= MAYOR 		{: RESULT = ">"; :}
-	| DISTINTO 		{: RESULT = "!="; :}
-	| MENOR  		{: RESULT = "<"; :}
-	| IGUALIGUAL 	{: RESULT = "=="; :}
-	| MENORIGUAL 	{: RESULT = "<="; :}
-	| MAYORIGUAL 	{: RESULT = ">="; :};
-Op1 ::= MAS 		{: RESULT = "+"; :}
-	| MENOS 		{: RESULT = "-"; :}
-	| OR 			{: RESULT = "or"; :};	
-Op2 ::= POR 		{: RESULT = "*"; :}
-	| DIV 			{: RESULT = "\\"; :}
-	| AND 			{: RESULT = "and"; :};
-Op3 ::= MENOS 		{: RESULT = "-"; :}
-	| NOT 			{: RESULT = "not"; :}
-	| AMPERSAND 	{: RESULT = "&"; :};
+E4 ::= ENT:str  {: RESULT = new Constant(str, new IntType()); :}
+	| TRUE 		{: RESULT = new Constant("true", new BoolType()); :}
+	| FALSE 	{: RESULT = new Constant("false", new BoolType()); :}
+	| NULL 		{: RESULT = new Constant("null", new PointerType()); :}
+	| PAP E0:exp PCIERRE    {: RESULT = exp; :}
+	| AccesoVariable:av     {: RESULT = av; :}                          // TODO
+	| IDEN:id PAP Argumentos:args PCIERRE {: RESULT = new InvokeExpression(id,args); :};   // TODO    
+Op0 ::= MAYOR 		{: RESULT = Operators.MAYOR; :}
+	| DISTINTO 		{: RESULT = Operators.DISTINTO; :}
+	| MENOR  		{: RESULT = Operators.MENOR; :}
+	| IGUALIGUAL 	{: RESULT = Operators.IGUALIGUAL; :}
+	| MENORIGUAL 	{: RESULT = Operators.MENORIGUAL; :}
+	| MAYORIGUAL 	{: RESULT = Operators.MAYORIGUAL; :};
+Op1 ::= MAS 		{: RESULT = Operators.MAS; :}
+	| MENOS 		{: RESULT = Operators.MENOS; :}
+	| OR 			{: RESULT = Operators.OR; :};	
+Op2 ::= POR 		{: RESULT = Operators.POR; :}
+	| DIV 			{: RESULT = Operators.DIVISION; :}
+	| AND 			{: RESULT = Operators.AND; :};
+Op3 ::= MENOS 		{: RESULT = Operators.MENOS; :}
+	| NOT 			{: RESULT = Operators.NOT; :}
+	| AMPERSAND 	{: RESULT = Operators.AMPERSAND; :};

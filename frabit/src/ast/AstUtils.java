@@ -27,5 +27,6 @@ public final class AstUtils {
     public static final String CASE_HEADER = "CASE: ";
     public static final String DEFAULT_HEADER = "DEFAULT: ";
     public static final String VAR_ACCESS_HEADER = "VARIABLE: ";
+    public static final String EXPRESSION_HEADER = "EXPRESSION: ";
 
 }

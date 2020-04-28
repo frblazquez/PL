@@ -26,8 +26,8 @@ public class Definition extends Instruction {
 	// instead of placing it at the header
 	// children.add(id);
 
-	// TODO: Add the initialization (if not null!) when it has a proper astToString
-	// children.add(e);
+	if (e != null)
+	    children.add(e);
 
     }
 }

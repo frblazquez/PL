@@ -13,9 +13,7 @@ public class While extends Instruction {
 	condition = e;
 	instructions = ins;
 
-	// TODO: Add condition when possible
-	// children.add(condition);
-
+	children.add(condition);
 	children.add(instructions);
     }
 
