@@ -2,18 +2,15 @@ package ast.types;
 
 import java.util.List;
 
+import ast.AstUtils;
+
 public class RegisterType extends Type {
 
     private List<Type> base_types;
 
     public RegisterType(List<Type> types) {
+	super(AstUtils.REGISTER_HEADER);
 	base_types = types;
-    }
-
-    @Override
-    public String toString() {
-	String aux = base_types.toString();
-	aux = aux.substring(1, aux.length() - 1);
-	return "<" + aux + ">";
+	children.addAll(base_types);
     }
 }

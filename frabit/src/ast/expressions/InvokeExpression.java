@@ -1,5 +1,6 @@
 package ast.expressions;
 
+import ast.AstUtils;
 import ast.arguments.Arguments;
 
 /**
@@ -14,8 +15,11 @@ public class InvokeExpression extends Expression {
     private Arguments arguments;
 
     public InvokeExpression(String id, Arguments args) {
+	super(AstUtils.INVOKE_HEADER + id);
+    
 	identifier = id;
 	arguments = args;
+	children.add(args);
     }
 
     @Override

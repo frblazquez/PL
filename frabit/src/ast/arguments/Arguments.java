@@ -19,11 +19,6 @@ public class Arguments extends AstNode {
     public Arguments(List<Expression> args) {
 	super(AstUtils.PARAMS_HEADER);
 	arguments = args;
-    }
-
-    @Override
-    public String toString() {
-	String aux = arguments.toString();
-	return aux.substring(1, aux.length() - 1);
+	children.addAll(arguments);
     }
 }

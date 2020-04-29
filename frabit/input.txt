@@ -17,8 +17,8 @@ int busqbin(*int vector, int iz, int de, int elem){
 // blbalblal
 int fibonacci(int n){
 	<int,int> lasts;
-	lasts[0] = 0;
-	lasts[1] = 1;
+	lasts.0 = 0;
+	lasts.1 = 1;
 	int aux;
 
 	while (n >= 1){

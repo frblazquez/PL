@@ -18,12 +18,6 @@ public class AstNode {
 	children = new ArrayList<AstNode>();
     }
 
-    // TODO: Remove constructor when possible. More important than what it seems.
-    public AstNode() {
-	NODE_NAME = "NULL";
-	children = null;
-    }
-
 
     /**
      * This method should be valid for all non-leaf nodes. Varying NODE_NAME

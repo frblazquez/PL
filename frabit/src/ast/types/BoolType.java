@@ -1,9 +1,11 @@
 package ast.types;
 
+import ast.AstUtils;
+
 public class BoolType extends Type {
 
-    @Override
-    public String toString() {
-	return "bool";
-    }
+	public BoolType()
+	{
+		super(AstUtils.TYPE_HEADER + "bool");
+	}
 }

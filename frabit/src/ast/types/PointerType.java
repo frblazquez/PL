@@ -6,15 +6,14 @@ public class PointerType extends Type {
 
     // TODO: Dangerous but necessary for instantiating NULL constant type!
     public PointerType() {
+    super("null");
 	base_type = null;
     }
 
     public PointerType(Type t) {
+	// TODO: Consider changing this for a POINTER header
+	super("*");
 	base_type = t;
-    }
-
-    @Override
-    public String toString() {
-	return "*" + base_type.toString();
+	children.add(base_type);
     }
 }

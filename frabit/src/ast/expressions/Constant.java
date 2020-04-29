@@ -7,11 +7,12 @@ public class Constant extends Expression {
     private String constant;
 
     public Constant(String ct) {
-	constant = ct;
+    	super(ct);
+    	constant = ct;
     }
 
     public Constant(String ct, Type type) {
-	super(type);
+	super(ct);
 	constant = ct;
     }
 

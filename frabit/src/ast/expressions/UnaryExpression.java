@@ -6,7 +6,9 @@ public class UnaryExpression extends Expression {
     private Expression exp;
 
     public UnaryExpression(Operators op, Expression exp) {
-	this.op = op;
+	super(op.toString());
+	children.add(exp);
+    this.op = op;
 	this.exp = exp;
     }
 

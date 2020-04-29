@@ -3,19 +3,15 @@ package ast;
 import ast.arguments.ArgumentsDefinition;
 import ast.expressions.Expression;
 import ast.instructions.Instructions;
+import ast.instructions.Return;
 import ast.types.Type;
 
 public class Function extends Procedure {
-
-    private Expression return_expression;
-    private Type return_type;
-
+    private Return ret;
+    
     public Function(String id, ArgumentsDefinition args, Instructions insts, Type t, Expression e) {
-	super(AstUtils.FUNCTION_HEADER, id, args, insts);
-	return_type = t;
-	return_expression = e;
-
-	children.add(return_type);
-	children.add(return_expression);
+	super(AstUtils.FUNCTION_HEADER, t, id, args, insts);
+	ret = new Return(e);
+	children.add(ret);
     }
 }

@@ -58,7 +58,7 @@ non terminal Expression E2;
 non terminal Expression E3;
 non terminal Expression E4;
 non terminal Call Llamada;
-non terminal Call Invoke;
+non terminal InvokeExpression Invoke;
 non terminal Assignment Asignacion;
 non terminal Definition Declaracion;
 non terminal IfElse If;
@@ -113,8 +113,8 @@ Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Defi
 If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); :};
 IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
 While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
-Invoke ::= IDEN:id PAP Argumentos:args PCIERRE              {: RESULT = new Call(id, args); :};
-Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = i; :};
+Invoke ::= IDEN:id PAP Argumentos:args PCIERRE              {: RESULT = new InvokeExpression(id, args); :};
+Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = new Call(i); :};
 Switch ::= SWITCH PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE               {: RESULT = new Switch(e,cs); :}
 			| SWITCH PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE  {: RESULT = new Switch(e,cs,d); :};                  
 
@@ -165,8 +165,8 @@ E4 ::= ENT:str  {: RESULT = new Constant(str, new IntType()); :}
 	| FALSE 	{: RESULT = new Constant("false", new BoolType()); :}
 	| NULL 		{: RESULT = new Constant("null", new PointerType()); :}
 	| PAP E0:exp PCIERRE    {: RESULT = exp; :}
-	| AccesoVariable:av     {: RESULT = av; :}                          // TODO
-	| IDEN:id PAP Argumentos:args PCIERRE {: RESULT = new InvokeExpression(id,args); :};   // TODO    
+	| AccesoVariable:av     {: RESULT = av; :}
+	| Invoke:in {: RESULT = in; :};   // TODO    
 Op0 ::= MAYOR 		{: RESULT = Operators.MAYOR; :}
 	| DISTINTO 		{: RESULT = Operators.DISTINTO; :}
 	| MENOR  		{: RESULT = Operators.MENOR; :}

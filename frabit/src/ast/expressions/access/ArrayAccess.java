@@ -7,7 +7,9 @@ public class ArrayAccess extends Access {
     private Expression index;
 
     public ArrayAccess(Expression e) {
-	index = e;
+    	super("[]");
+    	index = e;
+    	children.add(e);
     }
 
     public Expression getIndex() {

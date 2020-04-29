@@ -1,5 +1,6 @@
 package ast.instructions;
 
+import ast.AstNode;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.Type;
@@ -15,16 +16,13 @@ public class Definition extends Instruction {
     }
 
     public Definition(Type t, String id, Expression e) {
-	super(AstUtils.DEFINITION_HEADER + "\"" + id + "\"");
+	super(AstUtils.DEFINITION_HEADER);
 	type = t;
 	identifier = id;
 	initialization = e;
 
 	children.add(t);
-
-	// TODO: Again reconsider the possibility of placing the identifier as a child
-	// instead of placing it at the header
-	// children.add(id);
+	children.add(new AstNode(AstUtils.ID_HEADER + id));
 
 	if (e != null)
 	    children.add(e);

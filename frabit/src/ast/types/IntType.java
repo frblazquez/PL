@@ -1,9 +1,11 @@
 package ast.types;
 
+import ast.AstUtils;
+
 public class IntType extends Type {
 
-    @Override
-    public String toString() {
-	return "int";
-    }
+	public IntType()
+	{
+		super(AstUtils.TYPE_HEADER + "int");
+	}
 }

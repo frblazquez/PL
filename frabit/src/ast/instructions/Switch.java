@@ -17,8 +17,7 @@ public class Switch extends Instruction {
 	this.cases = cases;
 	this.default_case = default_case;
 
-	// TODO: Add base expression to header or children when possible
-	// children.add(base_expression);
+	children.add(base_expression);
 
 	children.addAll(cases);
 	if (default_case != null)
