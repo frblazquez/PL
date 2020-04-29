@@ -83,7 +83,7 @@ Metodos ::= Metodos:fp Funcion:f        {: RESULT = fp; fp.add(f); :} ;
 Metodos ::= Metodos:fp Procedimiento:p  {: RESULT = fp; fp.add(p); :} ;
 Metodos ::=                             {: RESULT = new ArrayList<Procedure>(); :} ;
 
-// TODO: Revisar cuando los tipos y argumentos estén fijados
+
 Main ::= INT MAIN PAP PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE 
         {: RESULT = new Function("main", new ArgumentsDefinition(), ins, new IntType(), e); :};
 
@@ -105,7 +105,6 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 				 | Llamada:ll 				{: RESULT = ll; :}
 				 | Switch:sw				{: RESULT = sw; :} ;
 
-// TODO: Accesos a variables!
 
 Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
 Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Definition(t,id); :}
@@ -148,7 +147,7 @@ Tipo ::= INT                            {: RESULT = new IntType(); :}
 Tipos ::= Tipos:ts COMA Tipo:t      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
 //TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
-TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :}    // TODO: Identificadores repetidos?(eso va en el codigo java)
+TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
             |  Tipo:t IDEN:id                   {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :};
 
 // Expresiones, operadores y prioridades
@@ -166,7 +165,7 @@ E4 ::= ENT:str  {: RESULT = new Constant(str, new IntType()); :}
 	| NULL 		{: RESULT = new Constant("null", new PointerType()); :}
 	| PAP E0:exp PCIERRE    {: RESULT = exp; :}
 	| AccesoVariable:av     {: RESULT = av; :}
-	| Invoke:in {: RESULT = in; :};   // TODO    
+	| Invoke:in {: RESULT = in; :};
 Op0 ::= MAYOR 		{: RESULT = Operators.MAYOR; :}
 	| DISTINTO 		{: RESULT = Operators.DISTINTO; :}
 	| MENOR  		{: RESULT = Operators.MENOR; :}
