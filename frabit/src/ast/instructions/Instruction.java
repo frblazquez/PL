@@ -11,6 +11,4 @@ public class Instruction extends AstNode {
 	super(header);
     }
 
-//    public Instruction() {
-//    }
 }

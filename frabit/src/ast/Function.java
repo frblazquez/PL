@@ -8,10 +8,14 @@ import ast.types.Type;
 
 public class Function extends Procedure {
     private Return ret;
+    private Type ret_type;
     
     public Function(String id, ArgumentsDefinition args, Instructions insts, Type t, Expression e) {
-	super(AstUtils.FUNCTION_HEADER, t, id, args, insts);
+	super(AstUtils.FUNCTION_HEADER, id, args, insts);
 	ret = new Return(e);
+	ret_type = t;
+
+	children.add(ret_type);
 	children.add(ret);
     }
 }

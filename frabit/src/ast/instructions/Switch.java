@@ -18,7 +18,6 @@ public class Switch extends Instruction {
 	this.default_case = default_case;
 
 	children.add(base_expression);
-
 	children.addAll(cases);
 	if (default_case != null)
 	    children.add(default_case);

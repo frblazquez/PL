@@ -2,8 +2,6 @@ package asint;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
 import java_cup.runtime.*;
 import ast.*;
@@ -78,7 +76,6 @@ non terminal List<Access> Accesos;
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
 S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf); :};
 
-//FunsProcs ::= FunsProcs Funcion | FunsProcs Procedimiento | ;
 Metodos ::= Metodos:fp Funcion:f        {: RESULT = fp; fp.add(f); :} ;
 Metodos ::= Metodos:fp Procedimiento:p  {: RESULT = fp; fp.add(p); :} ;
 Metodos ::=                             {: RESULT = new ArrayList<Procedure>(); :} ;
@@ -114,16 +111,16 @@ IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfEl
 While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
 Invoke ::= IDEN:id PAP Argumentos:args PCIERRE              {: RESULT = new InvokeExpression(id, args); :};
 Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = new Call(i); :};
-Switch ::= SWITCH PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE               {: RESULT = new Switch(e,cs); :}
-			| SWITCH PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE  {: RESULT = new Switch(e,cs,d); :};                  
+Switch ::= SWITCH PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE           {: RESULT = new Switch(e,cs); :}
+		|  SWITCH PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE {: RESULT = new Switch(e,cs,d); :};                  
 
 AccesoVariable ::= IDEN:id Accesos:as       {: RESULT = new VariableAccess(id, as); :};
 Accesos ::= Accesos:as CAP E0:e CCIERRE     {: RESULT = as; as.add(new ArrayAccess(e)); :}
         |   Accesos:as PUNTO ENT:ent        {: RESULT = as; as.add(new RegisterAccess(Integer.parseInt(ent))); :}
         |                                   {: RESULT = new ArrayList<Access>(); :};
 
-Cases ::= Cases:cs Case:c   {: RESULT = cs; cs.add(c); :}
-        |                   {: RESULT = new ArrayList<Case>(); :};
+Cases ::= Cases:cs Case:c                   {: RESULT = cs; cs.add(c); :}
+        |                                   {: RESULT = new ArrayList<Case>(); :};
 Case ::= CASE E0:e DOSPUNTOS Bloque:ins     {: RESULT = new Case(e, ins); :};
 Default ::= DEFAULT DOSPUNTOS Bloque:ins    {: RESULT = new Case(ins); :} ; 
 
@@ -133,22 +130,20 @@ Args ::=  Args:args COMA E0:e   {: RESULT = args; args.add(e); :}
             | E0:e              {: RESULT = new ArrayList<Expression>(); RESULT.add(e); :}   ;
 
 // Bloques de instrucciones 
+Bloque ::= LLAP Instrucciones:insts LLCIERRE            {: RESULT = insts; :};
 Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.add(ins); :} 
-					| 									{: RESULT = new Instructions(); :};
-Bloque ::= LLAP Instrucciones:insts LLCIERRE {: RESULT = insts; :};
-//BloqueReturn ::= LLAP Instrucciones RETURN E0 PUNTOCOMA LLCIERRE ;
+				| 									    {: RESULT = new Instructions(); :};
 
 // Tipos permitidos
-Tipo ::= INT                            {: RESULT = new IntType(); :}
-    | BOOL                              {: RESULT = new BoolType(); :}
-    | POR Tipo:t                        {: RESULT = new PointerType(t); :}
-    | CAP Tipo:t COMA ENT:ent CCIERRE   {: RESULT = new ArrayType(t, Integer.parseInt(ent)); :}
-    | MENOR Tipos:ts MAYOR              {: RESULT = new RegisterType(ts); :};
-Tipos ::= Tipos:ts COMA Tipo:t      {: RESULT = ts; ts.add(t); :}
-    | Tipo:t                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
-//TipoIden ::= Tipo IDEN:nom {: RESULT = nom; :} ;
-TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id   {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
-            |  Tipo:t IDEN:id                   {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :};
+Tipo ::= INT                                        {: RESULT = new IntType(); :}
+    | BOOL                                          {: RESULT = new BoolType(); :}
+    | POR Tipo:t                                    {: RESULT = new PointerType(t); :}
+    | CAP Tipo:t COMA ENT:ent CCIERRE               {: RESULT = new ArrayType(t, Integer.parseInt(ent)); :}
+    | MENOR Tipos:ts MAYOR                          {: RESULT = new RegisterType(ts); :};
+Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :}
+    | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
+TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id    {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
+            |  Tipo:t IDEN:id                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :};
 
 // Expresiones, operadores y prioridades
 E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
@@ -157,27 +152,28 @@ E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new BinaryExpression(op,expa,expb); 
 		| E2:exp 					{: RESULT = exp; :};
 E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new BinaryExpression(op,expa,expb); :}  
 		| E3:exp 					{: RESULT = exp; :};
-E3 ::= Op3:op E3:exp	{: RESULT = new UnaryExpression(op,exp); :}			   
-		 | E4:exp		{: RESULT = exp; :} ;
-E4 ::= ENT:str  {: RESULT = new Constant(str, new IntType()); :}
-	| TRUE 		{: RESULT = new Constant("true", new BoolType()); :}
-	| FALSE 	{: RESULT = new Constant("false", new BoolType()); :}
-	| NULL 		{: RESULT = new Constant("null", new PointerType()); :}
-	| PAP E0:exp PCIERRE    {: RESULT = exp; :}
-	| AccesoVariable:av     {: RESULT = av; :}
-	| Invoke:in {: RESULT = in; :};
-Op0 ::= MAYOR 		{: RESULT = Operators.MAYOR; :}
-	| DISTINTO 		{: RESULT = Operators.DISTINTO; :}
-	| MENOR  		{: RESULT = Operators.MENOR; :}
-	| IGUALIGUAL 	{: RESULT = Operators.IGUALIGUAL; :}
-	| MENORIGUAL 	{: RESULT = Operators.MENORIGUAL; :}
-	| MAYORIGUAL 	{: RESULT = Operators.MAYORIGUAL; :};
-Op1 ::= MAS 		{: RESULT = Operators.MAS; :}
-	| MENOS 		{: RESULT = Operators.MENOS; :}
-	| OR 			{: RESULT = Operators.OR; :};	
-Op2 ::= POR 		{: RESULT = Operators.POR; :}
-	| DIV 			{: RESULT = Operators.DIVISION; :}
-	| AND 			{: RESULT = Operators.AND; :};
-Op3 ::= MENOS 		{: RESULT = Operators.MENOS; :}
-	| NOT 			{: RESULT = Operators.NOT; :}
-	| AMPERSAND 	{: RESULT = Operators.AMPERSAND; :};
+E3 ::= Op3:op E3:exp	            {: RESULT = new UnaryExpression(op,exp); :}			   
+        | E4:exp		            {: RESULT = exp; :} ;
+E4 ::= ENT:str                      {: RESULT = new Constant(str, new IntType()); :}
+	| TRUE 		                    {: RESULT = new Constant("true", new BoolType()); :}
+	| FALSE 	                    {: RESULT = new Constant("false", new BoolType()); :}
+	| NULL 		                    {: RESULT = new Constant("null", new PointerType()); :}
+	| PAP E0:exp PCIERRE            {: RESULT = exp; :}
+	| AccesoVariable:av             {: RESULT = av; :}
+	| Invoke:in                     {: RESULT = in; :};
+
+Op0 ::= MAYOR 		                {: RESULT = Operators.MAYOR; :}
+	| DISTINTO 		                {: RESULT = Operators.DISTINTO; :}
+	| MENOR  		                {: RESULT = Operators.MENOR; :}
+	| IGUALIGUAL 	                {: RESULT = Operators.IGUALIGUAL; :}
+	| MENORIGUAL 	                {: RESULT = Operators.MENORIGUAL; :}
+	| MAYORIGUAL 	                {: RESULT = Operators.MAYORIGUAL; :};
+Op1 ::= MAS 		                {: RESULT = Operators.MAS; :}
+	| MENOS 		                {: RESULT = Operators.MENOS; :}
+	| OR 			                {: RESULT = Operators.OR; :};	
+Op2 ::= POR 		                {: RESULT = Operators.POR; :}
+	| DIV 			                {: RESULT = Operators.DIVISION; :}
+	| AND 			                {: RESULT = Operators.AND; :};
+Op3 ::= MENOS 		                {: RESULT = Operators.MENOS; :}
+	| NOT 			                {: RESULT = Operators.NOT; :}
+	| AMPERSAND 	                {: RESULT = Operators.AMPERSAND; :};

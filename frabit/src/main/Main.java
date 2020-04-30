@@ -9,11 +9,24 @@ import asint.AnalizadorSintacticoTiny;
 import ast.Program;
 
 public class Main {
+
+    //@formatter:off
+    public static final String BASE_FOLDER 		 = "test-files/";
+    public static final String TEST_ALL 		 = "input.txt";
+    public static final String TEST_INSTRUCTIONS_DISPLAY = "instructions.txt";
+    public static final String TEST_ACCESSES_DISPLAY 	 = "accesses.txt";
+    public static final String TEST_EXPRESSIONS_DISPLAY  = "expressions.txt";
+    public static final String TEST_TYPES_DISPLAY 	 = "types.txt";
+    //@formatter:on
+
     public static void main(String[] args) throws Exception {
-	Reader input = new InputStreamReader(new FileInputStream("input.txt"));
+	String input_file = BASE_FOLDER + TEST_ALL;
+	
+	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 	Program pr = (Program) asint.parse().value;
+	
 	System.out.println(pr);
     }
 }

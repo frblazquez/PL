@@ -1,19 +1,20 @@
 package ast.types;
 
+import ast.AstUtils;
+
 public class PointerType extends Type {
 
     private Type base_type;
 
-    // TODO: Dangerous but necessary for instantiating NULL constant type!
     public PointerType() {
-    super("null");
+	super(AstUtils.TYPE_HEADER + AstUtils.POINTER_HEADER + AstUtils.POINTER_NULL);
 	base_type = null;
     }
 
     public PointerType(Type t) {
-	// TODO: Consider changing this for a POINTER header
-	super("*");
+	super(AstUtils.TYPE_HEADER + AstUtils.POINTER_HEADER);
 	base_type = t;
+
 	children.add(base_type);
     }
 }

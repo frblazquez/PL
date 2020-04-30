@@ -9,10 +9,11 @@ public class ArrayType extends Type {
     private int size;
 
     public ArrayType(Type t, int n) {
-    	super(AstUtils.ARRAY_HEADER);
+	super(AstUtils.TYPE_HEADER + AstUtils.ARRAY_HEADER);
     	base_type = t;
     	size = n;
+
     	children.add(base_type);
-    	children.add(new AstNode(String.valueOf(size)));
+	children.add(new AstNode(String.valueOf(size)));
     }
 }

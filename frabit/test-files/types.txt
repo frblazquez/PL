@@ -1,0 +1,21 @@
+// File to check types display in our AST construction
+int main(){
+
+	// Basic types expressions
+	int x;
+	bool y;
+	int x2 = 5;
+	bool y2 = true;
+	[int, 10] array_int;
+	[[int, 10], 8] matrix_int;
+	[bool, 100] array_bool;
+	[[bool,10],5] matrix_bool;
+	[*int,5] array_ptr_int;
+	[[*bool,100],10] matrix_ptr_bool;
+	
+	// Complex types multi-dimensional arrays
+	[[*[bool,100], 20],10] matrix_ptr_array_bool;
+	[[*[[int,100],8], 20],10] matrix_ptr_matrix_int;
+
+	return 0;
+}

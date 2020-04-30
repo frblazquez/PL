@@ -1,0 +1,39 @@
+// File to check instructions display in our AST construction
+int main(){
+
+	// Variable definition 
+	int x;
+	bool y = true;
+	
+	// Assignment
+	x = x + 1;
+	y = y or not y;
+
+	// if and ifelse
+	if(x==5){
+		print(x);
+	}
+	
+	if(y) {
+		print(x);
+	} else {
+		print(x + 1);
+	}
+		
+	// while
+	while(x != 5) {
+		x = x + 1;
+	}
+
+	// switch
+	switch(x) {
+		case 5:	 {x=9;}
+		case 9:  {x=5;}
+		default: {print(x);}
+	}
+	
+	// invoke
+	function_id(param1, param2, 2*i, 4*j, true, &vector);
+	
+	return 0;
+}

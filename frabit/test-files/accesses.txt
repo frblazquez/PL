@@ -1,0 +1,36 @@
+// File to check accesses display in our AST construction
+int main(){
+
+	int x;
+	
+	// ACCESSES AS EXPRESSIONS
+	// Basic one-dimensional variable access
+	x = identifier[0];
+	x = identifier.0;
+	
+	// Multidimensional variable access
+	x = identifier[0][0][1][1];
+	x = identifier.0.1.2.0.0;
+	x = identifier[0][5].3[2].0.1.2[7];
+	
+	// Multidimensional array variable access with expressions
+	x = identifier[i + k*j][i][j][0];
+	x = identifier[null][not true or true].3[j+k].0.1.2[&x];
+	
+	
+	// ACCESSES AS VARIABLE ACCESS
+	// Basic one-dimensional variable access
+	identifier[0] = expression;
+	identifier.0  = expression;
+	
+	// Multidimensional variable access
+	identifier[0][0][1][1] 			= expression;
+	identifier.0.1.2.0.0  			= expression;
+	identifier[0][5].3[2].0.1.2[7] 	= expression;
+	
+	// Multidimensional array variable access with expressions
+	identifier[i + k*j][i][j][0] = expression;
+	identifier[null][not true or true].3[j+k].0.1.2[&x] = expression;
+	
+	return 0;
+}

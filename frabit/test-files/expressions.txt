@@ -1,0 +1,33 @@
+// File to check expressions display in our AST construction
+int main(){
+
+	int	x;  
+	bool y;
+	*int ptr;
+
+	// Basic expressions, operators and constants
+	x = 5;
+	y = true;
+	x = 5 + 3*8 + 4;
+	x = not (5 + 3*8 + 4) == false;
+	y = not false and (false or true);
+	y = (5 + 3*8 + 4 + 7) * 2 * 3 / 4 + 19 == 18;
+	x = - (5 + 4) * 2 / 4 + 19 == 18 and (x != 8);
+	
+	ptr = &x;
+	ptr = null;
+	ptr = - (12 + 4) / 4 + 19 == 18 or (x > 8);
+	
+	// Expressions involving identifiers
+	x = i;
+	y = b;
+	x = &y[5][2];
+	x = - (x + y) * j / i + 19 == 18 and (x != y);
+	
+	// Expressions involving functions
+	ptr = funcion_ptr(i, j);
+	x   = funcion_int(i,j,k*2);
+	
+	
+	return 0;
+}
