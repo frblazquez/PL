@@ -17,16 +17,23 @@ public class Main {
     public static final String TEST_ACCESSES_DISPLAY 	 = "accesses.txt";
     public static final String TEST_EXPRESSIONS_DISPLAY  = "expressions.txt";
     public static final String TEST_TYPES_DISPLAY 	 = "types.txt";
+    public static final String TEST_ERROR_RECOVERY = "error_recovery.txt";
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = BASE_FOLDER + TEST_ALL;
+	String input_file = BASE_FOLDER + TEST_ERROR_RECOVERY;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
-	Program pr = (Program) asint.parse().value;
-	
-	System.out.println(pr);
+	try
+	{
+		Program pr = (Program) asint.parse().value;
+		System.out.println(pr);
+	}
+	catch (Exception e)
+	{
+		System.out.println("Could not recover");
+	}
     }
 }

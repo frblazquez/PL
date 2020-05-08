@@ -8,6 +8,8 @@ JLex/
 .classpath
 *.class
 *.jar
+*.pdf
+*.zip
 
 # Files automatically generated with the scripts in prueba_especificacion_practica
 AnalizadorLexicoTiny.java

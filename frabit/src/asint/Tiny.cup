@@ -20,6 +20,10 @@ parser code {:
    public void syntax_error(Symbol unidadLexica) {
      errores.errorSintactico((UnidadLexica)unidadLexica);
    }
+   
+   public void unrecovered_syntax_error(Symbol unidadLexica)throws java.lang.Exception {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
 :};
 init with {: 
    errores = new GestionErroresTiny();
@@ -100,7 +104,8 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 				 | IfElse:ifelse			{: RESULT = ifelse; :} 					
 				 | While:wh					{: RESULT = wh; :} 
 				 | Llamada:ll 				{: RESULT = ll; :}
-				 | Switch:sw				{: RESULT = sw; :} ;
+				 | Switch:sw				{: RESULT = sw; :} 
+				 | error PUNTOCOMA			{: System.out.println("Instruccion incorrecta"); RESULT = null;:};
 
 
 Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
@@ -130,7 +135,8 @@ Args ::=  Args:args COMA E0:e   {: RESULT = args; args.add(e); :}
             | E0:e              {: RESULT = new ArrayList<Expression>(); RESULT.add(e); :}   ;
 
 // Bloques de instrucciones 
-Bloque ::= LLAP Instrucciones:insts LLCIERRE            {: RESULT = insts; :};
+Bloque ::= LLAP Instrucciones:insts LLCIERRE            {: RESULT = insts; :}
+			| error 	{: System.out.println("Se esperaba un bloque"); RESULT = null; :};
 Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.add(ins); :} 
 				| 									    {: RESULT = new Instructions(); :};
 
@@ -160,7 +166,8 @@ E4 ::= ENT:str                      {: RESULT = new Constant(str, new IntType())
 	| NULL 		                    {: RESULT = new Constant("null", new PointerType()); :}
 	| PAP E0:exp PCIERRE            {: RESULT = exp; :}
 	| AccesoVariable:av             {: RESULT = av; :}
-	| Invoke:in                     {: RESULT = in; :};
+	| Invoke:in                     {: RESULT = in; :}
+	| error							{: System.out.println("Se esperaba un operando"); RESULT = null; :};
 
 Op0 ::= MAYOR 		                {: RESULT = Operators.MAYOR; :}
 	| DISTINTO 		                {: RESULT = Operators.DISTINTO; :}
