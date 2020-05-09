@@ -32,6 +32,7 @@ public class AstNode {
 	if(children != null && !children.isEmpty()) {
 	    for (Iterator<AstNode> it = children.iterator(); it.hasNext();) {
 	            AstNode next = it.next();
+	            if (next == null) continue;
 	            if (it.hasNext()) {
 	                next.astToString(sb, children_prefix + AstUtils.NEW_BRANCH_DELIMITER, children_prefix + AstUtils.INNER_SEPARATION);
 	            } else {

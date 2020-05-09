@@ -33,7 +33,7 @@ public class Main {
 	}
 	catch (Exception e)
 	{
-		System.out.println("Could not recover");
+		System.out.println("Could not recover, exception: " + e.toString());
 	}
     }
 }
