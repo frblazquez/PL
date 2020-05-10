@@ -1,12 +1,18 @@
+void metodo(int x, tiponovalido z)
+{
+	
+}
+
 int main()
 {
 	llamar(abe);
 	int i = 1;
-	int j = k + 2 *;
+	int j = i + 2 *;
+	int k = j * j - 2;
+	tiponovalido x = 3;
 	blabla(bla,bla);
 	blabla;
 	int x = 2;
-	5;
 	if (condition)
 		r = r + 1;
 	int i = 1;

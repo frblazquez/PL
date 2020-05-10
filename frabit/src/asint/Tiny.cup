@@ -149,7 +149,8 @@ Tipo ::= INT                                        {: RESULT = new IntType(); :
 Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
 TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id    {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
-            |  Tipo:t IDEN:id                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :};
+            |  Tipo:t IDEN:id                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :}
+            |  error IDEN							{: System.out.println("Se esperaba un tipo"); RESULT = new ArrayList<PairArgumentType>(); RESULT.add(null); :};
 
 // Expresiones, operadores y prioridades
 E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
