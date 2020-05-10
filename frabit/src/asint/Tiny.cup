@@ -110,7 +110,10 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 
 Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
 Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Definition(t,id); :}
-            |   Tipo:t IDEN:id IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,id,e); :};
+            |   Tipo:t IDEN:id IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,id,e); :}
+            |   error IDEN PUNTOCOMA						{: System.out.println("Se esperaba un tipo válido"); RESULT = null; :}
+            |   error IDEN IGUAL E0 PUNTOCOMA				{: System.out.println("Se esperaba un tipo válido"); RESULT = null; :};
+            
 If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); :};
 IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
 While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
@@ -150,7 +153,7 @@ Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :
     | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
 TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id    {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
             |  Tipo:t IDEN:id                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :}
-            |  error IDEN							{: System.out.println("Se esperaba un tipo"); RESULT = new ArrayList<PairArgumentType>(); RESULT.add(null); :};
+            |  error IDEN							{: System.out.println("Se esperaba un tipo válido"); RESULT = new ArrayList<PairArgumentType>(); RESULT.add(null); :};
 
 // Expresiones, operadores y prioridades
 E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}

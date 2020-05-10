@@ -1,25 +1,26 @@
-void metodo(int x, tiponovalido z)
+void metodo(int x, tiponovalido z) // Tipo no válido
 {
 	
 }
 
 int main()
 {
+	[int . 8] matrizmaldefinida;	// Tipo no válido, debería ser una coma
 	llamar(abe);
 	int i = 1;
-	int j = i + 2 *;
+	int j = i + 2 *;				// Fallo de expresión, está sin acabar
 	int k = j * j - 2;
-	tiponovalido x = 3;
+	tiponovalido x = 3;				// Tipo no válido en definición + asignación
 	blabla(bla,bla);
-	blabla;
+	blabla;							// Instrucción incorrecta
 	int x = 2;
 	if (condition)
-		r = r + 1;
+		r = r + 1;					// El cuerpo DEBE ir en un bloque
 	int i = 1;
 	llamar(aa);
 	switch(elemento)
 	{
-		case 2 : i = i + 1;
+		case 2 : i = i + 1;			// Cada case DEBE ir en un bloque
 	}
-	return 0 + 1 + ;
+	return 0 + 1 + ;				// Expresión inacabada
 }
