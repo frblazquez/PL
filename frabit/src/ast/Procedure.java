@@ -1,5 +1,8 @@
 package ast;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
+import asem.SymbolTableEntry;
 import ast.arguments.ArgumentsDefinition;
 import ast.instructions.Instructions;
 
@@ -27,5 +30,16 @@ public class Procedure extends AstNode {
 	children.add(arguments);
 	children.add(instructions);
     }
+    
+    public Identifier getIdentifier()
+    {
+    	return identifier;
+    }
 
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	st = arguments.checkSemantics(st); // Symbol table is updated by arguments
+    	instructions.checkSemantics(st);
+    	return st;
+    }
 }

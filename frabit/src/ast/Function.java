@@ -1,5 +1,7 @@
 package ast;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
 import ast.arguments.ArgumentsDefinition;
 import ast.expressions.Expression;
 import ast.instructions.Instructions;
@@ -17,5 +19,13 @@ public class Function extends Procedure {
 
 	children.add(ret_type);
 	children.add(ret);
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	st = arguments.checkSemantics(st); // Arguments update symbol table
+    	st = instructions.checkSemantics(st); // Get variables defined within instructions
+    	ret.checkSemantics(st);
+    	return st;
     }
 }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
+
 /**
  * This class is responsible of the tree structure and functionalities behind
  * our AST generation from valid programs for our syntax.
@@ -41,5 +44,23 @@ public class AstNode {
 	        }
 	}
     }
-
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	boolean ret = true;
+    	for (Iterator<AstNode> it = children.iterator(); it.hasNext() && ret;)
+    	{
+    		AstNode next = it.next();
+    		if (next == null) continue;
+    		try
+    		{
+    			next.checkSemantics(st);
+    		}
+    		catch (SemanticErrorException se)
+    		{
+    			System.out.println("Semantic error found: " + se.getMessage());
+    		}
+    	}
+    	return st;
+    }
 }

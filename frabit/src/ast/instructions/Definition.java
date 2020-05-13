@@ -1,8 +1,13 @@
 package ast.instructions;
 
+import asem.MemoryAddress;
+import asem.SemanticErrorException;
+import asem.SymbolTable;
+import asem.SymbolTableEntry;
 import ast.AstUtils;
 import ast.Identifier;
 import ast.expressions.Expression;
+import ast.types.IntType;
 import ast.types.Type;
 
 public class Definition extends Instruction {
@@ -25,5 +30,21 @@ public class Definition extends Instruction {
 	children.add(identifier);
 	if (e != null)
 	    children.add(e);
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	// TODO: Assign a valid memory address instead of null
+    	if (initialization != null) initialization.checkSemantics(st);
+    	try
+    	{
+    		// Add binding of identifier
+    		st.makeBinding(identifier, new SymbolTableEntry(new MemoryAddress(), type));
+    	}
+    	catch (SemanticErrorException se)
+    	{
+    		se.printSemanticError();
+    	}
+    	return st;
     }
 }

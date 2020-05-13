@@ -14,6 +14,7 @@ public class Constant extends Expression {
     public Constant(String ct, Type type) {
 	super(ct);
 	constant = ct;
+	expression_type = type;
     }
 
     @Override

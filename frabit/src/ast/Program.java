@@ -1,6 +1,11 @@
 package ast;
 
+import java.util.Iterator;
 import java.util.List;
+
+import asem.SemanticErrorException;
+import asem.SymbolTable;
+import asem.SymbolTableEntry;
 
 public class Program extends AstNode {
 
@@ -16,6 +21,15 @@ public class Program extends AstNode {
 
 	children.addAll(methods);
 	children.add(main);
+	try
+	{
+		this.checkSemantics(new SymbolTable());
+	}
+	catch (SemanticErrorException | NullPointerException e)
+	{
+//		e.printStackTrace();
+		System.out.println("Semantic error found: " + e.getMessage());
+	}
     }
 
     @Override
@@ -23,5 +37,32 @@ public class Program extends AstNode {
 	StringBuilder sb = new StringBuilder();
 	astToString(sb, "", "");
 	return sb.toString();
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {	
+    	st.makeBinding(new Identifier("main"), new SymbolTableEntry());
+    	for (Iterator<Procedure> it = methods.iterator(); it.hasNext();)
+    	{
+    		Procedure p = it.next();
+    		if (st.contains(p.getIdentifier()))
+    		{
+    			throw new SemanticErrorException("Cannot have two functions with same name");
+    		}
+    		else
+    		{
+    			st.makeBinding(p.getIdentifier(), new SymbolTableEntry());
+    			try
+    			{
+    				p.checkSemantics(st);
+    			}
+    			catch (SemanticErrorException se)
+    			{
+    				System.out.println("Semantic error found: " + se.getMessage());
+    			}
+    		}
+    	}
+    	main_function.checkSemantics(st); // Check main semantics last, after all functions added to scope
+    	return st;
     }
 }

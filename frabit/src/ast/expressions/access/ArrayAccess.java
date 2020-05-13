@@ -1,5 +1,6 @@
 package ast.expressions.access;
 
+import asem.SymbolTable;
 import ast.expressions.Expression;
 
 public class ArrayAccess extends Access {
@@ -20,5 +21,4 @@ public class ArrayAccess extends Access {
     public String toString() {
 	return "[" + index + "]";
     }
-
 }

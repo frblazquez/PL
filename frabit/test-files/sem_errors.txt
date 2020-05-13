@@ -1,0 +1,14 @@
+int main()
+{
+	int x = 1;
+	bool y = false;
+	int z = x + false;
+	bool x = false and true;
+	bool z = y and x;
+	int l = 1 + w;
+	while (1)
+	{
+		int x = 2;
+	}
+	return 0;
+}

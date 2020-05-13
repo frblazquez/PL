@@ -18,10 +18,11 @@ public class Main {
     public static final String TEST_EXPRESSIONS_DISPLAY  = "expressions.txt";
     public static final String TEST_TYPES_DISPLAY 	 = "types.txt";
     public static final String TEST_ERROR_RECOVERY = "error_recovery.txt";
+    public static final String TEST_SEMANTIC_ERRORS = "sem_errors.txt";
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = BASE_FOLDER + TEST_ERROR_RECOVERY;
+	String input_file = BASE_FOLDER + TEST_SEMANTIC_ERRORS;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);

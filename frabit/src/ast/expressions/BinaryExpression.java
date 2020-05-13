@@ -1,5 +1,9 @@
 package ast.expressions;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
+import ast.types.Type;
+
 public class BinaryExpression extends Expression{
 
     private Operators op;
@@ -18,6 +22,24 @@ public class BinaryExpression extends Expression{
     @Override
     public String toString() {
 	return left_e + " " + op + " " + right_e;
+    }
+    
+    public Type getType(SymbolTable st) throws SemanticErrorException
+    {
+    	return left_e.getType(st);
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	left_e.checkSemantics(st);
+    	right_e.checkSemantics(st);
+    	
+    	OperationTypes optype = left_e.getType(st).getOpType();
+    	
+    	if (optype != right_e.getType(st).getOpType() || optype != op.operandType()) 
+    		throw new SemanticErrorException("Operand types do not match in expression");
+    	
+    	return st;
     }
 
 }

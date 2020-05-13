@@ -9,6 +9,11 @@ public class RegisterAccess extends Access {
     	index = idx;
     }
     
+    public int getIndex()
+    {
+    	return index;
+    }
+    
     @Override
     public String toString() {
 	return "." + index;

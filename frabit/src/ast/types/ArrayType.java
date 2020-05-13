@@ -16,4 +16,9 @@ public class ArrayType extends Type {
     	children.add(base_type);
 	children.add(new AstNode(String.valueOf(size)));
     }
+    
+    public Type getBaseType()
+	{
+		return base_type;
+	}
 }

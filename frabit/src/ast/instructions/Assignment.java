@@ -1,5 +1,7 @@
 package ast.instructions;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.expressions.access.VariableAccess;
@@ -16,6 +18,13 @@ public class Assignment extends Instruction {
 
 	children.add(variable);
 	children.add(expression);
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	variable.checkSemantics(st);
+    	expression.checkSemantics(st);
+    	return st;
     }
 
 }
