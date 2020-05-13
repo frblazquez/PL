@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
+// TODO: Either move this to a test folder (could prove useful in the future) or delete
+
 class IdentifierHashTest {
 
 	@Test

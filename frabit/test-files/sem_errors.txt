@@ -2,13 +2,19 @@ int main()
 {
 	int x = 1;
 	bool y = false;
-	int z = x + false;
-	bool x = false and true;
-	bool z = y and x;
-	int l = 1 + w;
-	while (1)
+	int z = x + false; 			// Operands not valid
+	bool x = false and true;	// x already declared
+	bool z = y and x;			// z already declared and operands non-matching
+	int l = 1 + w;				// w undeclared
+	while (1)					// Invalid condition
 	{
-		int x = 2;
+		bool x = true;			// Legal redefinition within inner block
+		bool z = x or false;	// Legal redefinition which uses new x binding
 	}
+	int op_neq_ops = true + true;	// Operands compatible but not with operation
+	[int, 10] array;
+	int k = array.2;			// Illegal access (array not a register)
+	<int,int> pair;
+	int first = pair[0];		// Illegal access (register not an array)
 	return 0;
 }

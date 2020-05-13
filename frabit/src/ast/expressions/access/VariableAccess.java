@@ -31,10 +31,6 @@ public class VariableAccess extends Expression {
     public Type getType(SymbolTable st) throws SemanticErrorException
     {
     	SymbolTableEntry ste = st.get(identifier); 
-    	if (ste ==  null)
-    	{
-    		System.out.println("WE HAD A NULL\n" + st.toString());
-    	}
     	Type t = ste.getType();
     	for (Iterator<Access> it = accesses.iterator(); it.hasNext(); )
     	{
@@ -49,8 +45,14 @@ public class VariableAccess extends Expression {
     			RegisterAccess acaux = (RegisterAccess) ac;
     			t = taux.getEntryType(acaux.getIndex());
     		}
-    		else throw new SemanticErrorException("Illegal access " + ac.toString());
+    		else throw new SemanticErrorException("Illegal access: " + ac.toString());
     	}
     	return t;
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	this.getType(st); // Check type is semantically valid
+    	return st;
     }
 }

@@ -34,8 +34,6 @@ public class Definition extends Instruction {
     
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-    	// TODO: Assign a valid memory address instead of null
-    	if (initialization != null) initialization.checkSemantics(st);
     	try
     	{
     		// Add binding of identifier
@@ -44,6 +42,18 @@ public class Definition extends Instruction {
     	catch (SemanticErrorException se)
     	{
     		se.printSemanticError();
+    	}
+    	
+    	if (initialization != null) 
+    	{
+    		try
+    		{
+    			initialization.checkSemantics(st);
+    		}
+    		catch (SemanticErrorException se)
+    		{
+    			se.printSemanticError();
+    		}
     	}
     	return st;
     }

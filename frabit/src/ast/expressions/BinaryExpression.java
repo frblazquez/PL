@@ -39,6 +39,10 @@ public class BinaryExpression extends Expression{
     	if (optype != right_e.getType(st).getOpType() || optype != op.operandType()) 
     		throw new SemanticErrorException("Operand types do not match in expression");
     	
+    	// TODO: Consider this more verbose output, would require implementing further toString methods
+//    	if (optype != right_e.getType(st).getOpType() || optype != op.operandType()) 
+//    		throw new SemanticErrorException("Operand types do not match in expression: " + this.toString());
+
     	return st;
     }
 
