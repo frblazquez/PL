@@ -1,10 +1,14 @@
 package ast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import asem.SemanticErrorException;
 import asem.SymbolTable;
 import asem.SymbolTableEntry;
 import ast.arguments.ArgumentsDefinition;
 import ast.instructions.Instructions;
+import ast.types.Type;
 
 public class Procedure extends AstNode {
 
@@ -34,6 +38,16 @@ public class Procedure extends AstNode {
     public Identifier getIdentifier()
     {
     	return identifier;
+    }
+
+    public int getNumberOfArguments()
+    {
+    	return arguments.getNumber();
+    }
+    
+    public List<Type> getArgumentTypes()
+    {
+    	return arguments.getTypes();
     }
 
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException

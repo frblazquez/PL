@@ -1,8 +1,11 @@
 package ast.instructions;
 
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
+import ast.expressions.OperationTypes;
 
 public class IfElse extends Instruction {
 
@@ -33,5 +36,28 @@ public class IfElse extends Instruction {
 
     public boolean hasElseClause() {
 	return else_instructions != null;
+    }
+    
+    public SymbolTable checkSemantics(SymbolTable st)
+    {
+    	SymbolTable new_st = new SymbolTable(st); // If introduces new block
+    	try 
+    	{
+    		condition.checkSemantics(new_st);
+    		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
+				throw new SemanticErrorException("Condition not a boolean");
+    		if_instructions.checkSemantics(new_st);
+    		if (this.hasElseClause())
+    		{
+    			SymbolTable else_st = new SymbolTable(st); // Else introduces new block
+    			else_instructions.checkSemantics(else_st);
+    		}
+    	}
+    	catch (SemanticErrorException se)
+    	{
+    		se.printSemanticError();
+    	}
+    	
+    	return st;
     }
 }

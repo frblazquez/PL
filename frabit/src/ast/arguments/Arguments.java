@@ -21,4 +21,19 @@ public class Arguments extends AstNode {
 	arguments = args;
 	children.addAll(arguments);
     }
+    
+    public int getNumOfArguments()
+    {
+    	return arguments.size();
+    }
+    
+    public Expression getArgument(int pos)
+    {
+    	return arguments.get(pos);
+    }
+    
+    public List<Expression> getArguments()
+    {
+    	return arguments;
+    }
 }

@@ -1,11 +1,18 @@
+int x(int y, int z)
+{
+	return y + z;
+}
+
 int main()
 {
+	int result = x(1);			// Incorrect number of arguments
 	int x = 1;
 	bool y = false;
 	int z = x + false; 			// Operands not valid
 	bool x = false and true;	// x already declared
 	bool z = y and x;			// z already declared and operands non-matching
 	int l = 1 + w;				// w undeclared
+	int res = x(1,2);			// x has been redefined and is no longer a function
 	while (1)					// Invalid condition
 	{
 		bool x = true;			// Legal redefinition within inner block

@@ -3,6 +3,7 @@ package ast;
 import java.util.Iterator;
 import java.util.List;
 
+import asem.MethodSTE;
 import asem.SemanticErrorException;
 import asem.SymbolTable;
 import asem.SymbolTableEntry;
@@ -27,7 +28,7 @@ public class Program extends AstNode {
 	}
 	catch (SemanticErrorException | NullPointerException e)
 	{
-//		e.printStackTrace();
+		e.printStackTrace();
 		System.out.println("Semantic error found: " + e.getMessage());
 	}
     }
@@ -51,14 +52,17 @@ public class Program extends AstNode {
     		}
     		else
     		{
-    			st.makeBinding(p.getIdentifier(), new SymbolTableEntry());
+    			MethodSTE ste = new MethodSTE();
+    			ste.setNumberOfArguments(p.getNumberOfArguments());
+    			ste.setTypesOfArguments(p.getArgumentTypes());
+    			st.makeBinding(p.getIdentifier(), ste);
     			try
     			{
     				p.checkSemantics(st);
     			}
     			catch (SemanticErrorException se)
     			{
-    				System.out.println("Semantic error found: " + se.getMessage());
+    				se.printSemanticError();
     			}
     		}
     	}

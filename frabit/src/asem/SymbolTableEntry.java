@@ -7,8 +7,7 @@ public class SymbolTableEntry {
 	private Type type;
 	
 	
-	// TODO: More items might be needed in symbol table (type of identifier in current binding,
-	// scope information, etc.
+	// TODO: More items might be needed in symbol table (e.g. memory address)
 	public SymbolTableEntry() 
 	{
 		memaddr = new MemoryAddress();

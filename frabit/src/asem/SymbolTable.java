@@ -17,6 +17,7 @@ public final class SymbolTable {
     
     public SymbolTable(SymbolTable prev)
     {
+    	bindings = new HashMap<Identifier,SymbolTableEntry>();
     	prevBlockST = prev;
     }
     

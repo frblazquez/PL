@@ -18,5 +18,15 @@ public class PairArgumentType extends AstNode {
 	children.add(identifier);
     	children.add(type);
     }
+    
+    public Identifier getIdentifier()
+    {
+    	return identifier;
+    }
+    
+    public Type getType()
+    {
+    	return type;
+    }
 
 }
