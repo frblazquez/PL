@@ -22,8 +22,9 @@ public class Assignment extends Instruction {
     
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-    	variable.checkSemantics(st);
-    	expression.checkSemantics(st);
+    	super.checkSemantics(st);
+    	if (variable.getType(st).getClass() != expression.getType(st).getClass())
+    		throw new SemanticErrorException("Assignment types do not match");
     	return st;
     }
 

@@ -2,14 +2,15 @@ package ast.instructions;
 
 import ast.AstNode;
 import ast.AstUtils;
+import ast.expressions.Constant;
 import ast.expressions.Expression;
 
 public class Case extends AstNode {
 
-    private Expression exp;
+    private Constant exp;
     private Instructions ins;
 
-    public Case(Expression e, Instructions is) {
+    public Case(Constant e, Instructions is) {
 	super(AstUtils.CASE_HEADER);
 	exp = e;
 	ins = is;
@@ -30,4 +31,8 @@ public class Case extends AstNode {
 	return exp == null;
     }
     
+    public Constant getConstantExpression()
+    {
+    	return exp;
+    }
 }

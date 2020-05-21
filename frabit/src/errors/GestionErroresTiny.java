@@ -4,11 +4,11 @@ import alex.UnidadLexica;
 
 public class GestionErroresTiny {
    public void errorLexico(int fila, String lexema) {
-     System.out.println("ERROR léxico fila "+fila+": Carácter inesperado: "+lexema); 
+     System.out.println("Lexical error in line " + fila + ": Unexpected character: "+lexema); 
      System.exit(1);
    }  
    public void errorSintactico(UnidadLexica unidadLexica) {
-     System.out.print("ERROR sintáctico fila "+unidadLexica.fila()+": Elemento inesperado "+unidadLexica.value + " ");
+     System.out.print("Syntax error in line "+unidadLexica.fila()+": Unexpected token "+unidadLexica.value + " ");
      //System.exit(1);
    }
 }

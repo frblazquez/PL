@@ -1,8 +1,13 @@
 package ast.instructions;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
+import asem.SemanticErrorException;
+import asem.SymbolTable;
 import ast.AstUtils;
+import ast.expressions.Constant;
 import ast.expressions.Expression;
 
 public class Switch extends Instruction {
@@ -27,4 +32,18 @@ public class Switch extends Instruction {
 	this(exp, cases, null);
     }
 
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    {
+    	super.checkSemantics(st);
+    	// Apart from checking semantics of instruction blocks, check cases are not repeated
+    	Set<Constant> s = new HashSet<>();
+    	for (Case cs : cases)
+    	{
+    		if (s.contains(cs.getConstantExpression()))
+    			throw new SemanticErrorException("Repeated case in switch");
+    		else
+    			s.add(cs.getConstantExpression());    		
+    	}
+    	return st;
+    }
 }

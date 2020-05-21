@@ -3,6 +3,16 @@ int x(int y, int z)
 	return y + z;
 }
 
+int fun(int x)
+{
+	switch(x) {
+		case 5:	 {x=9;}
+		case 9:  {x=5;}
+		case 5:	 {x=9;}	// Repeated case in switch
+	}
+	return 1;
+}
+
 int main()
 {
 	int result = x(1);			// Incorrect number of arguments
@@ -10,7 +20,8 @@ int main()
 	bool y = false;
 	int z = x + false; 			// Operands not valid
 	bool x = false and true;	// x already declared
-	bool z = y and x;			// z already declared and operands non-matching
+	bool badbool;
+	badbool = 1;
 	int l = 1 + w;				// w undeclared
 	int res = x(1,2);			// x has been redefined and is no longer a function
 	while (1)					// Invalid condition

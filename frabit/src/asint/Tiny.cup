@@ -129,7 +129,7 @@ Accesos ::= Accesos:as CAP E0:e CCIERRE     {: RESULT = as; as.add(new ArrayAcce
 
 Cases ::= Cases:cs Case:c                   {: RESULT = cs; cs.add(c); :}
         |                                   {: RESULT = new ArrayList<Case>(); :};
-Case ::= CASE E0:e DOSPUNTOS Bloque:ins     {: RESULT = new Case(e, ins); :};
+Case ::= CASE ENT:s DOSPUNTOS Bloque:ins     {: RESULT = new Case(new Constant(s, new IntType()), ins); :};
 Default ::= DEFAULT DOSPUNTOS Bloque:ins    {: RESULT = new Case(ins); :} ; 
 
 Argumentos ::= Args:args        {: RESULT = new Arguments(args); :} 
