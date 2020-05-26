@@ -12,6 +12,6 @@ public class SemanticErrorException extends Exception {
 	
 	public void printSemanticError()
 	{
-		System.out.println("Semantic error found: " + this.getMessage());
+		System.out.println("Semantic error: " + this.getMessage());
 	}
 }

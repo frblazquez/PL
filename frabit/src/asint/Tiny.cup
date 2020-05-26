@@ -78,7 +78,7 @@ non terminal VariableAccess AccesoVariable;
 non terminal List<Access> Accesos;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
-S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf); :};
+S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf);:};
 
 Metodos ::= Metodos:fp Funcion:f        {: RESULT = fp; fp.add(f); :} ;
 Metodos ::= Metodos:fp Procedimiento:p  {: RESULT = fp; fp.add(p); :} ;

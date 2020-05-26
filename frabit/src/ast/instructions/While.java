@@ -34,6 +34,6 @@ public class While extends Instruction {
     	{
     		se.printSemanticError();
     	}
-    	return st;
+    	return st; // After block is finished, same symbol table as before
     }
 }
