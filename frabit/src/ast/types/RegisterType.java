@@ -24,6 +24,6 @@ public class RegisterType extends Type {
     		Type t = it.next();
     		if (i == index) return t;
     	}
-    	throw new SemanticErrorException("Register access index out of bounds");
+    	throw new SemanticErrorException("Register access index out of bounds",this.line);
     }
 }

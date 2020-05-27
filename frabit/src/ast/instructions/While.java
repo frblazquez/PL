@@ -27,7 +27,7 @@ public class While extends Instruction {
     	{
     		condition.checkSemantics(new_st);
     		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-				throw new SemanticErrorException("Condition not a boolean");
+				throw new SemanticErrorException("Condition not a boolean",this.line);
     		instructions.checkSemantics(new_st);
     	}
     	catch (SemanticErrorException se)

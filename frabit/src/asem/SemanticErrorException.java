@@ -9,6 +9,7 @@ public class SemanticErrorException extends Exception {
 	
 	public SemanticErrorException(String errorMessage) {
         super(errorMessage);
+        line = -1;
     }
 	
 	public SemanticErrorException(String errorMessage, int line) {
@@ -16,8 +17,13 @@ public class SemanticErrorException extends Exception {
         this.line = line;
     }
 	
+	public void setLine(int line)
+	{
+		this.line = line;
+	}
+	
 	public void printSemanticError()
 	{
-		System.out.println("Semantic error: " + this.getMessage());
+		System.out.println("Semantic error on line " + line + ": " + this.getMessage());
 	}
 }

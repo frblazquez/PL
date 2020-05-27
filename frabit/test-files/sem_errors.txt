@@ -5,7 +5,7 @@ int x(int y, int z)
 
 int fun(int x)
 {
-	switch(x) {
+	switch(x + 2) {
 		case 5:	 {x=9;}
 		case 9:  {x=5;}
 		case 5:	 {x=9;}	// Repeated case in switch
