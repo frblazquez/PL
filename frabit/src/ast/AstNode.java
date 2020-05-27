@@ -83,4 +83,7 @@ public class AstNode {
     {
     	this.line = line;
     }
+    
+    public int getLine()
+    { return line; }
 }

@@ -34,6 +34,7 @@ public class Main {
 	}
 	catch (Exception e)
 	{
+		e.printStackTrace();
 		System.out.println("Could not recover, exception: " + e.toString());
 	}
     }

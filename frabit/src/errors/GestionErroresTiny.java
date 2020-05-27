@@ -1,5 +1,6 @@
 package errors;
 
+import alex.TokenValue;
 import alex.UnidadLexica;
 
 public class GestionErroresTiny {
@@ -8,7 +9,7 @@ public class GestionErroresTiny {
      System.exit(1);
    }  
    public void errorSintactico(UnidadLexica unidadLexica) {
-     System.out.print("Syntax error in line "+unidadLexica.fila()+": Unexpected token "+unidadLexica.value + " ");
+     System.out.print("Syntax error in line "+ ((TokenValue) unidadLexica.value).line +": Unexpected token "+unidadLexica.lexema() + " ");
      //System.exit(1);
    }
 }
