@@ -10,7 +10,6 @@ import ast.arguments.*;
 import ast.instructions.*;
 import ast.expressions.*;
 import ast.expressions.access.*;
-import alex.TokenValue;
 import alex.UnidadLexica;
 import alex.AnalizadorLexicoTiny;
 import errors.GestionErroresTiny;
@@ -32,11 +31,14 @@ init with {:
    alex.fijaGestionErrores(errores);
 :};
 
-terminal TokenValue MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,  
-					COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
-					AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
-					DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
-					INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID, IDEN, ENT;
+terminal	MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN, 
+			COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
+			AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
+			DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
+			INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID;
+
+terminal String IDEN ;
+terminal String ENT;
 
 non terminal Program S ;
 non terminal List<Procedure> Metodos ;
@@ -76,7 +78,7 @@ non terminal VariableAccess AccesoVariable;
 non terminal List<Access> Accesos;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
-S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf);:};
+S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf); :};
 
 Metodos ::= Metodos:fp Funcion:f        {: RESULT = fp; fp.add(f); :} ;
 Metodos ::= Metodos:fp Procedimiento:p  {: RESULT = fp; fp.add(p); :} ;
@@ -87,10 +89,10 @@ Main ::= INT MAIN PAP PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIE
         {: RESULT = new Function("main", new ArgumentsDefinition(), ins, new IntType(), e); :};
 
 // Declaración de funciones y procedimientos
-Funcion ::= Tipo:t IDEN:tv PAP DefArgumentos:args PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE			
-			{: RESULT = new Function(tv.token, args, ins, t, e); :};
-Procedimiento ::= VOID IDEN:tv PAP DefArgumentos:args PCIERRE Bloque:ins 	
-			{: RESULT = new Procedure(tv.token, args, ins); :};
+Funcion ::= Tipo:t IDEN:id PAP DefArgumentos:args PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE			
+			{: RESULT = new Function(id, args, ins, t, e); :};
+Procedimiento ::= VOID IDEN:id PAP DefArgumentos:args PCIERRE Bloque:ins 	
+			{: RESULT = new Procedure(id, args, ins); :};
 
 DefArgumentos ::= TiposIdens:ti {: RESULT = new ArgumentsDefinition(ti); :}
                 |               {: RESULT = new ArgumentsDefinition(); :};
@@ -106,28 +108,28 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 				 | error PUNTOCOMA			{: System.out.println("Instruccion incorrecta"); RESULT = null;:};
 
 
-Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA:tv        {: RESULT = new Assignment(a, e); RESULT.setLine(tv.line); :};
-Declaracion ::= Tipo:t IDEN:tv PUNTOCOMA                    {: RESULT = new Definition(t,tv.token); RESULT.setLine(tv.line); :}
-            |   Tipo:t IDEN:tv IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,tv.token,e); RESULT.setLine(tv.line); :}
+Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA        {: RESULT = new Assignment(a, e); :};
+Declaracion ::= Tipo:t IDEN:id PUNTOCOMA                    {: RESULT = new Definition(t,id); :}
+            |   Tipo:t IDEN:id IGUAL E0:e PUNTOCOMA         {: RESULT = new Definition(t,id,e); :}
             |   error IDEN PUNTOCOMA						{: System.out.println("Se esperaba un tipo válido"); RESULT = null; :}
             |   error IDEN IGUAL E0 PUNTOCOMA				{: System.out.println("Se esperaba un tipo válido"); RESULT = null; :};
             
-If ::= IF:tv PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); RESULT.setLine(tv.line); :};
-IfElse ::= IF:tv PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); RESULT.setLine(tv.line); :};
-While ::= WHILE:tv PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); RESULT.setLine(tv.line); :} ;
-Invoke ::= IDEN:tv PAP Argumentos:args PCIERRE              {: RESULT = new InvokeExpression(tv.token, args); RESULT.setLine(tv.line); :};
+If ::= IF PAP E0:e PCIERRE Bloque:ins                       {: RESULT = new IfElse(e,ins); :};
+IfElse ::= IF PAP E0:e PCIERRE Bloque:bif ELSE Bloque:belse {: RESULT = new IfElse(e,bif,belse); :};
+While ::= WHILE PAP E0:e PCIERRE Bloque:ins                 {: RESULT = new While(e,ins); :} ;
+Invoke ::= IDEN:id PAP Argumentos:args PCIERRE              {: RESULT = new InvokeExpression(id, args); :};
 Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = new Call(i); :};
-Switch ::= SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE           {: RESULT = new Switch(e,cs); RESULT.setLine(tv.line); :}
-		|  SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE {: RESULT = new Switch(e,cs,d); RESULT.setLine(tv.line); :};                  
+Switch ::= SWITCH PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE           {: RESULT = new Switch(e,cs); :}
+		|  SWITCH PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE {: RESULT = new Switch(e,cs,d); :};                  
 
-AccesoVariable ::= IDEN:tv Accesos:as       {: RESULT = new VariableAccess(tv.token, as); RESULT.setLine(tv.line); :};
+AccesoVariable ::= IDEN:id Accesos:as       {: RESULT = new VariableAccess(id, as); :};
 Accesos ::= Accesos:as CAP E0:e CCIERRE     {: RESULT = as; as.add(new ArrayAccess(e)); :}
-        |   Accesos:as PUNTO ENT:tv        {: RESULT = as; as.add(new RegisterAccess(Integer.parseInt(tv.token))); :}
+        |   Accesos:as PUNTO ENT:ent        {: RESULT = as; as.add(new RegisterAccess(Integer.parseInt(ent))); :}
         |                                   {: RESULT = new ArrayList<Access>(); :};
 
 Cases ::= Cases:cs Case:c                   {: RESULT = cs; cs.add(c); :}
         |                                   {: RESULT = new ArrayList<Case>(); :};
-Case ::= CASE ENT:tv DOSPUNTOS Bloque:ins     {: RESULT = new Case(new Constant(tv.token, new IntType()), ins); RESULT.setLine(tv.line); :};
+Case ::= CASE ENT:s DOSPUNTOS Bloque:ins     {: RESULT = new Case(new Constant(s, new IntType()), ins); :};
 Default ::= DEFAULT DOSPUNTOS Bloque:ins    {: RESULT = new Case(ins); :} ; 
 
 Argumentos ::= Args:args        {: RESULT = new Arguments(args); :} 
@@ -145,28 +147,27 @@ Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.
 Tipo ::= INT                                        {: RESULT = new IntType(); :}
     | BOOL                                          {: RESULT = new BoolType(); :}
     | POR Tipo:t                                    {: RESULT = new PointerType(t); :}
-    | CAP Tipo:t COMA ENT:tv CCIERRE               {: RESULT = new ArrayType(t, Integer.parseInt(tv.token)); :}
+    | CAP Tipo:t COMA ENT:ent CCIERRE               {: RESULT = new ArrayType(t, Integer.parseInt(ent)); :}
     | MENOR Tipos:ts MAYOR                          {: RESULT = new RegisterType(ts); :};
-
 Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
-TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:tv    {: RESULT = ti; RESULT.add(new PairArgumentType(tv.token, t)); :} 
-            |  Tipo:t IDEN:tv                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(tv.token, t)); :}
+TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:id    {: RESULT = ti; RESULT.add(new PairArgumentType(id, t)); :} 
+            |  Tipo:t IDEN:id                       {: RESULT = new ArrayList<PairArgumentType>(); RESULT.add(new PairArgumentType(id, t)); :}
             |  error IDEN							{: System.out.println("Se esperaba un tipo válido"); RESULT = new ArrayList<PairArgumentType>(); RESULT.add(null); :};
 
 // Expresiones, operadores y prioridades
-E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}
+E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
 		| E1:exp 					{: RESULT = exp; :};
-E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}
+E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new BinaryExpression(op,expa,expb); :}
 		| E2:exp 					{: RESULT = exp; :};
-E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}  
+E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new BinaryExpression(op,expa,expb); :}  
 		| E3:exp 					{: RESULT = exp; :};
-E3 ::= Op3:op E3:exp	            {: RESULT = new UnaryExpression(op,exp); RESULT.setLine(exp.getLine()); :}			   
+E3 ::= Op3:op E3:exp	            {: RESULT = new UnaryExpression(op,exp); :}			   
         | E4:exp		            {: RESULT = exp; :} ;
-E4 ::= ENT:tv                      {: RESULT = new Constant(tv.token, new IntType()); RESULT.setLine(tv.line); :}
-	| TRUE:tv	                    {: RESULT = new Constant(tv.token, new BoolType()); RESULT.setLine(tv.line); :}
-	| FALSE:tv	                    {: RESULT = new Constant(tv.token, new BoolType()); RESULT.setLine(tv.line); :}
-	| NULL:tv 		                    {: RESULT = new Constant("null", new PointerType()); RESULT.setLine(tv.line); :}
+E4 ::= ENT:str                      {: RESULT = new Constant(str, new IntType()); :}
+	| TRUE 		                    {: RESULT = new Constant("true", new BoolType()); :}
+	| FALSE 	                    {: RESULT = new Constant("false", new BoolType()); :}
+	| NULL 		                    {: RESULT = new Constant("null", new PointerType()); :}
 	| PAP E0:exp PCIERRE            {: RESULT = exp; :}
 	| AccesoVariable:av             {: RESULT = av; :}
 	| Invoke:in                     {: RESULT = in; :}

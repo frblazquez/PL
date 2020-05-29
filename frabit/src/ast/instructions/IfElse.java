@@ -45,7 +45,7 @@ public class IfElse extends Instruction {
     	{
     		condition.checkSemantics(new_st);
     		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-				throw new SemanticErrorException("Condition not a boolean", this.line);
+				throw new SemanticErrorException("Condition not a boolean");
     		if_instructions.checkSemantics(new_st);
     		if (this.hasElseClause())
     		{

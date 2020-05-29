@@ -27,13 +27,13 @@ public class While extends Instruction {
     	{
     		condition.checkSemantics(new_st);
     		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-				throw new SemanticErrorException("Condition not a boolean",this.line);
+				throw new SemanticErrorException("Condition not a boolean");
     		instructions.checkSemantics(new_st);
     	}
     	catch (SemanticErrorException se)
     	{
     		se.printSemanticError();
     	}
-    	return st; // After block is finished, same symbol table as before
+    	return st;
     }
 }

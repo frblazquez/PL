@@ -18,7 +18,7 @@ public class BinaryExpression extends Expression{
 	this.children.add(left_e);
 	this.children.add(right_e);
     }
-        
+    
     @Override
     public String toString() {
 	return left_e + " " + op + " " + right_e;
@@ -37,9 +37,12 @@ public class BinaryExpression extends Expression{
     	OperationTypes optype = left_e.getType(st).getOpType();
     	
     	if (optype != right_e.getType(st).getOpType() || optype != op.operandType()) 
-    		{
-    			throw new SemanticErrorException("Operand types do not match in expression", this.line);
-    		}
+    		throw new SemanticErrorException("Operand types do not match in expression");
+    	
+    	// TODO: Consider this more verbose output, would require implementing further toString methods
+//    	if (optype != right_e.getType(st).getOpType() || optype != op.operandType()) 
+//    		throw new SemanticErrorException("Operand types do not match in expression: " + this.toString());
+
     	return st;
     }
 

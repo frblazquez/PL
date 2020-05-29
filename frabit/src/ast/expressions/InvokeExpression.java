@@ -41,11 +41,11 @@ public class InvokeExpression extends Expression {
     	SymbolTableEntry ste;
     	ste = st.get(identifier);
     	if (! (ste instanceof MethodSTE))
-    		throw new SemanticErrorException(identifier + " not a method in this scope",this.line);
+    		throw new SemanticErrorException(identifier + " not a method in this scope");
     	MethodSTE mste = (MethodSTE) ste;
     	if (arguments.getNumOfArguments() != mste.getNumberOfArguments())
     	{
-    		throw new SemanticErrorException("Incorrect number of arguments for " + identifier, this.line);
+    		throw new SemanticErrorException("Incorrect number of arguments for " + identifier);
     	}
     	List<Type> argtypes = mste.getTypesOfArguments();
     	for (int i = 0; i < argtypes.size(); ++i)
@@ -56,9 +56,9 @@ public class InvokeExpression extends Expression {
     		{
     			throw new SemanticErrorException("Argument type mismatch. Expected "
     					+ argtypes.get(i) + ", but got " 
-    					+ arguments.getArgument(i).getType(st) + " instead", this.line); 
+    					+ arguments.getArgument(i).getType(st) + " instead"); 
     		}
-    		// TODO: Rethink which types CAN actually be arguments of a function, especially arrays and pointers issue
+    		// TODO: Rethink which types CAN actually be arguments of a function
     	}
     	return st;
     }

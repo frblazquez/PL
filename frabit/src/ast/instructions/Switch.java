@@ -9,7 +9,6 @@ import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Constant;
 import ast.expressions.Expression;
-import ast.expressions.OperationTypes;
 
 public class Switch extends Instruction {
 
@@ -36,17 +35,12 @@ public class Switch extends Instruction {
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
     	super.checkSemantics(st);
-    	// Apart from checking semantics of instruction blocks, check cases are not repeated, and that
-    	// the expression is of type int
-    	if (base_expression.getType(st).getOpType() != OperationTypes.ARITHMETIC)
-    	{
-    		throw new SemanticErrorException("Switch requires integer expressions", this.line);
-    	}
+    	// Apart from checking semantics of instruction blocks, check cases are not repeated
     	Set<Constant> s = new HashSet<>();
     	for (Case cs : cases)
     	{
     		if (s.contains(cs.getConstantExpression()))
-    			throw new SemanticErrorException("Repeated case in switch", cs.getLine());
+    			throw new SemanticErrorException("Repeated case in switch");
     		else
     			s.add(cs.getConstantExpression());    		
     	}

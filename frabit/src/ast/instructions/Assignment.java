@@ -24,7 +24,7 @@ public class Assignment extends Instruction {
     {
     	super.checkSemantics(st);
     	if (variable.getType(st).getClass() != expression.getType(st).getClass())
-    		throw new SemanticErrorException("Assignment types do not match",this.line);
+    		throw new SemanticErrorException("Assignment types do not match");
     	return st;
     }
 

@@ -48,7 +48,7 @@ public class Program extends AstNode {
     		Procedure p = it.next();
     		if (st.contains(p.getIdentifier()))
     		{
-    			throw new SemanticErrorException("Cannot have two functions with same name",p.getLine());
+    			throw new SemanticErrorException("Cannot have two functions with same name");
     		}
     		else
     		{

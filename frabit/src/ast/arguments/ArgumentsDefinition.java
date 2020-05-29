@@ -56,7 +56,7 @@ public class ArgumentsDefinition extends AstNode {
 			}
 			catch (SemanticErrorException se)
 			{
-				throw new SemanticErrorException("Repeated argument name",this.line);
+				throw new SemanticErrorException("Repeated argument name");
 			}
 		}
 		return newst;

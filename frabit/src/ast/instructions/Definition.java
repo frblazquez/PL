@@ -41,8 +41,7 @@ public class Definition extends Instruction {
     	}
     	catch (SemanticErrorException se)
     	{
-    		se.setLine(this.line);
-    		throw se;
+    		se.printSemanticError();
     	}
     	
     	if (initialization != null) 
