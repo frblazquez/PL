@@ -104,6 +104,8 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 				 | Llamada:ll 				{: RESULT = ll; :}
 				 | Switch:sw				{: RESULT = sw; :} 
 				 | error PUNTOCOMA			{: System.out.println("Instruccion incorrecta"); RESULT = null;:};
+// TODO: error PAP   ?? Shouldn't we manage differently errors in whiles, ifs, Switches... (don't end in ';')
+// TODO: error LLAP  ??
 
 
 Asignacion ::= AccesoVariable:a IGUAL E0:e PUNTOCOMA:tv        {: RESULT = new Assignment(a, e); RESULT.setLine(tv.line); :};
@@ -147,6 +149,9 @@ Tipo ::= INT                                        {: RESULT = new IntType(); :
     | POR Tipo:t                                    {: RESULT = new PointerType(t); :}
     | CAP Tipo:t COMA ENT:tv CCIERRE               {: RESULT = new ArrayType(t, Integer.parseInt(tv.token)); :}
     | MENOR Tipos:ts MAYOR                          {: RESULT = new RegisterType(ts); :};
+//  | TODO: error {::} ??
+//    TODO: Why not having an error production in 'Tipo' definition instead of 
+//          having several errors everywhere a type can be placed?
 
 Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};
@@ -157,6 +162,10 @@ TiposIdens ::= TiposIdens:ti COMA Tipo:t IDEN:tv    {: RESULT = ti; RESULT.add(n
 // Expresiones, operadores y prioridades
 E0 ::= E1:expa Op0:op E1:expb 		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}
 		| E1:exp 					{: RESULT = exp; :};
+// TODO:| error {::} ??
+// TODO: An expression can be syntactically incorrect for several reasons. Having error 
+//       clause in E4 makes it think that every error is because an operating is incorrect.
+// TODO: One unique global error clause for the expressions ??
 E1 ::= E1:expa Op1:op E2:expb 		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}
 		| E2:exp 					{: RESULT = exp; :};
 E2 ::= E2:expa Op2:op E3:expb		{: RESULT = new BinaryExpression(op,expa,expb); RESULT.setLine(expa.getLine()); :}  
@@ -171,6 +180,8 @@ E4 ::= ENT:tv                      {: RESULT = new Constant(tv.token, new IntTyp
 	| AccesoVariable:av             {: RESULT = av; :}
 	| Invoke:in                     {: RESULT = in; :}
 	| error							{: System.out.println("Se esperaba un operando"); RESULT = null; :};
+    // TODO: Remove error clause from here ??
+    // TODO: Add several error clauses in several expression levels ??
 
 Op0 ::= MAYOR 		                {: RESULT = Operators.MAYOR; :}
 	| DISTINTO 		                {: RESULT = Operators.DISTINTO; :}
@@ -178,6 +189,8 @@ Op0 ::= MAYOR 		                {: RESULT = Operators.MAYOR; :}
 	| IGUALIGUAL 	                {: RESULT = Operators.IGUALIGUAL; :}
 	| MENORIGUAL 	                {: RESULT = Operators.MENORIGUAL; :}
 	| MAYORIGUAL 	                {: RESULT = Operators.MAYORIGUAL; :};
+    // TODO:| error {::} ??
+    // TODO: Should we detect invalid operators? Same for Op1, Op2, Op3?
 Op1 ::= MAS 		                {: RESULT = Operators.MAS; :}
 	| MENOS 		                {: RESULT = Operators.MENOS; :}
 	| OR 			                {: RESULT = Operators.OR; :};	

@@ -30,22 +30,14 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = BASE_FOLDER + TEST_SEMANTIC_ERRORS;
+	String input_file = ERROR_RECOVERY_FOLDER + TEST_INST_ERROR_RECOVERY;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 
-	// TODO: Why this try-catch?
-	try
-	{
-		Program pr = (Program) asint.parse().value;
-		System.out.println(pr);
-	}
-	catch (Exception e)
-	{
-		e.printStackTrace();
-		System.out.println("Could not recover, exception: " + e.toString());
-	}
+	Program pr = (Program) asint.parse().value;
+	// TODO: pr.checkSemantics()
+	// System.out.println(pr);
     }
 }

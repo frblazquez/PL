@@ -22,15 +22,9 @@ public class Program extends AstNode {
 
 	children.addAll(methods);
 	children.add(main);
-	try
-	{
-		this.checkSemantics(new SymbolTable());
-	}
-	catch (SemanticErrorException | NullPointerException e)
-	{
-		e.printStackTrace();
-		System.out.println("Semantic error found: " + e.getMessage());
-	}
+
+	// TODO: We allow to create invalid semantic Program instances. Do you agree? If
+	//       not, check semantics here.
     }
 
     @Override

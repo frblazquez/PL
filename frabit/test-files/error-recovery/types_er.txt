@@ -1,0 +1,66 @@
+// File for testing type errors display and recovery
+ 
+int func(){
+	return 0;
+}
+
+// Type error in a function definition - TODO
+innt func2(){		
+	return 0;
+}
+
+//void proc(){
+//}
+
+// "Type" error in a procedure definition - TODO 
+//voi proc1(){		
+//}
+
+bool func3(int x, int y, *int ptr, bool b){
+	return 0;
+}
+
+// Type error in a function parameters definition - TODO
+bool func4(int* arr, int size){				
+	return 0;
+}
+
+bool func5(int x, int y, *int ptr, bool b){
+	return 0;
+}
+
+// Several type errors in a function parameters definition - TODO
+bool func6(<int,> param1, [int,int] size){				
+	return 0;
+}
+
+void proc2(<int,bool> x, [int,3] y){
+}
+
+// Type error in a procedure parameters definition - TODO
+void proc3(<int,boool> x, int size){			
+}
+
+void proc4(<int,bool> x, [int,3] y){
+}
+
+// Several type error in a procedure parameters definition - TODO
+void proc5(<int,bool> x, [int,int] size){	
+}
+
+int main()
+{
+	int x = 5;
+	int y = 6;
+	int z = 7;
+	
+	ints a = 7;		// Type error in a declaration - TODO
+	
+	int u = 0;
+	int v = 0;
+	int w = 0;
+	
+	boolean b = 7;	// Type error in a declaration - TODO
+	
+	return 0;
+} 
