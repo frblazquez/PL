@@ -1,0 +1,17 @@
+// File for testing errors in expressions display and recovery
+
+int main(){
+
+	int x = 1;
+	
+	x = 1 + ;			// Operating is missing - TODO
+	x = x + 1;
+	x = true xor false;	// Operator is not accepted - TODO
+	x = x + 1;
+	x = (1 + 2)*3); 	// Parenthesis mismatch - TODO
+	x = x + 1;
+	//x = (((1 + 2)*3);	// Explodes! - TODO
+	x = x + 1;
+	
+	return 0;
+}

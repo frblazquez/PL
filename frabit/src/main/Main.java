@@ -30,7 +30,7 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = ERROR_RECOVERY_FOLDER + TEST_INST_ERROR_RECOVERY;
+	String input_file = ERROR_RECOVERY_FOLDER + TEST_EXP_ERROR_RECOVERY;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
