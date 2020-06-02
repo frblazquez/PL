@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import alex.AnalizadorLexicoTiny;
+import asem.SymbolTable;
 import asint.AnalizadorSintacticoTiny;
 import ast.Program;
 
@@ -26,18 +27,18 @@ public class Main {
     public static final String TEST_EXP_ERROR_RECOVERY   = "expressions_er.txt";
     public static final String TEST_INST_ERROR_RECOVERY  = "instructions_er.txt";
     public static final String TEST_COMMON_ERROR_RECOVERY= "common_er.txt";
-    public static final String TEST_SEMANTIC_ERRORS 	 = "errors_sa.txt";
+    public static final String TEST_SEMANTIC_ERRORS 	 = "sem_errors.txt";
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = ERROR_RECOVERY_FOLDER + TEST_EXP_ERROR_RECOVERY;
+	String input_file = SEMANTIC_ANALYSIS_FOLDER + TEST_SEMANTIC_ERRORS;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 
 	Program pr = (Program) asint.parse().value;
-	// TODO: pr.checkSemantics()
+	pr.checkSemantics(new SymbolTable());
 	// System.out.println(pr);
     }
 }

@@ -16,7 +16,7 @@ public class AstNode {
     
     protected final String NODE_NAME;
     protected List<AstNode> children;
-    protected SymbolTable symbol_table; // TODO: See if we can omit this
+    protected SymbolTable symbol_table; // TODO: See if we can omit this, it makes sense
     protected int line;
     
     public AstNode(String node_name) {

@@ -41,7 +41,7 @@ public class InvokeExpression extends Expression {
     	SymbolTableEntry ste;
     	ste = st.get(identifier);
     	if (! (ste instanceof MethodSTE))
-    		throw new SemanticErrorException(identifier + " not a method in this scope",this.line);
+	    throw new SemanticErrorException(identifier + " is not a method in this scope", this.line);
     	MethodSTE mste = (MethodSTE) ste;
     	if (arguments.getNumOfArguments() != mste.getNumberOfArguments())
     	{
@@ -50,7 +50,7 @@ public class InvokeExpression extends Expression {
     	List<Type> argtypes = mste.getTypesOfArguments();
     	for (int i = 0; i < argtypes.size(); ++i)
     	{
-    		// TODO: MAYBE RETHINK EQUALITY OF TYPES
+    		// TODO: MAYBE RETHINK EQUALITY OF TYPES ~ Totally agree (see comment in Assignment.java)
     		// Using an enum as in OperandTypes might do
     		if ( argtypes.get(i).getClass() != arguments.getArgument(i).getType(st).getClass())
     		{

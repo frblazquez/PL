@@ -34,6 +34,7 @@ public class Program extends AstNode {
 	return sb.toString();
     }
     
+    @Override
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {	
     	st.makeBinding(new Identifier("main"), new SymbolTableEntry());
@@ -46,9 +47,14 @@ public class Program extends AstNode {
     		}
     		else
     		{
+    		    	// TODO: It might be better (safer) a builder instead instantiate and set
     			MethodSTE ste = new MethodSTE();
     			ste.setNumberOfArguments(p.getNumberOfArguments());
     			ste.setTypesOfArguments(p.getArgumentTypes());
+    			
+    			// TODO: IMPORTANT!
+    			// This way we only allow to invoke previously defined methods. Shouldn't we
+    			// allow mutual recursion?
     			st.makeBinding(p.getIdentifier(), ste);
     			try
     			{

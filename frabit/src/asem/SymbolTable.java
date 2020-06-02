@@ -10,6 +10,7 @@ public final class SymbolTable {
 	protected HashMap<Identifier,SymbolTableEntry> bindings;
 	protected SymbolTable prevBlockST;
 	
+    // TODO: Unused if i'm not wrong
     public SymbolTable() 
     {
     	bindings = new HashMap<Identifier,SymbolTableEntry>();
@@ -21,6 +22,9 @@ public final class SymbolTable {
     	prevBlockST = prev;
     }
     
+    // TODO: IMPORTANT!
+    // Could an identifier be defined not in the previous block but in the previous-previous block or before?
+    // Shouldn't we invoke prevBlockST.contains(...) instead of prevBlockSt.bindings.containsKey(...) ?
     public boolean contains(Identifier id)
     {
     	if (prevBlockST != null)

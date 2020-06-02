@@ -49,6 +49,7 @@ public class Definition extends Instruction {
     	{
     		try
     		{
+    		    	// TODO: We should also check the type coherence
     			initialization.checkSemantics(st);
     		}
     		catch (SemanticErrorException se)

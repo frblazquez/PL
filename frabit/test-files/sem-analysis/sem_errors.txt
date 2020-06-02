@@ -1,3 +1,14 @@
+// File for testing semantic analysis
+
+// TODO: IMPORTANT CORRECTIONS NEEDED
+// int x = true; 				// allowed!
+// int func() { return bool; } 	// allowed!
+// switch(x + 2) {
+//		case 5:	 {int y = 9;}
+//		case 9:  {y = 10;}		// allowed!
+//	}
+	
+
 int x(int y, int z)
 {
 	return y + z;
@@ -13,10 +24,20 @@ int fun(int x)
 	return 1;
 }
 
+int fun2(int x)
+{
+	switch(x + 2) {
+		case 5:	 {int y = 9;}
+		case 9:  {y = 10;}		// y is totally out of scope but it works!
+	}
+	return 1;
+}
+
+
 int main()
 {
 	int result = x(1);			// Incorrect number of arguments
-	int x = 1;
+	int x = true;
 	bool y = false;
 	int z = x + false; 			// Operands not valid
 	bool x = false and true;	// x already declared

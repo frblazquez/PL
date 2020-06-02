@@ -26,8 +26,9 @@ public class While extends Instruction {
     	try 
     	{
     		condition.checkSemantics(new_st);
+    		// TODO: Type coherence check, change when Type redefines equals
     		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-				throw new SemanticErrorException("Condition not a boolean",this.line);
+			throw new SemanticErrorException("While condition must be a boolean expression",this.line);
     		instructions.checkSemantics(new_st);
     	}
     	catch (SemanticErrorException se)

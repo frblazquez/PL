@@ -23,6 +23,8 @@ public class Instructions extends AstNode {
 	children.add(instr);
     }
     
+    @Override
+    // TODO: This looks the same than ASTNode.checkSemantics, consider removing it
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
     	for (Iterator<Instruction> it = instructions.iterator(); it.hasNext(); )

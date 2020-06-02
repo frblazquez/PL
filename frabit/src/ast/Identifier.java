@@ -24,6 +24,7 @@ public class Identifier extends AstNode {
 
         Identifier id = (Identifier) o;
 
+	// Instances of same class can access private members of each other
         return id.identifier.equals(identifier);
     }
     

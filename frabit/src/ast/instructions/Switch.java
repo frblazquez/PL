@@ -1,8 +1,8 @@
 package ast.instructions;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
@@ -35,7 +35,11 @@ public class Switch extends Instruction {
 
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
+	// TODO: IMPORTANT!
+	// This doesn't work properly, each case also considers as own everything in the
+	// scope of the cases before (see sem_errors.txt)
     	super.checkSemantics(st);
+
     	// Apart from checking semantics of instruction blocks, check cases are not repeated, and that
     	// the expression is of type int
     	if (base_expression.getType(st).getOpType() != OperationTypes.ARITHMETIC)

@@ -25,6 +25,9 @@ public class Function extends Procedure {
     {
     	st = arguments.checkSemantics(st); // Arguments update symbol table
     	st = instructions.checkSemantics(st); // Get variables defined within instructions
+
+	// TODO: IMPORTANT!
+	// We are not checking the return expression has the function type!
     	ret.checkSemantics(st);
     	return st;
     }
