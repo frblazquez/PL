@@ -29,7 +29,9 @@ public class Assignment extends Instruction {
 	// Different register instances are different types (for example). Our
 	// expression can be an invoke so checking only the class is not enough. We
 	// should define properly equals method in Type..
-    	if (variable.getType(st).getClass() != expression.getType(st).getClass())
+    	if (variable.getType(st).getClass() 
+    		!= 
+    	    expression.getType(st).getClass())
     		throw new SemanticErrorException("Assignment types do not match",this.line);
     	return st;
     }

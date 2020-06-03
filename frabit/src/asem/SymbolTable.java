@@ -54,6 +54,9 @@ public final class SymbolTable {
     	// Check id is not bound to any entry in this level
     	if (bindings.containsKey(id))
     	{
+	    // TODO: IMPORTANT!
+	    // Shouldn't we allow to override a previous definition inside a block?
+	    // After re-think it looks like this is totally correct.
     		throw new SemanticErrorException("Repeated identifier in block: " + id.toString());
     	}
     	bindings.put(id, ste);
