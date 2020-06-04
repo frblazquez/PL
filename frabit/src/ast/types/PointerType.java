@@ -4,6 +4,9 @@ import ast.AstUtils;
 
 public class PointerType extends Type {
 
+    public static final PointerType INT_PTR  = new PointerType(new IntType());
+    public static final PointerType BOOL_PTR = new PointerType(new BoolType());
+    
     private Type base_type;
 
     public PointerType() {
@@ -16,5 +19,10 @@ public class PointerType extends Type {
 	base_type = t;
 
 	children.add(base_type);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+	return (o instanceof PointerType) && base_type.equals(((PointerType) o).base_type);
     }
 }

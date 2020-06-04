@@ -1,13 +1,17 @@
 package ast.types;
 
 import ast.AstUtils;
-import ast.expressions.OperationTypes;
 
 public class BoolType extends Type {
 
-    public BoolType() 
-    {
-    	super(AstUtils.TYPE_HEADER + "bool");
-    	this.op_type = OperationTypes.BOOLEAN;
+    public static final BoolType BOOL_TYPE = new BoolType();
+
+    public BoolType() {
+	super(AstUtils.TYPE_HEADER + "bool");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+	return o instanceof BoolType;
     }
 }
