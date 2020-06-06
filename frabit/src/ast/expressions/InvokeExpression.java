@@ -26,7 +26,7 @@ public class InvokeExpression extends Expression {
 	super(AstUtils.INVOKE_HEADER);
 	identifier = new Identifier(id);
 	arguments = args;
-	
+
 	children.add(identifier);
 	children.add(args);
     }
@@ -35,31 +35,31 @@ public class InvokeExpression extends Expression {
     public String toString() {
 	return identifier + "(" + arguments + ")";
     }
-    
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-    	SymbolTableEntry ste;
-    	ste = st.get(identifier);
-    	if (! (ste instanceof MethodSTE))
-	    throw new SemanticErrorException(identifier + " is not a method in this scope", this.line);
-    	MethodSTE mste = (MethodSTE) ste;
-    	if (arguments.getNumOfArguments() != mste.getNumberOfArguments())
-    	{
-    		throw new SemanticErrorException("Incorrect number of arguments for " + identifier, this.line);
-    	}
-    	List<Type> argtypes = mste.getTypesOfArguments();
-    	for (int i = 0; i < argtypes.size(); ++i)
-    	{
-    		// TODO: MAYBE RETHINK EQUALITY OF TYPES ~ Totally agree (see comment in Assignment.java)
-    		// Using an enum as in OperandTypes might do
-    		if ( argtypes.get(i).getClass() != arguments.getArgument(i).getType(st).getClass())
-    		{
-    			throw new SemanticErrorException("Argument type mismatch. Expected "
-    					+ argtypes.get(i) + ", but got " 
-    					+ arguments.getArgument(i).getType(st) + " instead", this.line); 
-    		}
-    		// TODO: Rethink which types CAN actually be arguments of a function, especially arrays and pointers issue
-    	}
-    	return st;
+
+    @Override
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+
+	// Might throw SemanticErrorException if not existent
+	SymbolTableEntry ste = st.get(identifier);
+
+	if (!(ste instanceof MethodSTE))
+	    throw new SemanticErrorException("\"" + identifier + "\" is not a method in this scope", this.line);
+
+	MethodSTE mste = (MethodSTE) ste;
+	if (arguments.getNumOfArguments() != mste.getNumberOfArguments())
+	    throw new SemanticErrorException("Incorrect number of arguments for " + identifier, this.line);
+
+	List<Type> argtypes = mste.getTypesOfArguments();
+	for(int i = 0; i < argtypes.size(); ++i) {
+	    arguments.getArgument(i).checkSemantics(st);
+	    if (argtypes.get(i).equals(arguments.getArgument(i).getType())) {
+		throw new SemanticErrorException("Argument type mismatch. Expected " + argtypes.get(i) + ", but got "
+			+ arguments.getArgument(i).getType() + " instead", this.line);
+	    }
+	}
+
+	expression_type = ste.getType();
+
+	return st;
     }
 }

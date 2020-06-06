@@ -3,12 +3,13 @@ package ast.expressions.access;
 import java.util.Iterator;
 import java.util.List;
 
+import asem.SemanticErrorException;
 import asem.SymbolTable;
 import asem.SymbolTableEntry;
 import ast.Identifier;
-import asem.SemanticErrorException;
 import ast.expressions.Expression;
 import ast.types.ArrayType;
+import ast.types.IntType;
 import ast.types.RegisterType;
 import ast.types.Type;
 
@@ -50,17 +51,32 @@ public class VariableAccess extends Expression {
     	return t;
     }
     
+    @Override
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-    	try
-    	{
-    		this.getType(st); // Check type is semantically valid
-    	}
-    	catch (SemanticErrorException se)
-    	{
-    		se.setLine(this.line);
-    		throw se;
-    	}
+	Type t = st.get(identifier).getType();
+
+	for(Access ac : accesses) {
+	    if (t instanceof ArrayType && ac instanceof ArrayAccess) {
+		ArrayType taux = ((ArrayType) t);
+		ArrayAccess acaux = ((ArrayAccess) ac);
+		acaux.getIndex().checkSemantics(st);
+
+		if (!acaux.getIndex().getType().equals(IntType.INT_TYPE))
+		    throw new SemanticErrorException("Array index must be an arithmetic expression", this.line);
+
+		t = taux.getBaseType();
+	    } else if (t instanceof RegisterType && ac instanceof RegisterAccess) {
+		RegisterType taux = ((RegisterType) t);
+		RegisterAccess acaux = ((RegisterAccess) ac);
+
+		t = taux.getEntryType(acaux.getIndex());
+	    } else
+		throw new SemanticErrorException("Illegal access: " + ac.toString(), this.line);
+	}
+
+	expression_type = t;
+
     	return st;
     }
 }

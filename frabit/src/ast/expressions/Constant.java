@@ -1,6 +1,5 @@
 package ast.expressions;
 
-import ast.Identifier;
 import ast.types.Type;
 
 public class Constant extends Expression {
@@ -8,8 +7,8 @@ public class Constant extends Expression {
     private String constant;
 
     public Constant(String ct) {
-    	super(ct);
-    	constant = ct;
+	super(ct);
+	constant = ct;
     }
 
     public Constant(String ct, Type type) {
@@ -22,25 +21,22 @@ public class Constant extends Expression {
     public String toString() {
 	return constant;
     }
-    
+
     @Override
     public boolean equals(Object o) {
 
-        if (o == this) return true;
-        if (!(o instanceof Constant)) {
-            return false;
-        }
+	if (o == this)
+	    return true;
+	if (!(o instanceof Constant))
+	    return false;
 
-        Constant c = (Constant) o;
-
-        return c.constant.equals(constant);
+	return constant.equals(((Constant) o).constant);
     }
-    
+
     // We need sets of constants to check switch semantics
     @Override
-    public int hashCode()
-    {
-    	return constant.hashCode();
+    public int hashCode() {
+	return constant.hashCode();
     }
 
 }
