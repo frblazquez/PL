@@ -11,22 +11,20 @@ public class PairArgumentType extends AstNode {
     private Type type;
 
     public PairArgumentType(String id, Type t) {
-    	super(AstUtils.PARAM_HEADER);
+	super(AstUtils.PARAM_HEADER);
 	identifier = new Identifier(id);
-    	type = t;
-    	
+	type = t;
+
 	children.add(identifier);
-    	children.add(type);
+	children.add(type);
     }
-    
-    public Identifier getIdentifier()
-    {
-    	return identifier;
+
+    public Identifier getIdentifier() {
+	return identifier;
     }
-    
-    public Type getType()
-    {
-    	return type;
+
+    public Type getType() {
+	return type;
     }
 
 }

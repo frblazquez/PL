@@ -1,11 +1,9 @@
 package ast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
-import asem.SymbolTableEntry;
 import ast.arguments.ArgumentsDefinition;
 import ast.instructions.Instructions;
 import ast.types.Type;
@@ -35,25 +33,18 @@ public class Procedure extends AstNode {
 	children.add(instructions);
     }
     
-    public Identifier getIdentifier()
-    {
-    	return identifier;
-    }
+    public Identifier getIdentifier()    { return identifier;            }
+    public int getNumberOfArguments()    { return arguments.getNumber(); }
+    public List<Type> getArgumentTypes() { return arguments.getTypes();  }
 
-    public int getNumberOfArguments()
-    {
-    	return arguments.getNumber();
-    }
-    
-    public List<Type> getArgumentTypes()
-    {
-    	return arguments.getTypes();
-    }
-
+    @Override
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-    	st = arguments.checkSemantics(st); // Symbol table is updated by arguments
-    	instructions.checkSemantics(st);
-    	return st;
+	// Arguments declaration modify the scope inside the method
+	SymbolTable proc_st = arguments.checkSemantics(st);
+	instructions.checkSemantics(proc_st);
+
+	// But the ST after the procedure ends is the same than before it starts
+	return st;
     }
 }

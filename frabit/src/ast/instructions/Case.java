@@ -3,7 +3,6 @@ package ast.instructions;
 import ast.AstNode;
 import ast.AstUtils;
 import ast.expressions.Constant;
-import ast.expressions.Expression;
 
 public class Case extends AstNode {
 
@@ -30,9 +29,8 @@ public class Case extends AstNode {
     public boolean isDefault() {
 	return exp == null;
     }
-    
-    public Constant getConstantExpression()
-    {
-    	return exp;
+
+    public Constant getConstantExpression() {
+	return exp;
     }
 }

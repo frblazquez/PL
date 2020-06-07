@@ -1,11 +1,10 @@
 package ast.instructions;
 
-
 import asem.SemanticErrorException;
 import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
-import ast.expressions.OperationTypes;
+import ast.types.BoolType;
 
 public class IfElse extends Instruction {
 
@@ -37,28 +36,19 @@ public class IfElse extends Instruction {
     public boolean hasElseClause() {
 	return else_instructions != null;
     }
-    
-    public SymbolTable checkSemantics(SymbolTable st)
-    {
-    	SymbolTable new_st = new SymbolTable(st); // If introduces new block
-    	try 
-    	{
-    		condition.checkSemantics(new_st);
-    		// TODO: Type coherence check, change when Type redefines equals
-    		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-    		    throw new SemanticErrorException("If condition must be a boolean expression", this.line);
-    		if_instructions.checkSemantics(new_st);
-    		if (this.hasElseClause())
-    		{
-    			SymbolTable else_st = new SymbolTable(st); // Else introduces new block
-    			else_instructions.checkSemantics(else_st);
-    		}
-    	}
-    	catch (SemanticErrorException se)
-    	{
-    		se.printSemanticError();
-    	}
-    	
-    	return st;
+
+    @Override
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+
+	condition.checkSemantics(st);
+
+	if (!condition.getType().equals(BoolType.BOOL_TYPE))
+	    throw new SemanticErrorException("If condition must be a boolean expression", this.line);
+
+	if_instructions.checkSemantics(st);
+	if (this.hasElseClause())
+	    else_instructions.checkSemantics(st);
+
+	return st;
     }
 }

@@ -16,7 +16,6 @@ public class AstNode {
     
     protected final String NODE_NAME;
     protected List<AstNode> children;
-    protected SymbolTable symbol_table; // TODO: See if we can omit this, it makes sense
     protected int line;
     
     public AstNode(String node_name) {
@@ -49,23 +48,25 @@ public class AstNode {
 	}
     }
     
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-    	for (Iterator<AstNode> it = children.iterator(); it.hasNext();)
-    	{
-    		AstNode next = it.next();
-    		if (next == null) continue;
-    		try
-    		{
-    			next.checkSemantics(st);
-    		}
-    		catch (SemanticErrorException se)
-    		{
-    			se.printSemanticError();
-    		}
+    // TODO: IMPORTANT!
+    // Definitely the way Bittor was doing is much better, now you understand it
+    /**
+     * Takes a symbol table, checks the semantics of a certain piece of code and
+     * returns an updated Symbol table with the new ambit.
+     * 
+     * @param st Symbol table with current program scope, won't be modified
+     * @return Updated symbol table with the new scope
+     * @throws SemanticErrorException
+     */
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+	SymbolTable newSt = new SymbolTable(st);
+    	for (AstNode node: children){
+    	    if (node == null) continue;
+    		
+    	    try{newSt = node.checkSemantics(newSt);}
+    	    catch (SemanticErrorException se) { se.printSemanticError();}
     	}
-    	symbol_table = st;
-    	return st;
+    	return newSt;
     }
     
     public CodeLines produceCode()
@@ -79,11 +80,6 @@ public class AstNode {
     	return ret;
     }
     
-    public void setLine(int line)
-    {
-    	this.line = line;
-    }
-    
-    public int getLine()
-    { return line; }
+    public void setLine(int line) { this.line = line; }
+    public int getLine() 	  { return line; }
 }

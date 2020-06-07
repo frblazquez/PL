@@ -21,14 +21,17 @@ public class Function extends Procedure {
 	children.add(ret);
     }
     
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-    	st = arguments.checkSemantics(st); // Arguments update symbol table
-    	st = instructions.checkSemantics(st); // Get variables defined within instructions
+    @Override
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+	// Arguments definition and instructions modify the ST inside the function
+	SymbolTable func_st = arguments.checkSemantics(st);
+	func_st = instructions.checkSemantics(func_st);
+	ret.checkSemantics(func_st);
 
-	// TODO: IMPORTANT!
-	// We are not checking the return expression has the function type!
-    	ret.checkSemantics(st);
+	if (!ret_type.equals(ret.getReturnType(func_st)))
+	    throw new SemanticErrorException("Function type and return expression type do not match");
+
+	// But when the function ends the scope has not been modified
     	return st;
     }
 }

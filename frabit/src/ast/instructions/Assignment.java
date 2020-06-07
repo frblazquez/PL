@@ -20,19 +20,15 @@ public class Assignment extends Instruction {
 	children.add(expression);
     }
     
+    @Override
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-	// TODO: This is for checking the semantics of the variable access and the expression, right?
-    	super.checkSemantics(st);
+	variable.checkSemantics(st);
+	expression.checkSemantics(st);
     	
-	// TODO: IMPORTANT
-	// Different register instances are different types (for example). Our
-	// expression can be an invoke so checking only the class is not enough. We
-	// should define properly equals method in Type..
-    	if (variable.getType(st).getClass() 
-    		!= 
-    	    expression.getType(st).getClass())
-    		throw new SemanticErrorException("Assignment types do not match",this.line);
+	if (!variable.getType().equals(expression.getType()))
+	    throw new SemanticErrorException("Assignment types do not match", this.line);
+
     	return st;
     }
 

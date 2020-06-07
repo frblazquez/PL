@@ -4,7 +4,7 @@ import asem.SemanticErrorException;
 import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
-import ast.expressions.OperationTypes;
+import ast.types.BoolType;
 
 public class While extends Instruction {
 
@@ -20,21 +20,12 @@ public class While extends Instruction {
 	children.add(instructions);
     }
 
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-    	SymbolTable new_st = new SymbolTable(st); // While introduces new block
-    	try 
-    	{
-    		condition.checkSemantics(new_st);
-    		// TODO: Type coherence check, change when Type redefines equals
-    		if (condition.getType(new_st).getOpType() != OperationTypes.BOOLEAN)
-			throw new SemanticErrorException("While condition must be a boolean expression",this.line);
-    		instructions.checkSemantics(new_st);
-    	}
-    	catch (SemanticErrorException se)
-    	{
-    		se.printSemanticError();
-    	}
-    	return st; // After block is finished, same symbol table as before
+    @Override
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+	condition.checkSemantics(st);
+	if (!condition.getType().equals(BoolType.BOOL_TYPE))
+	    throw new SemanticErrorException("While condition must be a boolean expression", this.line);
+	instructions.checkSemantics(st);
+	return st; // After block is finished, same symbol table as before
     }
 }

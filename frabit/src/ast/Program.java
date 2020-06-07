@@ -1,6 +1,5 @@
 package ast;
 
-import java.util.Iterator;
 import java.util.List;
 
 import asem.MethodSTE;
@@ -10,8 +9,6 @@ import asem.SymbolTableEntry;
 
 public class Program extends AstNode {
 
-    // We keep full references for later stages of development. For the moment it's
-    // only necessary to deal with AstNode instances.
     private List<Procedure> methods;
     private Function main_function;
 
@@ -22,9 +19,6 @@ public class Program extends AstNode {
 
 	children.addAll(methods);
 	children.add(main);
-
-	// TODO: We allow to create invalid semantic Program instances. Do you agree? If
-	//       not, check semantics here.
     }
 
     @Override
@@ -33,40 +27,30 @@ public class Program extends AstNode {
 	astToString(sb, "", "");
 	return sb.toString();
     }
-    
+
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {	
-    	st.makeBinding(new Identifier("main"), new SymbolTableEntry());
-    	for (Iterator<Procedure> it = methods.iterator(); it.hasNext();)
-    	{
-    		Procedure p = it.next();
-    		if (st.contains(p.getIdentifier()))
-    		{
-    			throw new SemanticErrorException("Cannot have two functions with same name",p.getLine());
-    		}
-    		else
-    		{
-    		    	// TODO: It might be better (safer) a builder instead instantiate and set
-    			MethodSTE ste = new MethodSTE();
-    			ste.setNumberOfArguments(p.getNumberOfArguments());
-    			ste.setTypesOfArguments(p.getArgumentTypes());
-    			
-    			// TODO: IMPORTANT!
-    			// This way we only allow to invoke previously defined methods. Shouldn't we
-    			// allow mutual recursion?
-    			st.makeBinding(p.getIdentifier(), ste);
-    			try
-    			{
-    				p.checkSemantics(st);
-    			}
-    			catch (SemanticErrorException se)
-    			{
-    				se.printSemanticError();
-    			}
-    		}
-    	}
-    	main_function.checkSemantics(st); // Check main semantics last, after all functions added to scope
-    	return st;
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+	// TODO: IMPORTANT!
+	// Do we allow to invoke main function? 
+	//   + If so it's SymbolTableEntry should be properly initialized
+	//   + If not we shouldn't make it's binding and we shouldn't allow to add a method called "main"
+	st.makeBinding(new Identifier("main"), new SymbolTableEntry());
+
+	for(Procedure p : methods) {
+	    if (st.contains(p.getIdentifier()))
+		throw new SemanticErrorException("Two methods can not have the same identifier \""+p.getIdentifier()+"\"", p.getLine());
+	    else {
+		MethodSTE ste = new MethodSTE(p.getNumberOfArguments(), p.getArgumentTypes());
+		st.makeBinding(p.getIdentifier(), ste);
+	    }
+	}
+	
+	for(Procedure p : methods) {
+	    try { p.checkSemantics(st); } 
+	    catch (SemanticErrorException se) { se.printSemanticError();  }
+	}
+	
+	main_function.checkSemantics(st);
+	return st;
     }
 }

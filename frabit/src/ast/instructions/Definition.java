@@ -7,7 +7,6 @@ import asem.SymbolTableEntry;
 import ast.AstUtils;
 import ast.Identifier;
 import ast.expressions.Expression;
-import ast.types.IntType;
 import ast.types.Type;
 
 public class Definition extends Instruction {
@@ -31,32 +30,19 @@ public class Definition extends Instruction {
 	if (e != null)
 	    children.add(e);
     }
-    
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-    	try
-    	{
-    		// Add binding of identifier
-    		st.makeBinding(identifier, new SymbolTableEntry(new MemoryAddress(), type));
-    	}
-    	catch (SemanticErrorException se)
-    	{
-    		se.setLine(this.line);
-    		throw se;
-    	}
-    	
-    	if (initialization != null) 
-    	{
-    		try
-    		{
-    		    	// TODO: We should also check the type coherence
-    			initialization.checkSemantics(st);
-    		}
-    		catch (SemanticErrorException se)
-    		{
-    			se.printSemanticError();
-    		}
-    	}
-    	return st;
+
+    @Override
+    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+
+	if (initialization != null) {
+	    initialization.checkSemantics(st);
+
+	    if (!type.equals(initialization.getType()))
+		throw new SemanticErrorException("Definition type and initialization expression type do not match", this.line);
+	}
+
+	SymbolTable newSt = new SymbolTable(st);
+	newSt.makeBinding(identifier, new SymbolTableEntry(new MemoryAddress(), type));
+	return newSt;
     }
 }

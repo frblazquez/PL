@@ -9,7 +9,7 @@ import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Constant;
 import ast.expressions.Expression;
-import ast.expressions.OperationTypes;
+import ast.types.IntType;
 
 public class Switch extends Instruction {
 
@@ -33,27 +33,25 @@ public class Switch extends Instruction {
 	this(exp, cases, null);
     }
 
+    @Override
     public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-	// TODO: IMPORTANT!
-	// This doesn't work properly, each case also considers as own everything in the
-	// scope of the cases before (see sem_errors.txt)
-    	super.checkSemantics(st);
+	base_expression.checkSemantics(st);
 
-    	// Apart from checking semantics of instruction blocks, check cases are not repeated, and that
-    	// the expression is of type int
-    	if (base_expression.getType(st).getOpType() != OperationTypes.ARITHMETIC)
-    	{
-    		throw new SemanticErrorException("Switch requires integer expressions", this.line);
-    	}
-    	Set<Constant> s = new HashSet<>();
-    	for (Case cs : cases)
-    	{
-    		if (s.contains(cs.getConstantExpression()))
-    			throw new SemanticErrorException("Repeated case in switch", cs.getLine());
-    		else
-    			s.add(cs.getConstantExpression());    		
-    	}
+	if (!base_expression.getType().equals(IntType.INT_TYPE))
+	    throw new SemanticErrorException("Switch requires an arithmetic base expression", this.line);
+
+	Set<Constant> s = new HashSet<>();
+	for(Case c : cases) {
+	    if (s.contains(c.getConstantExpression()))
+		throw new SemanticErrorException("Repeated case in switch", c.getLine());
+	    else
+		s.add(c.getConstantExpression());
+	}
+
+	for(Case c : cases)
+	    c.checkSemantics(st);
+
     	return st;
     }
 }
