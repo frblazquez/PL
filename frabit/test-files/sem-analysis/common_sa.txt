@@ -1,5 +1,41 @@
+// Mutual recursion mechanism
+bool even(int n){
+	bool aux;
+	
+	if(n == 0) { aux = true; }
+	else 	   { aux = even(n - 1);}
+	
+	return aux;
+}
+
+bool odd(int n){
+	bool aux;
+	
+	if(n == 0) { aux = false; }
+	else 	   { aux = odd(n - 1);}
+	
+	return aux;
+}
+
 int main() {
 
-
+	odd(5);
+	even(5);
+	
 	return 0;
 }
+
+
+// TODO:
+// -> Test mutual recursion ~ now working
+// -> Check the visibility of a variable in a block two/three levels deeper ~ now working
+// -> Program with two main functions ~ Everything after first main seems to be discarded
+// -> Test main method invocation ~ Not allowed since "main" is a reserved word
+// -> An argument is called as a method defined
+// -> Proper way of taking the type of an expression
+// -> Exceptions management is for a later stage
+// -> Are *int and [int, k] the same type?!?!
+// -> Rethink which types can actually be arguments of a function
+// -> Void type?
+
+

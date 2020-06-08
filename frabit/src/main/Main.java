@@ -40,7 +40,7 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = SEMANTIC_ANALYSIS_FOLDER + TEST_EXP_SEMANTIC_ANALYSIS;
+	String input_file = SEMANTIC_ANALYSIS_FOLDER + TEST_COMMON_SEMANTIC_ANALYSIS;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
