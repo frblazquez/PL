@@ -4,6 +4,7 @@ import asem.SemanticErrorException;
 import asem.SymbolTable;
 import ast.arguments.ArgumentsDefinition;
 import ast.expressions.Expression;
+import ast.instructions.Instruction;
 import ast.instructions.Instructions;
 import ast.instructions.Return;
 import ast.types.Type;
@@ -21,17 +22,22 @@ public class Function extends Procedure {
 	children.add(ret);
     }
     
+    public Type getType() {
+	return ret_type;
+    }
+
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
-	// Arguments definition and instructions modify the ST inside the function
-	SymbolTable func_st = arguments.checkSemantics(st);
-	func_st = instructions.checkSemantics(func_st);
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
+	SymbolTable func_st = new SymbolTable(st);
+	arguments.checkSemantics(func_st);
+	
+	for(Instruction i : instructions.getInstructions())
+	    try{ i.checkSemantics(func_st);}
+	    catch(SemanticErrorException e) {e.printSemanticError();}
+	
 	ret.checkSemantics(func_st);
 
-	if (!ret_type.equals(ret.getReturnType(func_st)))
+	if (!ret_type.equals(ret.getReturnType()))
 	    throw new SemanticErrorException("Function type and return expression type do not match");
-
-	// But when the function ends the scope has not been modified
-    	return st;
     }
 }

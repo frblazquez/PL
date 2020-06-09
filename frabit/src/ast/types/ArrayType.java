@@ -29,4 +29,9 @@ public class ArrayType extends Type {
 	ArrayType arr = ((ArrayType) o);
 	return size == arr.size && base_type.equals(arr.base_type);
     }
+
+    @Override
+    public String toString() {
+	return "[" + base_type + "," + size + "]";
+    }
 }

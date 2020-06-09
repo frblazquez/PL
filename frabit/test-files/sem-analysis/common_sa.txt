@@ -17,10 +17,81 @@ bool odd(int n){
 	return aux;
 }
 
+void aux() {
+}
+
 int main() {
 
-	odd(5);
-	even(5);
+	int x = 5;
+	bool y = true;
+	
+	x = true;
+	y = 5;
+	x = y;
+	y = x;
+	
+	x = 10 + 5*x;
+	x = true + 5;
+	x = 5 + y;
+	
+	y = not true;
+	y = not false;
+	y = not 5;
+	y = not x;
+	y = not odd(x);
+	y = not (even(x) and odd(x));
+	
+	if(y){ if(true){ if(y and true){
+		x = 10;
+	}}}
+	
+	y = even(true);
+	x = odd(true);
+	y = aux();
+	x = aux();
+	
+	// Whenever if/while/switch expression is not valid we don't analize their blocks, should we?
+	if(x){ x = y; }
+	else { x = y; }
+	
+	while(x + 5){ y = x;}
+	
+	switch(y) { case 5: {y = x;} }
+	
+	// Complex types and accesses
+	<int,bool,int> reg;
+	[[int, 5],5] matrix;
+	
+	reg.0 = 1;
+	reg.1 = true;
+	reg.2 = x;
+	reg.0 = y;
+	reg.1 = x;
+	reg.0 = even(x);
+	reg.9 = y;
+	reg.9 = x;
+	 
+	matrix[0][0] = 1;
+	matrix[0][1] = x;
+	matrix[x][0] = 1;
+	matrix[0][x] = x*5 + 18;
+	
+	matrix[0][0] = even(x);
+	matrix[0][1] = y;
+	matrix[x][true] = 1;
+	matrix[y][x] = x;
+	
+	[<int,bool>, 5] arr_reg;
+	
+	arr_reg[0].0 = 1;
+	arr_reg[0].1 = true;
+	arr_reg[1].0 = y;
+	arr_reg[1].1 = x;
+	arr_reg[4].0 = even(x) and odd(arr_reg[0].0);
+	arr_reg[4].0 = even(x) and odd(arr_reg[0].0);
+	
+	arr_reg.0[1] = 1;
+	arr_reg.1[0] = true;
 	
 	return 0;
 }
@@ -30,12 +101,12 @@ int main() {
 // -> Test mutual recursion ~ now working
 // -> Check the visibility of a variable in a block two/three levels deeper ~ now working
 // -> Program with two main functions ~ Everything after first main seems to be discarded
-// -> Test main method invocation ~ Not allowed since "main" is a reserved word
-// -> An argument is called as a method defined
+// -> Test main method invocation ~ It could be necessary to modify checkSemantics in Program class
+// -> Reserved word as identifiers ~ Which error do we get?
+// -> An argument is called as a method defined ~ What would happend?
 // -> Proper way of taking the type of an expression
 // -> Exceptions management is for a later stage
-// -> Are *int and [int, k] the same type?!?!
-// -> Rethink which types can actually be arguments of a function
-// -> Void type?
-
+// -> Are *int and [int, k] the same type?!?! ~ No with the current implementation
+// -> Rethink which types can actually be arguments of a function 
+// -> Void type? ~ As the code is, void expression type is null, however it works!
 

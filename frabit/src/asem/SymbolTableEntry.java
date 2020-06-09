@@ -2,10 +2,9 @@ package asem;
 
 import ast.types.Type;
 
-// TODO: MemoryAddress?? This class should fully make sense at pcode generation stage
 public class SymbolTableEntry {
-    private MemoryAddress memaddr;
-    private Type type;
+    protected MemoryAddress memaddr;
+    protected Type type;
 
     public SymbolTableEntry() {
 	memaddr = new MemoryAddress();

@@ -21,15 +21,12 @@ public class Assignment extends Instruction {
     }
     
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 	variable.checkSemantics(st);
 	expression.checkSemantics(st);
     	
 	if (!variable.getType().equals(expression.getType()))
 	    throw new SemanticErrorException("Assignment types do not match", this.line);
-
-    	return st;
     }
 
 }

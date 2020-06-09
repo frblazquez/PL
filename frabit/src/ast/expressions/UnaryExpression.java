@@ -21,7 +21,7 @@ public class UnaryExpression extends Expression {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	if (op.getArity() != 1)
 	    throw new SemanticErrorException("Operator \"" + op + "\" is not an unary operator", this.line);
@@ -32,7 +32,5 @@ public class UnaryExpression extends Expression {
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);
 
 	expression_type = op.resultType();
-
-	return st;
     }
 }

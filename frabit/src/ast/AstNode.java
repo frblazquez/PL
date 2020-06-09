@@ -48,29 +48,23 @@ public class AstNode {
 	}
     }
     
-    // TODO: IMPORTANT!
-    // Definitely the way Bittor was doing is much better, now you understand it
     /**
      * Takes a symbol table, checks the semantics of a certain piece of code and
-     * returns an updated Symbol table with the new ambit.
+     * updates the symbol table according with the instructions.
      * 
-     * @param st Symbol table with current program scope, won't be modified
-     * @return Updated symbol table with the new scope
+     * @param st Symbol table with current program scope, w be modified
      * @throws SemanticErrorException
      */
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
-	SymbolTable newSt = new SymbolTable(st);
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
     	for (AstNode node: children){
-    	    if (node == null) continue;
+    	    if (node == null) continue; // Could be syntactic errors
     		
-    	    try{newSt = node.checkSemantics(newSt);}
+	    try { node.checkSemantics(st); }
     	    catch (SemanticErrorException se) { se.printSemanticError();}
     	}
-    	return newSt;
     }
     
-    public CodeLines produceCode()
-    {
+    public CodeLines produceCode() {
     	CodeLines ret = new CodeLines();
     	for (Iterator<AstNode> it = children.iterator(); it.hasNext();)
     	{

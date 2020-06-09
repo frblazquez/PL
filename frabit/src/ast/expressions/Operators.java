@@ -30,8 +30,7 @@ public enum Operators {
 	}
     }
     
-    // TODO: IMPORTANT!
-    // Pointers are temporally excluded
+    // TODO: Pointers are temporally excluded
     
     public Type operandType(){
     	switch(this) {

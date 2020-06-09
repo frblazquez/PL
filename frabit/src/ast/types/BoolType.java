@@ -14,4 +14,9 @@ public class BoolType extends Type {
     public boolean equals(Object o) {
 	return o instanceof BoolType;
     }
+
+    @Override
+    public String toString() {
+	return "bool";
+    }
 }

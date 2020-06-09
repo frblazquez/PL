@@ -14,8 +14,8 @@ public class Case extends AstNode {
 	exp = e;
 	ins = is;
 
-	children.add(e);
-	children.add(is);
+	children.add(exp);
+	children.add(ins);
     }
 
     public Case(Instructions is) {
@@ -23,7 +23,7 @@ public class Case extends AstNode {
 	exp = null;
 	ins = is;
 
-	children.add(is);
+	children.add(ins);
     }
 
     public boolean isDefault() {

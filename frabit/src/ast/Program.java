@@ -1,11 +1,12 @@
 package ast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asem.MethodSTE;
 import asem.SemanticErrorException;
 import asem.SymbolTable;
-import asem.SymbolTableEntry;
+import ast.types.Type;
 
 public class Program extends AstNode {
 
@@ -29,19 +30,20 @@ public class Program extends AstNode {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
-	// TODO: IMPORTANT!
-	// Do we allow to invoke main function? 
-	//   + If so it's SymbolTableEntry should be properly initialized
-	//   + If not we shouldn't make it's binding and we shouldn't allow to add a method called "main"
-	st.makeBinding(new Identifier("main"), new SymbolTableEntry());
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	for(Procedure p : methods) {
 	    if (st.contains(p.getIdentifier()))
 		throw new SemanticErrorException("Two methods can not have the same identifier \""+p.getIdentifier()+"\"", p.getLine());
 	    else {
-		MethodSTE ste = new MethodSTE(p.getNumberOfArguments(), p.getArgumentTypes());
-		st.makeBinding(p.getIdentifier(), ste);
+		if (p instanceof Function) { // If it's a function we have to keep it's type too
+		    Function func = (Function) p;
+		    MethodSTE ste = new MethodSTE(func.getNumberOfArguments(), func.getArgumentTypes(), func.getType());
+		    st.makeBinding(func.getIdentifier(), ste);
+		} else {
+		    MethodSTE ste = new MethodSTE(p.getNumberOfArguments(), p.getArgumentTypes());
+		    st.makeBinding(p.getIdentifier(), ste);
+		}
 	    }
 	}
 	
@@ -50,7 +52,8 @@ public class Program extends AstNode {
 	    catch (SemanticErrorException se) { se.printSemanticError();  }
 	}
 	
+	// As "main" is a reserved word we could delete the following line
+	st.makeBinding(new Identifier("main"), new MethodSTE(0, (new ArrayList<Type>())));
 	main_function.checkSemantics(st);
-	return st;
     }
 }

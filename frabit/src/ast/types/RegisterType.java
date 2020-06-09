@@ -18,8 +18,17 @@ public class RegisterType extends Type {
 	return base_types.get(index);
     }
 
+    public int getRegisterSize() {
+	return base_types.size();
+    }
+
     @Override
     public boolean equals(Object o) {
 	return (o instanceof RegisterType) && base_types.equals(((RegisterType) o).base_types);
+    }
+
+    @Override
+    public String toString() {
+	return "<" + base_types + ">";
     }
 }

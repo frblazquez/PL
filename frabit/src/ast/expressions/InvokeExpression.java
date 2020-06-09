@@ -37,29 +37,28 @@ public class InvokeExpression extends Expression {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	// Might throw SemanticErrorException if not existent
 	SymbolTableEntry ste = st.get(identifier);
 
+	// Check the identifier is really a method
 	if (!(ste instanceof MethodSTE))
 	    throw new SemanticErrorException("\"" + identifier + "\" is not a method in this scope", this.line);
 
+	// Check the number of arguments
 	MethodSTE mste = (MethodSTE) ste;
 	if (arguments.getNumOfArguments() != mste.getNumberOfArguments())
-	    throw new SemanticErrorException("Incorrect number of arguments for " + identifier, this.line);
+	    throw new SemanticErrorException("Incorrect number of arguments for \"" + identifier + "\"", this.line);
 
+	// Check the type of the arguments
 	List<Type> argtypes = mste.getTypesOfArguments();
 	for(int i = 0; i < argtypes.size(); ++i) {
 	    arguments.getArgument(i).checkSemantics(st);
-	    if (argtypes.get(i).equals(arguments.getArgument(i).getType())) {
-		throw new SemanticErrorException("Argument type mismatch. Expected " + argtypes.get(i) + ", but got "
-			+ arguments.getArgument(i).getType() + " instead", this.line);
-	    }
+	    if (!argtypes.get(i).equals(arguments.getArgument(i).getType()))
+		throw new SemanticErrorException("Argument type mismatch. Expected " + argtypes.get(i) + ", but got "+ arguments.getArgument(i).getType() + " instead", this.line);
 	}
 
 	expression_type = ste.getType();
-
-	return st;
     }
 }

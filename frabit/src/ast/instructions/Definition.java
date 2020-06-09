@@ -1,6 +1,5 @@
 package ast.instructions;
 
-import asem.MemoryAddress;
 import asem.SemanticErrorException;
 import asem.SymbolTable;
 import asem.SymbolTableEntry;
@@ -32,7 +31,7 @@ public class Definition extends Instruction {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	if (initialization != null) {
 	    initialization.checkSemantics(st);
@@ -41,8 +40,6 @@ public class Definition extends Instruction {
 		throw new SemanticErrorException("Definition type and initialization expression type do not match", this.line);
 	}
 
-	SymbolTable newSt = new SymbolTable(st);
-	newSt.makeBinding(identifier, new SymbolTableEntry(new MemoryAddress(), type));
-	return newSt;
+	st.makeBinding(identifier, new SymbolTableEntry(type));
     }
 }

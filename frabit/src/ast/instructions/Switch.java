@@ -34,10 +34,9 @@ public class Switch extends Instruction {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
-	base_expression.checkSemantics(st);
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
+	base_expression.checkSemantics(st);
 	if (!base_expression.getType().equals(IntType.INT_TYPE))
 	    throw new SemanticErrorException("Switch requires an arithmetic base expression", this.line);
 
@@ -51,7 +50,5 @@ public class Switch extends Instruction {
 
 	for(Case c : cases)
 	    c.checkSemantics(st);
-
-    	return st;
     }
 }

@@ -24,7 +24,7 @@ public class BinaryExpression extends Expression {
     }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	if (op.getArity() != 2)
 	    throw new SemanticErrorException("Operator \"" + op + "\" is not a binary operator", this.line);
@@ -36,8 +36,6 @@ public class BinaryExpression extends Expression {
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);
 
 	expression_type = op.resultType();
-
-	return st;
     }
 
 }

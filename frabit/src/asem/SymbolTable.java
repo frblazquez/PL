@@ -33,8 +33,6 @@ public final class SymbolTable {
     }
 
     public void makeBinding(Identifier id, SymbolTableEntry ste) throws SemanticErrorException {
-	// TODO: IMPORTANT!
-	// Important change to re-think
 	if (bindings.containsKey(id))
 	    System.out.println("Semantic  warn on line "+id.getLine()+": Identifier \"" + id + "\" will be overwritten");
 

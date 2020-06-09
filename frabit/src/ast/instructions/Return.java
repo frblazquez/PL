@@ -1,7 +1,6 @@
 package ast.instructions;
 
 import asem.SemanticErrorException;
-import asem.SymbolTable;
 import ast.AstNode;
 import ast.AstUtils;
 import ast.expressions.Expression;
@@ -18,7 +17,7 @@ public class Return extends AstNode {
 	children.add(ret_expr);
     }
 
-    public Type getReturnType(SymbolTable st) throws SemanticErrorException {
+    public Type getReturnType() throws SemanticErrorException {
 	return expression.getType();
     }
 

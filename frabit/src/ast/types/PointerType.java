@@ -25,4 +25,9 @@ public class PointerType extends Type {
     public boolean equals(Object o) {
 	return (o instanceof PointerType) && base_type.equals(((PointerType) o).base_type);
     }
+
+    @Override
+    public String toString() {
+	return "*" + base_type;
+    }
 }

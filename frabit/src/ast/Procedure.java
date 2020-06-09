@@ -38,13 +38,11 @@ public class Procedure extends AstNode {
     public List<Type> getArgumentTypes() { return arguments.getTypes();  }
 
     @Override
-    public SymbolTable checkSemantics(SymbolTable st) throws SemanticErrorException
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException
     {
-	// Arguments declaration modify the scope inside the method
-	SymbolTable proc_st = arguments.checkSemantics(st);
+	// A procedure defines a new scope with new variables
+	SymbolTable proc_st = new SymbolTable(st);
+	arguments.checkSemantics(proc_st);
 	instructions.checkSemantics(proc_st);
-
-	// But the ST after the procedure ends is the same than before it starts
-	return st;
     }
 }
