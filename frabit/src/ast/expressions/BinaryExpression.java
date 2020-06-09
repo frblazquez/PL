@@ -2,6 +2,8 @@ package ast.expressions;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
+import code.CodeLine;
+import code.CodeLines;
 
 public class BinaryExpression extends Expression {
 
@@ -37,6 +39,15 @@ public class BinaryExpression extends Expression {
 
 	expression_type = op.resultType();
 	this.st = st;
+    }
+    
+    @Override
+    public CodeLines produceCode() {
+    	CodeLines cls = new CodeLines();
+    	cls.addAll(left_e.produceCode());
+    	cls.addAll(right_e.produceCode());
+    	cls.add(new CodeLine(op.opInstruction()));
+    	return cls;
     }
 
 }

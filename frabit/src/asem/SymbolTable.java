@@ -49,7 +49,7 @@ public final class SymbolTable {
 	if (bindings.containsKey(id))
 	    throw new SemanticErrorException("Repeated identifier in block", id.getLine());
 	
-	this.next_free_address += ste.memaddr + ste.mempositions;
+	this.next_free_address += ste.mempositions;
 	bindings.put(id, ste);
     }
 

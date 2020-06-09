@@ -40,7 +40,7 @@ public class Assignment extends Instruction {
 	CodeLines cls = new CodeLines();
 	// The only code a definition produces is (potentially) intialization
 	// First do whatever it takes to get value of expression on top of stack
-	cls.addAll(variable.produceCode());
+	cls.addAll(variable.produceStoreCode());
 	cls.addAll(expression.produceCode());
 	cls.add(new CodeLine(PMachineInstructions.STO));
 	return cls;
