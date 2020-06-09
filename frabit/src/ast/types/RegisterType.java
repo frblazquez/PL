@@ -31,4 +31,13 @@ public class RegisterType extends Type {
     public String toString() {
 	return "<" + base_types + ">";
     }
+    
+    @Override
+    public int getSize() {
+	int sum = 0;
+	for (Type bt : base_types) {
+		sum += bt.getSize();
+	}
+	return sum;
+    }
 }

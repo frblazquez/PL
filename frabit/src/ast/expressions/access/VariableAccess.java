@@ -4,12 +4,16 @@ import java.util.List;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
+import asem.SymbolTableEntry;
 import ast.Identifier;
 import ast.expressions.Expression;
 import ast.types.ArrayType;
 import ast.types.IntType;
 import ast.types.RegisterType;
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class VariableAccess extends Expression {
 
@@ -54,5 +58,43 @@ public class VariableAccess extends Expression {
 	}
 
 	expression_type = t;
+	this.st = st;
+    }
+    
+    // Produce the code necessary to place the exact address on top of stack
+    @Override
+    public CodeLines produceCode() {
+    	CodeLines cls = new CodeLines();
+    	SymbolTableEntry ste = st.getCertain(identifier);
+    	// Set start of memory position at identifier's base address
+    	cls.add(new CodeLine(PMachineInstructions.LDC, Integer.toString(ste.getAddr())));
+    	Type t = st.getCertain(identifier).getType();
+    	for (Access ac : accesses) {
+    		if (ac instanceof ArrayAccess) {
+    			ArrayType taux = ((ArrayType) t);
+    			ArrayAccess acaux = (ArrayAccess) ac;
+    			acaux.getIndex().produceCode(); // Produce code of index expression
+    			int size_per_element = taux.getBaseType().getSize();
+    			// Multiply index by base type size
+    			cls.add(new CodeLine(PMachineInstructions.LDC,Integer.toString(size_per_element)));
+    			cls.add(new CodeLine(PMachineInstructions.MUL));
+    			// Now add current shift with new shift
+    			cls.add(new CodeLine(PMachineInstructions.ADD));
+    			t = taux.getBaseType();
+    		} else if (ac instanceof RegisterAccess) {
+    			RegisterType taux = ((RegisterType) t);
+    			RegisterAccess acaux = ((RegisterAccess) ac);
+    			// Index can be statically determined
+    			int index = acaux.getIndex();
+    			int shift = 0;
+    			for (int i = 0; i < index; ++i) { // Add shift for each entry before index
+    				shift += taux.getEntryType(i).getSize();
+    			}
+    			cls.add(new CodeLine(PMachineInstructions.LDC,Integer.toString(shift)));
+    			cls.add(new CodeLine(PMachineInstructions.ADD));
+    			t = taux.getEntryType(index);
+    		}
+    	}
+    	return cls;
     }
 }

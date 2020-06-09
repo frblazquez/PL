@@ -48,5 +48,6 @@ public class IfElse extends Instruction {
 	if_instructions.checkSemantics(st);
 	if (this.hasElseClause())
 	    else_instructions.checkSemantics(st);
+	this.st = st;
     }
 }

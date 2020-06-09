@@ -50,5 +50,8 @@ public class Switch extends Instruction {
 
 	for(Case c : cases)
 	    c.checkSemantics(st);
+	
+	this.st = st;
     }
+    
 }

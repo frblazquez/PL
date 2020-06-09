@@ -39,5 +39,6 @@ public class Function extends Procedure {
 
 	if (!ret_type.equals(ret.getReturnType()))
 	    throw new SemanticErrorException("Function type and return expression type do not match");
+	this.st = func_st;
     }
 }

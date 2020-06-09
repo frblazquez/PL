@@ -1,6 +1,9 @@
 package ast.expressions;
 
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class Constant extends Expression {
 
@@ -37,6 +40,13 @@ public class Constant extends Expression {
     @Override
     public int hashCode() {
 	return constant.hashCode();
+    }
+    
+    @Override
+    public CodeLines produceCode() {
+    	CodeLines cls = new CodeLines();
+    	cls.add(new CodeLine(PMachineInstructions.LDC, constant));
+    	return cls;
     }
 
 }

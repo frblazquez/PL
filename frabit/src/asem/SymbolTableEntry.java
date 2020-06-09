@@ -3,24 +3,31 @@ package asem;
 import ast.types.Type;
 
 public class SymbolTableEntry {
-    protected MemoryAddress memaddr;
+    protected int memaddr;
+    protected int mempositions;
     protected Type type;
 
     public SymbolTableEntry() {
-	memaddr = new MemoryAddress();
+	memaddr = -1;
 	type = null;
     }
 
     public SymbolTableEntry(Type type) {
-	this.memaddr = new MemoryAddress();
+	memaddr = -1;
 	this.type = type;
     }
 
-    public SymbolTableEntry(MemoryAddress memaddr, Type type) {
+    public SymbolTableEntry(int memaddr, Type type) {
+	memaddr = -1;
+	this.type = type;
+    }
+
+    public SymbolTableEntry(Type type, int memaddr, int mempositions) {
+	this.type = type;	
 	this.memaddr = memaddr;
-	this.type = type;
-    }
+	this.mempositions = mempositions;
+	}
 
-    public MemoryAddress getAddr() { return memaddr; }
+	public int getAddr() { return memaddr; }
     public Type getType()          { return type;    }
 }

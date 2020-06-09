@@ -28,5 +28,6 @@ public class While extends Instruction {
 	    throw new SemanticErrorException("While condition must be a boolean expression", this.line);
 
 	instructions.checkSemantics(st);
+	this.st = st;
     }
 }

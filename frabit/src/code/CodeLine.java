@@ -2,8 +2,9 @@ package code;
 
 public class CodeLine {
 private int line_number;
-private int parameter1;
-private int parameter2;
+private String parameter1; // Parameters are either integers or true/false constants
+private String parameter2;
+private int num_parameters;
 private boolean has_jump;
 private JumpDecided jd;
 private PMachineInstructions instruction;
@@ -11,27 +12,33 @@ private PMachineInstructions instruction;
 public CodeLine()
 {
 	line_number = -1;
-	parameter1 = parameter2 = -1;
 	has_jump = false;
 	jd = JumpDecided.NOT_DECIDED;
 }
 
-public String toString()
+public CodeLine(PMachineInstructions instruction)
 {
-	StringBuilder sb = new StringBuilder("");
-	sb.append(instruction.toString());
-	if (parameter1 >= 0)
-	{
-		sb.append(" ");
-		sb.append(parameter1);
-		if (parameter2 >= 0)
-		{
-			sb.append(" ");
-			sb.append(parameter2);
-		}
-		sb.append("\n");
-	}
-	return sb.toString(); 
+	line_number = -1;
+	has_jump = false;
+	jd = JumpDecided.NOT_DECIDED;
+	this.instruction = instruction;
+}
+
+public CodeLine(PMachineInstructions instruction, String parameter1)
+{
+	line_number = -1;
+	num_parameters = 1;
+	this.parameter1 = parameter1;
+	this.instruction = instruction;
+}
+
+public CodeLine(PMachineInstructions instruction, String parameter1, String parameter2)
+{
+	line_number = -1;
+	this.parameter1 = parameter1;
+	this.parameter2 = parameter2;
+	num_parameters = 1;
+	this.instruction = instruction;
 }
 
 public enum JumpDecided
@@ -39,4 +46,25 @@ public enum JumpDecided
 	NOT_DECIDED, DECIDED;
 }
 
+public int getLine() { return line_number; }
+public PMachineInstructions getInstruction() { return instruction; }
+
+public String toString() {
+	StringBuilder sb = new StringBuilder("");
+	sb.append('{');
+	sb.append(this.line_number);
+	sb.append('}');
+	sb.append(' ');
+	sb.append(instruction.toString());
+	if (num_parameters > 0) {
+		sb.append(' ');
+		sb.append(parameter1);
+		if (num_parameters == 2) { // Num of parameters can only be 0, 1 or 2
+			sb.append(' ');
+			sb.append(parameter2);
+		}
+	}
+	sb.append(';');
+	return sb.toString();
+}
 }

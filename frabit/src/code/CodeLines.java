@@ -33,4 +33,13 @@ public class CodeLines {
 		codelines.addAll(cls.codelines);
 		nlines += cls.nlines;
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder("");
+		for (CodeLine cl : codelines) {
+			sb.append(cl.toString());
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
 }

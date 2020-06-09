@@ -60,5 +60,6 @@ public class InvokeExpression extends Expression {
 	}
 
 	expression_type = ste.getType();
+	this.st = st;
     }
 }

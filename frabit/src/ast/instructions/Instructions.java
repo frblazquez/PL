@@ -35,5 +35,6 @@ public class Instructions extends AstNode {
 	for(Instruction i : instructions)
 	    try{ i.checkSemantics(block_st);}
 	    catch(SemanticErrorException e) {e.printSemanticError();}
+	this.st = st;
     }
 }

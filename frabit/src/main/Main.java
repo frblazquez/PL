@@ -8,6 +8,7 @@ import alex.AnalizadorLexicoTiny;
 import asem.SymbolTable;
 import asint.AnalizadorSintacticoTiny;
 import ast.Program;
+import code.CodeLines;
 
 public class Main {
 
@@ -16,6 +17,7 @@ public class Main {
     public static final String AST_DISPLAY_FOLDER        = BASE_FOLDER+"ast/";
     public static final String ERROR_RECOVERY_FOLDER     = BASE_FOLDER+"error-recovery/";
     public static final String SEMANTIC_ANALYSIS_FOLDER  = BASE_FOLDER+"sem-analysis/";
+    public static final String CODE_GENERATION_FOLDER = BASE_FOLDER+"code-gen/";
     public static final String TEST_ALL 		 = BASE_FOLDER+"input.txt";
     
     // AST construction and display test files
@@ -40,7 +42,7 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = SEMANTIC_ANALYSIS_FOLDER + TEST_COMMON_SEMANTIC_ANALYSIS;
+	String input_file = CODE_GENERATION_FOLDER + "basic.txt";
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
@@ -48,6 +50,9 @@ public class Main {
 
 	Program pr = (Program) asint.parse().value;
 	pr.checkSemantics(new SymbolTable());
+	CodeLines pcode = pr.produceCode();
+	// TODO: Bang this bad boy into a txt file
+	System.out.println(pcode.toString());
 	// System.out.println(pr);
     }
 }

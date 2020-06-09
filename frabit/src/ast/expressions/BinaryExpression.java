@@ -36,6 +36,7 @@ public class BinaryExpression extends Expression {
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);
 
 	expression_type = op.resultType();
+	this.st = st;
     }
 
 }

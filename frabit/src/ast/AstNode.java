@@ -17,6 +17,7 @@ public class AstNode {
     protected final String NODE_NAME;
     protected List<AstNode> children;
     protected int line;
+    protected SymbolTable st;
     
     public AstNode(String node_name) {
 	NODE_NAME = node_name;
@@ -62,6 +63,7 @@ public class AstNode {
 	    try { node.checkSemantics(st); }
     	    catch (SemanticErrorException se) { se.printSemanticError();}
     	}
+    	this.st = st;
     }
     
     public CodeLines produceCode() {
