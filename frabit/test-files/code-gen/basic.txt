@@ -1,11 +1,10 @@
 int main()
 {
-	int x;
-	x = 17;
-	int y = 23;
-	int z = 3 + x;
-	int w = 1837 + x + y + z * 2;
-	bool a = false;
-	bool b = a or a and false;
+	bool a;
+	if(1 <= 2){
+		a = true;
+	} else {
+		a = false;
+	}
 	return 0;
 }

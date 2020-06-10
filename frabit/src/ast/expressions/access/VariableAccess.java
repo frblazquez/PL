@@ -61,10 +61,9 @@ public class VariableAccess extends Expression {
 	this.st = st;
     }
     
-    // TODO: Review! "produceCode" has changed!
- // Produce the code necessary to place the exact address on top of stack
-    public CodeLines produceStoreCode() {
-    	CodeLines cls = new CodeLines();
+
+    // Produce the code necessary to place the exact address on top of stack
+    public void produceStoreCode(CodeLines cls) {
     	SymbolTableEntry ste = st.getCertain(identifier);
     	// Set start of memory position at identifier's base address
     	cls.add(new CodeLine(PMachineInstructions.LDC, Integer.toString(ste.getAddr())));
@@ -95,13 +94,12 @@ public class VariableAccess extends Expression {
     			t = taux.getEntryType(index);
     		}
     	}
-    	return cls;
     }
     
     // Produce the code necessary to evaluate as expression
     @Override
     public void produceCode(CodeLines cls) {
-    	cls.addAll(this.produceStoreCode());
+    	this.produceStoreCode(cls);
     	cls.add(new CodeLine(PMachineInstructions.IND));
     }
 }

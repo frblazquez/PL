@@ -35,7 +35,7 @@ public class Assignment extends Instruction {
 
     @Override
     public void produceCode(CodeLines cls) {
-	variable.produceCode(cls);
+	variable.produceStoreCode(cls);
 	expression.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.STO));
     }

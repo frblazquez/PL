@@ -63,13 +63,13 @@ public class IfElse extends Instruction {
 	if_instructions.produceCode(cls);
 	
 	if (this.hasElseClause()) {
-	    int elsePC = cls.getNLines();
 	    cls.add(new CodeLine(PMachineInstructions.UJP));
+	    int elsePC = cls.getNLines();
 	    else_instructions.produceCode(cls);
 	    int endPC = cls.getNLines();
 
 	    cls.modify(ifPC, elsePC);
-	    cls.modify(elsePC, endPC);
+	    cls.modify(elsePC-1, endPC);
 	} else {
 	    int endPC = cls.getNLines();
 	    cls.modify(ifPC, endPC);

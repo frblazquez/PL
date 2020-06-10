@@ -48,7 +48,16 @@ public enum JumpDecided
 
 public int getLine() { return line_number; }
 public PMachineInstructions getInstruction() { return instruction; }
-public void setParameter(String parameter1)  { this.parameter1 = parameter1; }
+
+public void setFirstParameter(String parameter1)  { // TODO: Think of improving this 
+	this.parameter1 = parameter1; 
+	if (num_parameters < 1)
+		num_parameters = 1;	
+}
+public void setSecondParameter(String parameter2) {
+	this.parameter2 = parameter2;
+	num_parameters = 2;
+}
 
 public String toString() {
 	StringBuilder sb = new StringBuilder("");

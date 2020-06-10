@@ -30,7 +30,7 @@ public class CodeLines {
     }
 
     public void modify(int codeLine, int parameter) {
-	codelines.get(codeLine).setParameter("" + parameter);
+	codelines.get(codeLine).setFirstParameter("" + parameter);
     }
 	public List<CodeLine> getCodeLines()
 	{ return codelines; }
