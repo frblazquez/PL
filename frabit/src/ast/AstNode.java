@@ -66,14 +66,16 @@ public class AstNode {
     	this.st = st;
     }
     
-    public CodeLines produceCode() {
-    	CodeLines ret = new CodeLines();
-    	for (Iterator<AstNode> it = children.iterator(); it.hasNext();)
-    	{
-    		AstNode next = it.next();
-    		ret.addAll(next.produceCode());
+    /**
+     * Adds to <code>cls</code> the p-code generated for the execution of the
+     * program from this node.
+     * 
+     */
+    public void produceCode(CodeLines cls) {
+    	for (AstNode node: children){
+    	    if (node == null) continue; // Could be syntactic errors
+    	    node.produceCode(cls); 
     	}
-    	return ret;
     }
     
     public void setLine(int line) { this.line = line; }

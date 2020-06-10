@@ -5,6 +5,9 @@ import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.BoolType;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class While extends Instruction {
 
@@ -29,5 +32,20 @@ public class While extends Instruction {
 
 	instructions.checkSemantics(st);
 	this.st = st;
+    }
+
+    @Override
+    public void produceCode(CodeLines cls) {
+	int conditionEvaluationPC = cls.getNLines();
+	condition.produceCode(cls);
+	int conditionJumpPC = cls.getNLines();
+	cls.add(new CodeLine(PMachineInstructions.FJP));
+	instructions.produceCode(cls);
+	int endWhileJumpPC = cls.getNLines();
+	cls.add(new CodeLine(PMachineInstructions.UJP));
+	int endPC = cls.getNLines();
+
+	cls.modify(conditionJumpPC, endPC);
+	cls.modify(endWhileJumpPC, conditionEvaluationPC);
     }
 }

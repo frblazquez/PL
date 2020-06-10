@@ -48,17 +48,13 @@ public class Definition extends Instruction {
     }
     
     @Override
-    public CodeLines produceCode()
-    {
-	CodeLines cls = new CodeLines();
+    public void produceCode(CodeLines cls) {
 	// The only code a definition produces is (potentially) intialization
 	if (initialization != null) {
-		// First do whatever it takes to get value of expression on top of stack
-		cls.addAll(initialization.produceCode());
-		SymbolTableEntry ste;
-		ste = st.getCertain(identifier); // To check what memaddr it was asigned
-		cls.add(new CodeLine(PMachineInstructions.SRO, Integer.toString(ste.getAddr())));
+	    // First get the initialization expression value on top of stack
+	    initialization.produceCode(cls);
+	    SymbolTableEntry ste = st.getCertain(identifier);
+	    cls.add(new CodeLine(PMachineInstructions.SRO, Integer.toString(ste.getAddr())));
 	}
-	return cls;
     }
 }

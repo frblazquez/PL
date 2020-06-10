@@ -2,7 +2,6 @@ package ast.instructions;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
-import asem.SymbolTableEntry;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.expressions.access.VariableAccess;
@@ -35,14 +34,9 @@ public class Assignment extends Instruction {
     }
 
     @Override
-    public CodeLines produceCode()
-    {
-	CodeLines cls = new CodeLines();
-	// The only code a definition produces is (potentially) intialization
-	// First do whatever it takes to get value of expression on top of stack
-	cls.addAll(variable.produceStoreCode());
-	cls.addAll(expression.produceCode());
+    public void produceCode(CodeLines cls) {
+	variable.produceCode(cls);
+	expression.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.STO));
-	return cls;
     }
 }

@@ -42,12 +42,10 @@ public class BinaryExpression extends Expression {
     }
     
     @Override
-    public CodeLines produceCode() {
-    	CodeLines cls = new CodeLines();
-    	cls.addAll(left_e.produceCode());
-    	cls.addAll(right_e.produceCode());
+    public void produceCode(CodeLines cls) {
+	left_e.produceCode(cls);
+	right_e.produceCode(cls);
     	cls.add(new CodeLine(op.opInstruction()));
-    	return cls;
     }
 
 }

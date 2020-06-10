@@ -43,10 +43,8 @@ public class Constant extends Expression {
     }
     
     @Override
-    public CodeLines produceCode() {
-    	CodeLines cls = new CodeLines();
+    public void produceCode(CodeLines cls) {
     	cls.add(new CodeLine(PMachineInstructions.LDC, constant));
-    	return cls;
     }
 
 }

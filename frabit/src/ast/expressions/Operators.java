@@ -77,17 +77,17 @@ public enum Operators {
     	switch(this) {
     		case DIVISION:   	return PMachineInstructions.DIV;
     		case MAS:	 		return PMachineInstructions.ADD;
-    		case MENOS:	 		return PMachineInstructions.SUB;
+    		case MENOS:	 		return PMachineInstructions.SUB; // TODO: This could be a negation!
     		case POR:	 		return PMachineInstructions.MUL; 
 	    	case AND:	 		return PMachineInstructions.AND;
+	    	case OR:	 		return PMachineInstructions.OR;
+	    	case NOT:	 		return PMachineInstructions.NOT;
 	    	case DISTINTO:   	return PMachineInstructions.NEQ;
 	    	case IGUALIGUAL: 	return PMachineInstructions.EQU;
 	    	case MAYOR: 	 	return PMachineInstructions.GRT; 
 	    	case MAYORIGUAL: 	return PMachineInstructions.GEQ;
 	    	case MENOR:	 		return PMachineInstructions.LES;
 	    	case MENORIGUAL: 	return PMachineInstructions.LEQ;
-	    	case NOT:	 		return PMachineInstructions.NOT;
-	    	case OR:	 		return PMachineInstructions.OR;
 	    	//case AMPERSAND:	return OperationTypes.ARITHMETIC;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}

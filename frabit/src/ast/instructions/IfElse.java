@@ -5,6 +5,9 @@ import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.BoolType;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class IfElse extends Instruction {
 
@@ -49,5 +52,27 @@ public class IfElse extends Instruction {
 	if (this.hasElseClause())
 	    else_instructions.checkSemantics(st);
 	this.st = st;
+    }
+
+    @Override
+    public void produceCode(CodeLines cls) {
+
+	condition.produceCode(cls);
+	int ifPC = cls.getNLines();
+	cls.add(new CodeLine(PMachineInstructions.FJP));
+	if_instructions.produceCode(cls);
+	
+	if (this.hasElseClause()) {
+	    int elsePC = cls.getNLines();
+	    cls.add(new CodeLine(PMachineInstructions.UJP));
+	    else_instructions.produceCode(cls);
+	    int endPC = cls.getNLines();
+
+	    cls.modify(ifPC, elsePC);
+	    cls.modify(elsePC, endPC);
+	} else {
+	    int endPC = cls.getNLines();
+	    cls.modify(ifPC, endPC);
+	}
     }
 }

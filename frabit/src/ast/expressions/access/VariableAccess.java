@@ -61,6 +61,7 @@ public class VariableAccess extends Expression {
 	this.st = st;
     }
     
+    // TODO: Review! "produceCode" has changed!
  // Produce the code necessary to place the exact address on top of stack
     public CodeLines produceStoreCode() {
     	CodeLines cls = new CodeLines();
@@ -72,7 +73,7 @@ public class VariableAccess extends Expression {
     		if (ac instanceof ArrayAccess) {
     			ArrayType taux = ((ArrayType) t);
     			ArrayAccess acaux = (ArrayAccess) ac;
-    			acaux.getIndex().produceCode(); // Produce code of index expression
+		acaux.getIndex().produceCode(cls); // Produce code of index expression
     			int size_per_element = taux.getBaseType().getSize();
     			// Multiply index by base type size
     			cls.add(new CodeLine(PMachineInstructions.LDC,Integer.toString(size_per_element)));
@@ -99,10 +100,8 @@ public class VariableAccess extends Expression {
     
     // Produce the code necessary to evaluate as expression
     @Override
-    public CodeLines produceCode() {
-    	CodeLines cls = new CodeLines();
+    public void produceCode(CodeLines cls) {
     	cls.addAll(this.produceStoreCode());
     	cls.add(new CodeLine(PMachineInstructions.IND));
-    	return cls;
     }
 }

@@ -50,7 +50,10 @@ public class Main {
 
 	Program pr = (Program) asint.parse().value;
 	pr.checkSemantics(new SymbolTable());
-	CodeLines pcode = pr.produceCode();
+
+	CodeLines pcode = new CodeLines();
+	pr.produceCode(pcode);
+
 	// TODO: Bang this bad boy into a txt file
 	System.out.println(pcode.toString());
 	// System.out.println(pr);

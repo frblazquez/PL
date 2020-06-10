@@ -48,6 +48,7 @@ public enum JumpDecided
 
 public int getLine() { return line_number; }
 public PMachineInstructions getInstruction() { return instruction; }
+public void setParameter(String parameter1)  { this.parameter1 = parameter1; }
 
 public String toString() {
 	StringBuilder sb = new StringBuilder("");
