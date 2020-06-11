@@ -8,14 +8,15 @@ public class MethodSTE extends SymbolTableEntry {
     private int number_of_arguments;
     private List<Type> types_of_arguments;
 
+    // TODO: I don't like this at all
     public MethodSTE(int noa, List<Type> toa) {
-	super(null);
+	super(-1, null);
 	number_of_arguments = noa;
 	types_of_arguments = toa;
     }
 
     public MethodSTE(int noa, List<Type> toa, Type returnType) {
-	super(returnType);
+	super(-1, returnType);
 	number_of_arguments = noa;
 	types_of_arguments = toa;
     }

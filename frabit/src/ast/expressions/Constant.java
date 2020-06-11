@@ -47,4 +47,9 @@ public class Constant extends Expression {
     	cls.add(new CodeLine(PMachineInstructions.LDC, constant));
     }
 
+    @Override
+    public int stackEvaluationSize() {
+	return 1;
+    }
+
 }

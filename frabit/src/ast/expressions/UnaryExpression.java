@@ -2,6 +2,7 @@ package ast.expressions;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
+import ast.AstNode;
 import code.CodeLine;
 import code.CodeLines;
 
@@ -41,5 +42,10 @@ public class UnaryExpression extends Expression {
     public void produceCode(CodeLines cls) {
 	exp.produceCode(cls);
 	cls.add(new CodeLine(op.opInstruction()));
+    }
+
+    @Override
+    public int stackEvaluationSize() {
+	return 1 + exp.stackEvaluationSize();
     }
 }

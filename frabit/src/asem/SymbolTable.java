@@ -17,7 +17,7 @@ public final class SymbolTable {
     }
 
     public SymbolTable(SymbolTable prev) {
-	next_free_address = 0;
+	next_free_address = prev.getNextFreeAddress();
 	bindings = new HashMap<Identifier, SymbolTableEntry>();
 	prevBlockST = prev;
     }
@@ -49,8 +49,11 @@ public final class SymbolTable {
 	if (bindings.containsKey(id))
 	    throw new SemanticErrorException("Repeated identifier in block", id.getLine());
 	
-	this.next_free_address += ste.mempositions;
 	bindings.put(id, ste);
+
+	// TODO: Don't really like this way
+	if (!(ste instanceof MethodSTE))
+	    this.next_free_address += ste.getType().getSize();
     }
 
     public int getNextFreeAddress() { return this.next_free_address; }

@@ -51,10 +51,10 @@ public class Procedure extends AstNode {
     @Override
     public void produceCode(CodeLines cls) {
 	cls.addMethod(identifier, cls.getNLines());
-	cls.add(new CodeLine(PMachineInstructions.SSP, "TODO")); // TODO: Static data offset?
-	cls.add(new CodeLine(PMachineInstructions.SEP, "TODO")); // TODO: This frame stack space?
+	cls.add(new CodeLine(PMachineInstructions.SSP, "" + this.staticDataSize()));
+	cls.add(new CodeLine(PMachineInstructions.SEP, "" + this.stackEvaluationSize()));
 	instructions.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETP));
-	cls.add(new CodeLine(PMachineInstructions.DELETEME));
     }
 }
+

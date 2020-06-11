@@ -48,4 +48,9 @@ public class BinaryExpression extends Expression {
     	cls.add(new CodeLine(op.opInstruction()));
     }
 
+    @Override
+    public int stackEvaluationSize() {
+	return 1 + Math.max(left_e.stackEvaluationSize(), right_e.stackEvaluationSize());
+    }
+
 }

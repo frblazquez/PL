@@ -78,6 +78,34 @@ public class AstNode {
     	}
     }
     
+    // TODO: IMPORTANT!
+    // Check correctness
+    public int staticDataSize() {
+	int max = st.getNextFreeAddress();
+
+	for(AstNode node : children)
+	    if (node == null) // Could be syntactic errors
+		continue;
+	    else if (node.staticDataSize() > max)
+		max = node.staticDataSize();
+
+	return max;
+    }
+    
+    // TODO: IMPORTANT!
+    // Check correctness
+    public int stackEvaluationSize() {
+	int max = -1;
+
+	for(AstNode node : children)
+	    if (node == null) // Could be syntactic errors
+		continue;
+	    else if (node.stackEvaluationSize() > max)
+		max = node.stackEvaluationSize();
+
+	return max;
+    }
+
     public void setLine(int line) { this.line = line; }
     public int getLine() 	  { return line; }
 }

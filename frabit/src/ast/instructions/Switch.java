@@ -1,5 +1,6 @@
 package ast.instructions;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,10 +60,20 @@ public class Switch extends Instruction {
     public void produceCode(CodeLines cls) {
 	base_expression.produceCode(cls);
 
-	// TODO: Fix the jumps!
-	for(Case c : cases)
+	List<Integer> jumpsToSwitchEnd = new ArrayList<>();
+	for(Case c : cases) {
 	    c.produceCode(cls);
+	    jumpsToSwitchEnd.add(cls.getNLines() - 1);
+	}
 
+	if (default_case != null)
+	    default_case.getInstructions().produceCode(cls);
+
+	int switchEnd = cls.getNLines();
+	// TODO: Remove stack top! (Switch expression evalutaion has been duplicated)
+
+	for(int idx : jumpsToSwitchEnd)
+	    cls.modify(idx, switchEnd);
     }
 
 }

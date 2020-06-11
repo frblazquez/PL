@@ -37,17 +37,21 @@ public class Case extends AstNode {
 	return exp;
     }
 
+    public Instructions getInstructions() {
+	return ins;
+    }
+
     @Override
     public void produceCode(CodeLines cls) {
-	// TODO: Check this!
-	// We duplicate the stack's last symbol so we can check if equals in next case
-	// if it fails, this also means that when switch finishes we still have this
-	// symbol in the stack!
-	cls.add(new CodeLine(PMachineInstructions.DPL)); // Check if equals consumes a symbol!
+	cls.add(new CodeLine(PMachineInstructions.DPL)); // Check if equals consumes a symbol
 	exp.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.EQU));
-	cls.add(new CodeLine(PMachineInstructions.FJP, "TODO")); // TODO: Jump to next case!
+	int caseCondition = cls.getNLines();
+	cls.add(new CodeLine(PMachineInstructions.FJP)); 
 	ins.produceCode(cls);
-	cls.add(new CodeLine(PMachineInstructions.UJP, "TODO")); // TODO: End of switch!
+	cls.add(new CodeLine(PMachineInstructions.UJP)); // Even last case finishes with unconditional Jump!
+	int nextCase = cls.getNLines();
+
+	cls.modify(caseCondition, nextCase);
     }
 }

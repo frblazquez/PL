@@ -5,6 +5,9 @@ import ast.AstNode;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class Return extends AstNode {
 
@@ -21,4 +24,9 @@ public class Return extends AstNode {
 	return expression.getType();
     }
 
+    @Override
+    public void produceCode(CodeLines cls) {
+	expression.produceCode(cls);
+	cls.add(new CodeLine(PMachineInstructions.STR, "0", "0")); // TODO: Check this!
+    }
 }
