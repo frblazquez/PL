@@ -46,6 +46,7 @@ public class Procedure extends AstNode {
 	SymbolTable proc_st = new SymbolTable(st);
 	arguments.checkSemantics(proc_st);
 	instructions.checkSemantics(proc_st);
+	this.st = proc_st;
     }
 
     @Override
@@ -55,6 +56,17 @@ public class Procedure extends AstNode {
 	cls.add(new CodeLine(PMachineInstructions.SEP, "" + this.stackEvaluationSize()));
 	instructions.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETP));
+    }
+    
+    @Override
+    public int stackEvaluationSize() {
+	return this.instructions.stackEvaluationSize();
+    }
+    
+    @Override
+    public int staticDataSize() {
+    	// Note that arguments' space will already be considered in instructions' symbol table
+    	return this.instructions.staticDataSize();
     }
 }
 

@@ -53,4 +53,18 @@ public class Function extends Procedure {
 	instructions.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETF));
     }
+    
+    @Override
+    public int stackEvaluationSize() {
+	int sesz0, sesz1;
+	sesz0 = this.instructions.stackEvaluationSize();
+	sesz1 = this.ret.stackEvaluationSize();
+	return sesz0 > sesz1 ? sesz0 : sesz1;
+    }
+    
+    @Override
+    public int staticDataSize() {
+    	// Note that arguments' space will already be considered in instructions' symbol table
+    	return this.instructions.staticDataSize();
+    }
 }

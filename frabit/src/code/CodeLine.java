@@ -32,7 +32,7 @@ public CodeLine(PMachineInstructions instruction, String parameter1, String para
 {
 	this.parameter1 = parameter1;
 	this.parameter2 = parameter2;
-	num_parameters = 1;
+	num_parameters = 2;
 	this.instruction = instruction;
 }
 
@@ -53,12 +53,7 @@ public void setSecondParameter(String parameter2) {
 	num_parameters = 2;
 }
 
-public String toString() {
-	StringBuilder sb = new StringBuilder("");
-	sb.append('{');
-	sb.append(-1); // TODO: Line numbers!
-	sb.append('}');
-	sb.append(' ');
+public void appendLine(StringBuilder sb) {
 	sb.append(instruction.toString());
 	if (num_parameters > 0) {
 		sb.append(' ');
@@ -69,6 +64,5 @@ public String toString() {
 		}
 	}
 	sb.append(';');
-	return sb.toString();
 }
 }

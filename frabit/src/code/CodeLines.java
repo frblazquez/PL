@@ -56,13 +56,32 @@ public class CodeLines {
     public void addMethod(Identifier id, int startPC) {
 	method_firstInstruction.put(id, startPC);
     }
+    
+    public void setUnsolvedReference(Integer line, Identifier identifier) {
+    	line_unsolvedJumpReference.put(line,identifier);
+    }
 
     public String toString() {
 	StringBuilder sb = new StringBuilder("");
+	int line = 0;
 	for(CodeLine cl : codelines) {
-	    sb.append(cl.toString());
+	    sb.append('{'); sb.append(line); sb.append('}');
+	    sb.append(' ');
+	    cl.appendLine(sb);
 	    sb.append('\n');
+	    ++line;
 	}
 	return sb.toString();
     }
+
+	public void setCallAddresses() {
+	Integer i = 0;
+	for (CodeLine cl : codelines) {
+		if (cl.getInstruction() == PMachineInstructions.CUP) {
+			Identifier identifier = line_unsolvedJumpReference.get(i);
+			cl.setSecondParameter(Integer.toString(method_firstInstruction.get(identifier)));
+		}
+		i = i + 1;	
+	}
+	}
 }

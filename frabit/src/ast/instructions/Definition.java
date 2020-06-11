@@ -54,7 +54,18 @@ public class Definition extends Instruction {
 	    // First get the initialization expression value on top of stack
 	    initialization.produceCode(cls);
 	    SymbolTableEntry ste = st.getCertain(identifier);
-	    cls.add(new CodeLine(PMachineInstructions.SRO, Integer.toString(ste.getAddr())));
+	    cls.add(new CodeLine(PMachineInstructions.STR, "0", Integer.toString(ste.getAddr())));
 	}
+    }
+    
+    @Override
+    public int stackEvaluationSize() {
+	if (initialization != null) return initialization.stackEvaluationSize();
+	else return 0;
+    }
+    
+    @Override
+    public int staticDataSize() {
+	return this.st.getNextFreeAddress();
     }
 }

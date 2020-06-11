@@ -50,7 +50,7 @@ public class BinaryExpression extends Expression {
 
     @Override
     public int stackEvaluationSize() {
-	return 1 + Math.max(left_e.stackEvaluationSize(), right_e.stackEvaluationSize());
+	return Math.max(Math.max(left_e.stackEvaluationSize(),1 + right_e.stackEvaluationSize()), 2);
     }
 
 }

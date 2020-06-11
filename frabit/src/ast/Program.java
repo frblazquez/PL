@@ -62,11 +62,18 @@ public class Program extends AstNode {
     
     @Override
     public void produceCode(CodeLines cls) {
-	for(Procedure m : methods)
+    cls.add(new CodeLine(PMachineInstructions.SSP, "1"));
+	cls.add(new CodeLine(PMachineInstructions.SEP, "5")); // Reserve size for activation frame
+    cls.add(new CodeLine(PMachineInstructions.MST, "0")); // Set activation frame for main
+    cls.setUnsolvedReference(cls.getNLines(), new Identifier("main"));
+    cls.add(new CodeLine(PMachineInstructions.CUP, "0", "")); // Call main
+    for(Procedure m : methods)
 	    m.produceCode(cls);
 
 	// TODO: main might need to be treated in a special way
 	main_function.produceCode(cls);
     	cls.add(new CodeLine(PMachineInstructions.STP));
+    	
+    cls.setCallAddresses();
     }
 }

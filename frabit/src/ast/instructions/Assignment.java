@@ -39,4 +39,16 @@ public class Assignment extends Instruction {
 	expression.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.STO));
     }
+    
+    @Override
+    public int stackEvaluationSize() {
+	int size0 = variable.stackEvaluationSize();
+	int size1 = 1 + expression.stackEvaluationSize();
+	return size0 > size1 ? size0 : size1;
+    }
+    
+    @Override
+    public int staticDataSize() {
+    	return this.st.getNextFreeAddress();
+    }
 }

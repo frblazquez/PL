@@ -2,6 +2,7 @@ package ast.instructions;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
+import ast.AstNode;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.types.BoolType;
@@ -74,5 +75,16 @@ public class IfElse extends Instruction {
 	    int endPC = cls.getNLines();
 	    cls.modify(ifPC, endPC);
 	}
+    }
+    
+    @Override
+    public int staticDataSize() {
+	int max = this.st.getNextFreeAddress();
+	int aux;
+	for (AstNode ch : children) {
+		aux = ch.staticDataSize();
+		max = aux > max ? aux : max;
+	}
+	return max;
     }
 }

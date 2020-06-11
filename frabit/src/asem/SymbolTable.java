@@ -11,7 +11,7 @@ public final class SymbolTable {
     protected int next_free_address;
 
     public SymbolTable() {
-	next_free_address = 0;
+	next_free_address = 5; // Five addresses reserved for activation frame
 	bindings = new HashMap<Identifier, SymbolTableEntry>();
 	prevBlockST = null;
     }

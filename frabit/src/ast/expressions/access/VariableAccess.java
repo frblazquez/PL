@@ -66,7 +66,7 @@ public class VariableAccess extends Expression {
     public void produceStoreCode(CodeLines cls) {
     	SymbolTableEntry ste = st.getCertain(identifier);
     	// Set start of memory position at identifier's base address
-    	cls.add(new CodeLine(PMachineInstructions.LDC, Integer.toString(ste.getAddr())));
+    	cls.add(new CodeLine(PMachineInstructions.LDA, "0", Integer.toString(ste.getAddr())));
     	Type t = st.getCertain(identifier).getType();
     	for (Access ac : accesses) {
     		if (ac instanceof ArrayAccess) {
@@ -100,6 +100,7 @@ public class VariableAccess extends Expression {
     @Override
     public void produceCode(CodeLines cls) {
     	this.produceStoreCode(cls);
+    	
     	cls.add(new CodeLine(PMachineInstructions.IND));
     }
 }

@@ -10,6 +10,9 @@ import ast.AstUtils;
 import ast.Identifier;
 import ast.arguments.Arguments;
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 /**
  * This class has almost the same schema than Call class, however, this is not
@@ -61,5 +64,14 @@ public class InvokeExpression extends Expression {
 
 	expression_type = ste.getType();
 	this.st = st;
+    }
+    
+    @Override
+    public void produceCode(CodeLines cls) {
+	MethodSTE mste = (MethodSTE) this.st.getCertain(identifier);
+	cls.add(new CodeLine(PMachineInstructions.MST, "0"));
+	arguments.produceCode(cls);
+	cls.setUnsolvedReference(cls.getNLines(), identifier);
+	cls.add(new CodeLine(PMachineInstructions.CUP, "0", Integer.toString(mste.getAddr())));
     }
 }

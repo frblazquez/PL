@@ -53,7 +53,8 @@ public class Main {
 
 	CodeLines pcode = new CodeLines();
 	pr.produceCode(pcode);
-
+	System.out.println("Maximum stack use: " + pr.stackEvaluationSize());
+	System.out.println("Maximum local positions used by any function: " + pr.staticDataSize());
 	// TODO: Bang this bad boy into a txt file
 	System.out.println(pcode.toString());
 	// System.out.println(pr);
