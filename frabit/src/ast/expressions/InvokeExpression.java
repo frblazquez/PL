@@ -74,4 +74,8 @@ public class InvokeExpression extends Expression {
 	cls.setUnsolvedReference(cls.getNLines(), identifier);
 	cls.add(new CodeLine(PMachineInstructions.CUP, "0", Integer.toString(mste.getAddr())));
     }
+    
+    public int stackEvaluationSize() {
+    	return 5 + arguments.stackEvaluationSize(); // Space for MST plus for arguments
+    }
 }

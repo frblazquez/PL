@@ -33,6 +33,15 @@ public class Arguments extends AstNode {
     public List<Expression> getArguments() {
 	return arguments;
     }
-
     // InvokeExpression takes responsibility for checking arguments correction
+    
+    public int stackEvaluationSize() {
+	int max = 0;
+	int i = 0;
+	for (Expression ex : arguments) {
+		max = Math.max(max, i + ex.stackEvaluationSize());
+		++i;
+	}
+	return max;
+    }
 }

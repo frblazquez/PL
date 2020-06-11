@@ -51,6 +51,7 @@ public class Function extends Procedure {
 	cls.add(new CodeLine(PMachineInstructions.SSP, "" + this.staticDataSize()));
 	cls.add(new CodeLine(PMachineInstructions.SEP, "" + this.stackEvaluationSize()));
 	instructions.produceCode(cls);
+	ret.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETF));
     }
     
