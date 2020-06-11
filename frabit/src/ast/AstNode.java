@@ -97,7 +97,7 @@ public class AstNode {
     // Check correctness
     public int stackEvaluationSize() {
 	
-	if (this.st == null) return 0;
+	// if (this.st == null) return 0;
 	
 	int max = 0;
 	

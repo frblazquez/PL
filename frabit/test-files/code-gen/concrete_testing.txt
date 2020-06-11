@@ -1,16 +1,33 @@
+int sum([[int, 3], 2] x){
+	int row; int col;
+	row = 0;
+	int suma = 0;
+	while (row < 2)
+	{
+		col = 0;
+		while (col < 3)
+		{
+			suma = suma + x[row][col];
+			col = col + 1;
+		}
+		row = row + 1;
+	}
+	return suma;
+}
+
 int main(){
-	int x = 2 + 3;
-	if (x < 3)
+	[[int, 3], 2] x;
+	int row; int col;
+	row = 0;
+	while (row < 2)
 	{
-		x = x + 1;
+		col = 0;
+		while (col < 3)
+		{
+			x[row][col] = row * 3 + col;
+			col = col + 1;
+		}
+		row = row + 1;
 	}
-	else { x = 2* x; }
-	[int, 8] y;
-	x = 0;
-	while ((x < 8) and (x >= 0)) 
-	{
-		y[x] = x * x;
-		x = x + 1;
-	}
-	return x;
+	return sum(x);	
 }

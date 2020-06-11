@@ -21,6 +21,15 @@ public class MethodSTE extends SymbolTableEntry {
 	types_of_arguments = toa;
     }
     public int getNumberOfArguments() 	    { return this.number_of_arguments; }
+    
+    public int getSizeOfArguments() {
+	int size = 0;
+	for (Type t : types_of_arguments) {
+		size += t.getSize();
+	}
+	return size;
+    }
+    
     public List<Type> getTypesOfArguments() { return this.types_of_arguments; }
 
 }

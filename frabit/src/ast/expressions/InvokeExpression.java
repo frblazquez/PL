@@ -72,7 +72,8 @@ public class InvokeExpression extends Expression {
 	cls.add(new CodeLine(PMachineInstructions.MST, "0"));
 	arguments.produceCode(cls);
 	cls.setUnsolvedReference(cls.getNLines(), identifier);
-	cls.add(new CodeLine(PMachineInstructions.CUP, "0", Integer.toString(mste.getAddr())));
+	cls.add(new CodeLine(PMachineInstructions.CUP, 
+			Integer.toString(mste.getSizeOfArguments()), Integer.toString(mste.getAddr())));
     }
     
     public int stackEvaluationSize() {
