@@ -57,10 +57,7 @@ public class Function extends Procedure {
     
     @Override
     public int stackEvaluationSize() {
-	int sesz0, sesz1;
-	sesz0 = this.instructions.stackEvaluationSize();
-	sesz1 = this.ret.stackEvaluationSize();
-	return sesz0 > sesz1 ? sesz0 : sesz1;
+	return Math.max(this.instructions.stackEvaluationSize(), this.ret.stackEvaluationSize());
     }
     
     @Override
