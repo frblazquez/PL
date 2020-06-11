@@ -46,7 +46,8 @@ public enum PMachineInstructions {
 	SMP,
 	CUPI,
 	MSTF,
-	STP;
+	STP,
+	DELETEME;
 	
 	public String toString()
 	{
@@ -97,6 +98,7 @@ public enum PMachineInstructions {
 		 case CUPI: return"cupi";
 		 case MSTF: return"mstf";
 		 case STP: return"stp";
+		 case DELETEME: return "{------------------------------------------------------------}";
 		 default: return "";
 		 }
 	}

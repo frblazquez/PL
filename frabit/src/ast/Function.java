@@ -8,6 +8,9 @@ import ast.instructions.Instruction;
 import ast.instructions.Instructions;
 import ast.instructions.Return;
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class Function extends Procedure {
     private Return ret;
@@ -40,5 +43,15 @@ public class Function extends Procedure {
 	if (!ret_type.equals(ret.getReturnType()))
 	    throw new SemanticErrorException("Function type and return expression type do not match");
 	this.st = func_st;
+    }
+
+    @Override
+    public void produceCode(CodeLines cls) {
+	cls.addMethod(identifier, cls.getNLines());
+	cls.add(new CodeLine(PMachineInstructions.SSP, "TODO")); // TODO: Static data offset?
+	cls.add(new CodeLine(PMachineInstructions.SEP, "TODO")); // TODO: This frame stack space?
+	instructions.produceCode(cls);
+	cls.add(new CodeLine(PMachineInstructions.RETF));
+	cls.add(new CodeLine(PMachineInstructions.DELETEME));
     }
 }

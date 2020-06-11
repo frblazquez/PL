@@ -62,9 +62,13 @@ public class Program extends AstNode {
     
     @Override
     public void produceCode(CodeLines cls) {
-    	// TODO: Extend this to function calls
-    	cls.add(new CodeLine(PMachineInstructions.SSP, "20")); // TODO: CHANGE 20 FOR ACTUAL SIZE OF LOCAL VARIABLES
+	cls.add(new CodeLine(PMachineInstructions.DELETEME));
+	for(Procedure m : methods)
+	    m.produceCode(cls);
+
+	// TODO: main might need to be treated in a special way
 	main_function.produceCode(cls);
     	cls.add(new CodeLine(PMachineInstructions.STP));
+	cls.add(new CodeLine(PMachineInstructions.DELETEME));
     }
 }

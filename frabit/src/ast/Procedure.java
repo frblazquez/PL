@@ -7,6 +7,9 @@ import asem.SymbolTable;
 import ast.arguments.ArgumentsDefinition;
 import ast.instructions.Instructions;
 import ast.types.Type;
+import code.CodeLine;
+import code.CodeLines;
+import code.PMachineInstructions;
 
 public class Procedure extends AstNode {
 
@@ -38,11 +41,20 @@ public class Procedure extends AstNode {
     public List<Type> getArgumentTypes() { return arguments.getTypes();  }
 
     @Override
-    public void checkSemantics(SymbolTable st) throws SemanticErrorException
-    {
+    public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 	// A procedure defines a new scope with new variables
 	SymbolTable proc_st = new SymbolTable(st);
 	arguments.checkSemantics(proc_st);
 	instructions.checkSemantics(proc_st);
+    }
+
+    @Override
+    public void produceCode(CodeLines cls) {
+	cls.addMethod(identifier, cls.getNLines());
+	cls.add(new CodeLine(PMachineInstructions.SSP, "TODO")); // TODO: Static data offset?
+	cls.add(new CodeLine(PMachineInstructions.SEP, "TODO")); // TODO: This frame stack space?
+	instructions.produceCode(cls);
+	cls.add(new CodeLine(PMachineInstructions.RETP));
+	cls.add(new CodeLine(PMachineInstructions.DELETEME));
     }
 }

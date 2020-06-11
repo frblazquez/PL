@@ -10,6 +10,7 @@ import ast.AstUtils;
 import ast.expressions.Constant;
 import ast.expressions.Expression;
 import ast.types.IntType;
+import code.CodeLines;
 
 public class Switch extends Instruction {
 
@@ -54,4 +55,14 @@ public class Switch extends Instruction {
 	this.st = st;
     }
     
+    @Override
+    public void produceCode(CodeLines cls) {
+	base_expression.produceCode(cls);
+
+	// TODO: Fix the jumps!
+	for(Case c : cases)
+	    c.produceCode(cls);
+
+    }
+
 }
