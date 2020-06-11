@@ -44,7 +44,7 @@ public class Assignment extends Instruction {
     public int stackEvaluationSize() {
 	int size0 = variable.stackEvaluationSize();
 	int size1 = 1 + expression.stackEvaluationSize();
-	return size0 > size1 ? size0 : size1;
+	return Math.max(size0, size1);
     }
     
     @Override

@@ -35,6 +35,7 @@ public class Arguments extends AstNode {
     }
     // InvokeExpression takes responsibility for checking arguments correction
     
+    @Override
     public int stackEvaluationSize() {
 	int max = 0;
 	int i = 0;

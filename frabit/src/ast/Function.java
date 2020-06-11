@@ -63,6 +63,6 @@ public class Function extends Procedure {
     @Override
     public int staticDataSize() {
     	// Note that arguments' space will already be considered in instructions' symbol table
-    	return this.instructions.staticDataSize();
+    	return Math.max(this.st.getNextFreeAddress(), this.instructions.staticDataSize());
     }
 }

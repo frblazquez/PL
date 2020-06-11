@@ -49,15 +49,4 @@ public class While extends Instruction {
 	cls.modify(conditionJumpPC, endPC);
 	cls.modify(endWhileJumpPC, conditionEvaluationPC);
     }
-    
-    @Override
-    public int staticDataSize() {
-	int max = this.st.getNextFreeAddress();
-	int aux;
-	for (AstNode ch : children) {
-		aux = ch.staticDataSize();
-		max = aux > max ? aux : max;
-	}
-	return max;
-    }
 }

@@ -81,12 +81,13 @@ public class AstNode {
     // TODO: IMPORTANT!
     // Check correctness
     public int staticDataSize() {
-	int max = 0;
+	if (this.st == null) 
+		return 0;
+	
+	int max = this.st.getNextFreeAddress();
 
 	for(AstNode node : children) {
-	    if (node == null) // Could be syntactic errors
-		continue;
-	    else if (node.staticDataSize() > max)
+	    if (node.staticDataSize() > max)
 		max = node.staticDataSize();
 	}
 	return max;
@@ -95,12 +96,13 @@ public class AstNode {
     // TODO: IMPORTANT!
     // Check correctness
     public int stackEvaluationSize() {
+	
+	if (this.st == null) return 0;
+	
 	int max = 0;
-
+	
 	for(AstNode node : children) {
-	    if (node == null) // Could be syntactic errors TODO: Sure?? We should not be compiling if so
-		continue;
-	    else if (node.stackEvaluationSize() > max)
+	    if (node.stackEvaluationSize() > max)
 		max = node.stackEvaluationSize();
 	}
 	return max;

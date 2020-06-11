@@ -13,4 +13,9 @@ public class Expression extends AstNode {
     public Type getType() {
     	return expression_type;
     }
+    
+    @Override
+    public int staticDataSize() {
+	return 0;
+    }
 }
