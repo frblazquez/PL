@@ -6,8 +6,7 @@ public class SymbolTableEntry {
     protected int memaddr;
     protected Type type;
 
-    public SymbolTableEntry(int memaddr, Type type) {
-	this.memaddr = memaddr;
+    public SymbolTableEntry(Type type) {
 	this.type = type;
     }
 
@@ -17,5 +16,9 @@ public class SymbolTableEntry {
 
     public Type getType() {
 	return type;
+    }
+
+    public void setMemAddress(int addr) {
+	memaddr = addr;
     }
 }

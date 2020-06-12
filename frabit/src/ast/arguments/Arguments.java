@@ -33,7 +33,6 @@ public class Arguments extends AstNode {
     public List<Expression> getArguments() {
 	return arguments;
     }
-    // InvokeExpression takes responsibility for checking arguments correction
     
     @Override
     public int stackEvaluationSize() {

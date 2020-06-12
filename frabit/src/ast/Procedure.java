@@ -36,9 +36,9 @@ public class Procedure extends AstNode {
 	children.add(instructions);
     }
     
-    public Identifier getIdentifier()    { return identifier;            }
-    public int getNumberOfArguments()    { return arguments.getNumber(); }
-    public List<Type> getArgumentTypes() { return arguments.getTypes();  }
+    public Identifier getIdentifier()       { return identifier;            }
+    public int getNumberOfArguments()       { return arguments.getNumber(); }
+    public List<Type> getTypesOfArguments() { return arguments.getTypes();    }
 
     @Override
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {

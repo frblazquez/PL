@@ -3,9 +3,11 @@ package asem;
 import java.util.HashMap;
 
 import ast.Identifier;
+import ast.Procedure;
 
 public final class SymbolTable {
 
+    protected static HashMap<Identifier, Procedure> methods = new HashMap<Identifier, Procedure>();
     protected HashMap<Identifier, SymbolTableEntry> bindings;
     protected SymbolTable prevBlockST;
     protected int next_free_address;
@@ -49,12 +51,26 @@ public final class SymbolTable {
 	if (bindings.containsKey(id))
 	    throw new SemanticErrorException("Repeated identifier in block", id.getLine());
 	
-	bindings.put(id, ste);
+	ste.setMemAddress(next_free_address);
+	next_free_address += ste.getType().getSize();
 
-	// TODO: Don't really like this way
-	if (!(ste instanceof MethodSTE))
-	    this.next_free_address += ste.getType().getSize();
+	bindings.put(id, ste);
     }
 
     public int getNextFreeAddress() { return this.next_free_address; }
+
+    public void addMethod(Procedure p) {
+	methods.put(p.getIdentifier(), p);
+    }
+
+    public Procedure getMethod(Identifier id) throws SemanticErrorException {
+	if (methods.containsKey(id))
+	    return methods.get(id);
+	else
+	    throw new SemanticErrorException("Method \"" + id + "\" is not defined");
+    }
+
+    public boolean containsMethod(Identifier id) {
+	return methods.containsKey(id);
+    }
 }

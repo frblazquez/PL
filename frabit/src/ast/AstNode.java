@@ -22,7 +22,7 @@ public class AstNode {
     public AstNode(String node_name) {
 	NODE_NAME = node_name;
 	children = new ArrayList<AstNode>();
-	line = -1; // TODO: Set lines from cup file
+	line = -1;
     }
 
 
@@ -58,8 +58,6 @@ public class AstNode {
      */
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
     	for (AstNode node: children){
-    	    if (node == null) continue; // Could be syntactic errors
-    		
 	    try { node.checkSemantics(st); }
     	    catch (SemanticErrorException se) { se.printSemanticError();}
     	}
@@ -72,20 +70,20 @@ public class AstNode {
      * 
      */
     public void produceCode(CodeLines cls) {
-    	for (AstNode node: children){
-    	    if (node == null) continue; // Could be syntactic errors
+	for(AstNode node : children)
     	    node.produceCode(cls); 
-    	}
     }
     
-    // TODO: IMPORTANT!
-    // Check correctness
+    /**
+     * This functions is used to find out the space required for a function frame.
+     * 
+     * @return static data size required for this subtree
+     */
     public int staticDataSize() {
-	if (this.st == null) 
-		return 0;
+	if (this.st == null) // TODO: Really necessary?
+	    return 0;
 	
 	int max = this.st.getNextFreeAddress();
-
 	for(AstNode node : children) {
 	    if (node.staticDataSize() > max)
 		max = node.staticDataSize();
@@ -93,12 +91,11 @@ public class AstNode {
 	return max;
     }
     
-    // TODO: IMPORTANT!
-    // Check correctness
+    /**
+     * This function is used to find out the stack space required for a function frame.
+     * @return stack evaluation size required for this subtree
+     */
     public int stackEvaluationSize() {
-	
-	// if (this.st == null) return 0;
-	
 	int max = 0;
 	
 	for(AstNode node : children) {

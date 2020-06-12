@@ -1,15 +1,13 @@
 package ast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import asem.MethodSTE;
 import asem.SemanticErrorException;
 import asem.SymbolTable;
-import ast.types.Type;
 import code.CodeLine;
 import code.CodeLines;
 import code.PMachineInstructions;
+import errors.GestionErroresTiny;
 
 public class Program extends AstNode {
 
@@ -36,18 +34,10 @@ public class Program extends AstNode {
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
 	for(Procedure p : methods) {
-	    if (st.contains(p.getIdentifier()))
+	    if (st.containsMethod(p.getIdentifier()))
 		throw new SemanticErrorException("Two methods can not have the same identifier \""+p.getIdentifier()+"\"", p.getLine());
-	    else {
-		if (p instanceof Function) { // If it's a function we have to keep it's type too
-		    Function func = (Function) p;
-		    MethodSTE ste = new MethodSTE(func.getNumberOfArguments(), func.getArgumentTypes(), func.getType());
-		    st.makeBinding(func.getIdentifier(), ste);
-		} else {
-		    MethodSTE ste = new MethodSTE(p.getNumberOfArguments(), p.getArgumentTypes());
-		    st.makeBinding(p.getIdentifier(), ste);
-		}
-	    }
+	    else
+		st.addMethod(p);
 	}
 	
 	for(Procedure p : methods) {
@@ -55,25 +45,50 @@ public class Program extends AstNode {
 	    catch (SemanticErrorException se) { se.printSemanticError();  }
 	}
 	
-	// As "main" is a reserved word we could delete the following line
-	st.makeBinding(new Identifier("main"), new MethodSTE(0, (new ArrayList<Type>())));
 	main_function.checkSemantics(st);
     }
     
     @Override
     public void produceCode(CodeLines cls) {
-    cls.add(new CodeLine(PMachineInstructions.SSP, "1"));
-	cls.add(new CodeLine(PMachineInstructions.SEP, "5")); // Reserve size for activation frame
-    cls.add(new CodeLine(PMachineInstructions.MST, "0")); // Set activation frame for main
-    cls.setUnsolvedReference(cls.getNLines(), new Identifier("main"));
-    cls.add(new CodeLine(PMachineInstructions.CUP, "0", "")); // Call main
-    cls.add(new CodeLine(PMachineInstructions.STP));
-    for(Procedure m : methods)
+	main_function.produceCode(cls);
+	cls.add(new CodeLine(PMachineInstructions.STP));
+	for(Procedure m : methods)
 	    m.produceCode(cls);
 
-	// TODO: main might need to be treated in a special way
-	main_function.produceCode(cls);
-    	
-    cls.setCallAddresses();
+	// Unsolved references should be corrected once the code is generated
+	cls.setCallAddresses();
+    }
+
+    public void printAST() {
+	if (GestionErroresTiny.getSyntacticErrors() > 0)
+	    System.out.println("WARN:  AST might be uncompleted because of syntax errors");
+
+	System.out.println(this);
+    }
+
+    public void checkSemantics() {
+	if (GestionErroresTiny.getSyntacticErrors() > 0) {
+	    System.out.println("ERROR: Aborting semantic analysis because syntax errors are present");
+	    return;
+	}
+
+	try { this.checkSemantics(new SymbolTable()); } 
+	catch (SemanticErrorException se) { se.printSemanticError(); }
+    }
+
+    public void printPCode() {
+	if (GestionErroresTiny.getSyntacticErrors() > 0) {
+	    System.out.println("ERROR: Aborting p-code generation because syntax errors are present");
+	    return;
+	}
+
+	if (GestionErroresTiny.getSemanticErrors() > 0) {
+	    System.out.println("ERROR: Aborting p-code generation because semantic errors are present");
+	    return;
+	}
+
+	CodeLines pcode = new CodeLines();
+	this.produceCode(pcode);
+	System.out.println(pcode.toString());
     }
 }

@@ -5,10 +5,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import alex.AnalizadorLexicoTiny;
-import asem.SymbolTable;
 import asint.AnalizadorSintacticoTiny;
 import ast.Program;
-import code.CodeLines;
 
 public class Main {
 
@@ -17,7 +15,7 @@ public class Main {
     public static final String AST_DISPLAY_FOLDER        = BASE_FOLDER+"ast/";
     public static final String ERROR_RECOVERY_FOLDER     = BASE_FOLDER+"error-recovery/";
     public static final String SEMANTIC_ANALYSIS_FOLDER  = BASE_FOLDER+"sem-analysis/";
-    public static final String CODE_GENERATION_FOLDER = BASE_FOLDER+"code-gen/";
+    public static final String CODE_GENERATION_FOLDER    = BASE_FOLDER+"code-gen/";
     public static final String TEST_ALL 		 = BASE_FOLDER+"input.txt";
     
     // AST construction and display test files
@@ -42,19 +40,21 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = CODE_GENERATION_FOLDER + "pointers.txt";
+	String input_file = SEMANTIC_ANALYSIS_FOLDER + TEST_EXP_SEMANTIC_ANALYSIS;
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 
-	Program pr = (Program) asint.parse().value;
-	pr.checkSemantics(new SymbolTable());
-
-	CodeLines pcode = new CodeLines();
-	pr.produceCode(pcode);
-	// TODO: Bang this bad boy into a txt file
-	System.out.println(pcode.toString());
-	// System.out.println(pr);
+	Program pr = (Program) asint.parseInput();
+	// pr.printAST();
+	pr.checkSemantics();
+	// pr.printPCode();
     }
+
+    // TODO: REMAINING
+    // -> Error recovery improvement
+    // -> Semantic analysis review
+    // -> Set lines properly (not -1 anymore)
+    // -> P-code generation review
 }

@@ -25,6 +25,7 @@ public class Constant extends Expression {
 	return constant;
     }
 
+    // TODO: What is this for?
     @Override
     public boolean equals(Object o) {
 

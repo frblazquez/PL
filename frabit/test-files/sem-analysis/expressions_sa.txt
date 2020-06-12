@@ -55,9 +55,9 @@ int main(){
 	y1 = null != 1;
 	y1 = &x1 >= 1;
 	y1 = 2 >= y1;
-	y1 = x2 >! x1;
+	y1 = x2 > x1;
 	y1 = x2 * x1;
-	y1 = x2 ~ funInt();
+	y1 = x2 + funInt();
 	
 	ptr1 = &x1;
 	ptr1 = &x2;
@@ -80,7 +80,7 @@ int main(){
 	ptr3 = x2 <= funBool();
 	
 	ptr1 = ptr4;
-	ptr3 = ptr2
+	ptr3 = ptr2;
 	
 	return 0;
 }

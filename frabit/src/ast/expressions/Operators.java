@@ -30,12 +30,10 @@ public enum Operators {
         	case NOT:	 return "not";
         	case OR:	 return "or";
         	case POR:	 return "*";
-        	case DEREF:		return "*";	
+        	case DEREF:	 return "*";	
         	default:	 throw new RuntimeException("Unknown operator!");
 	}
     }
-    
-    // TODO: Pointers are temporally excluded
     
     public Type operandType(){
     	switch(this) {
@@ -52,7 +50,7 @@ public enum Operators {
 	    	case AND:	 	return BoolType.BOOL_TYPE;
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
-	    	case AMPERSAND:	return new PointerType(); // TODO: Change this
+	    	case AMPERSAND:		return new PointerType(); // Unused
 	    	case DEREF:		return IntType.INT_TYPE;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
@@ -73,8 +71,8 @@ public enum Operators {
 	    	case MENORIGUAL: 	return BoolType.BOOL_TYPE;
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
-	    	case AMPERSAND:	return PointerType.INT_PTR;
-	    	case DEREF:		return PointerType.INT_PTR;
+	    	case AMPERSAND:		return new PointerType(); // Unused
+	    	case DEREF:		return new PointerType(); // Unused
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
     }
@@ -102,6 +100,7 @@ public enum Operators {
     public int getArity(){
     	switch(this) {
 	    	case NOT:	 	return 1;
+	    	case MENOS: 		return 2; // TODO: MENOS can also be an unary operator!
 	    	case AMPERSAND:	return 1;
 	    	case DEREF:		return 1;
 	    	default:	 	return 2;

@@ -19,7 +19,6 @@ public class Identifier extends AstNode {
 	if (o == this)	    		return true;
 	if (!(o instanceof Identifier)) return false;
 
-	// Instances of same class can access private members of each other
 	Identifier id = (Identifier) o;
 	return id.identifier.equals(identifier);
     }

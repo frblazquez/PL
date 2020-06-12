@@ -12,25 +12,23 @@ import ast.expressions.*;
 import ast.expressions.access.*;
 import alex.TokenValue;
 import alex.UnidadLexica;
-import alex.AnalizadorLexicoTiny;
 import errors.GestionErroresTiny;
 
 scan with {: return getScanner().next_token(); :};
 parser code {: 
-   private GestionErroresTiny errores;
    public void syntax_error(Symbol unidadLexica) {
-     errores.errorSintactico((UnidadLexica)unidadLexica);
+     GestionErroresTiny.errorSintactico((UnidadLexica)unidadLexica);
    }
    
    public void unrecovered_syntax_error(Symbol unidadLexica)throws java.lang.Exception {
-     errores.errorSintactico((UnidadLexica)unidadLexica);
+     GestionErroresTiny.errorSintactico((UnidadLexica)unidadLexica);
+   }
+   
+   public Program parseInput() throws Exception {
+  	 return (Program) this.parse().value; 
    }
 :};
-init with {: 
-   errores = new GestionErroresTiny();
-   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
-   alex.fijaGestionErrores(errores);
-:};
+init with {: :};
 
 terminal TokenValue MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,  
 					COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,

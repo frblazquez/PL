@@ -43,7 +43,7 @@ public enum JumpDecided
 
 public PMachineInstructions getInstruction() { return instruction; }
 
-public void setFirstParameter(String parameter1)  { // TODO: Think of improving this 
+    public void setFirstParameter(String parameter1) {
 	this.parameter1 = parameter1; 
 	if (num_parameters < 1)
 		num_parameters = 1;	

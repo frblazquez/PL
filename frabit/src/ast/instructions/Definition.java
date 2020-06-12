@@ -43,7 +43,7 @@ public class Definition extends Instruction {
 		throw new SemanticErrorException("Definition type and initialization expression type do not match", this.line);
 	}
 
-	st.makeBinding(identifier, new SymbolTableEntry(st.getNextFreeAddress(), type));
+	st.makeBinding(identifier, new SymbolTableEntry(type));
 	this.st = st;
     }
     

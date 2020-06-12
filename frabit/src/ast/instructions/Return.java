@@ -27,6 +27,6 @@ public class Return extends AstNode {
     @Override
     public void produceCode(CodeLines cls) {
 	expression.produceCode(cls);
-	cls.add(new CodeLine(PMachineInstructions.STR, "0", "0")); // TODO: Check this!
+	cls.add(new CodeLine(PMachineInstructions.STR, "0", "0"));
     }
 }

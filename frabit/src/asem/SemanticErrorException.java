@@ -1,5 +1,7 @@
 package asem;
 
+import errors.GestionErroresTiny;
+
 public class SemanticErrorException extends Exception {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +22,7 @@ public class SemanticErrorException extends Exception {
     }
 
     public void printSemanticError() {
-	System.out.println("Semantic error on line " + line + ": " + this.getMessage());
+	// All the errors are being redirected to GestionErroresTiny
+	GestionErroresTiny.errorSemántico(this.getMessage(), line);
     }
 }

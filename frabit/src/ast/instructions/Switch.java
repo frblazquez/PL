@@ -42,6 +42,7 @@ public class Switch extends Instruction {
 	if (!base_expression.getType().equals(IntType.INT_TYPE))
 	    throw new SemanticErrorException("Switch requires an arithmetic base expression", this.line);
 
+	// Switch would even work with repeated cases
 	Set<Constant> s = new HashSet<>();
 	for(Case c : cases) {
 	    if (s.contains(c.getConstantExpression()))

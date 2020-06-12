@@ -1,14 +1,5 @@
 // File for testing semantic analysis
 
-// TODO: IMPORTANT CORRECTIONS NEEDED
-// int x = true; 				// allowed!
-// int func() { return bool; } 	// allowed!
-// switch(x + 2) {
-//		case 5:	 {int y = 9;}
-//		case 9:  {y = 10;}		// allowed!
-//	}
-	
-
 int x(int y, int z)
 {
 	return y + z;
@@ -28,7 +19,7 @@ int fun2(int x)
 {
 	switch(x + 2) {
 		case 5:	 {int y = 9;}
-		case 9:  {y = 10;}		// y is totally out of scope but it works!
+		case 9:  {y = 10;}		// y is totally out of scope 
 	}
 	return 1;
 }

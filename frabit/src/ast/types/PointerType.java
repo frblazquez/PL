@@ -22,9 +22,7 @@ public class PointerType extends Type {
 
     @Override
     public boolean equals(Object o) {
-    if (this.base_type != null)
-    	return (o instanceof PointerType) && base_type.equals(((PointerType) o).base_type);
-    else return (o instanceof PointerType);
+	return (o instanceof PointerType) && (base_type == null || ((PointerType) o).base_type == null || base_type.equals(((PointerType) o).base_type));
     }
 
     @Override
