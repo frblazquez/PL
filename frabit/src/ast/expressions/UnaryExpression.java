@@ -4,6 +4,8 @@ import asem.SemanticErrorException;
 import asem.SymbolTable;
 import ast.AstNode;
 import ast.expressions.access.VariableAccess;
+import ast.types.PointerType;
+import ast.types.Type;
 import code.CodeLine;
 import code.CodeLines;
 
@@ -32,11 +34,13 @@ public class UnaryExpression extends Expression {
 
 	exp.checkSemantics(st);
 	
-	if ((op == Operators.AMPERSAND || op == Operators.DEREF) && !(exp instanceof VariableAccess)) {
-		throw new SemanticErrorException("Pointer operators demand a variable's name");
+	if (op == Operators.AMPERSAND) {
+		if (!(exp instanceof VariableAccess))
+			throw new SemanticErrorException("Pointer operators demand a variable's name");
+		VariableAccess va = (VariableAccess) exp;
+		this.expression_type = new PointerType(va.getType());
 	}
-
-	if (!op.operandType().equals(exp.getType()))
+	else if (!op.operandType().equals(exp.getType()))
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);
 
 	expression_type = op.resultType();
@@ -62,7 +66,7 @@ public class UnaryExpression extends Expression {
 		va.produceCode(cls); // 
 	}
     }
-
+    
     @Override
     public int stackEvaluationSize() {
 	return 1 + exp.stackEvaluationSize();

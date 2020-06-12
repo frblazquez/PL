@@ -122,7 +122,8 @@ Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = new Call
 Switch ::= SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE           {: RESULT = new Switch(e,cs); RESULT.setLine(tv.line); :}
 		|  SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE {: RESULT = new Switch(e,cs,d); RESULT.setLine(tv.line); :};                  
 
-AccesoVariable ::= IDEN:tv Accesos:as       {: RESULT = new VariableAccess(tv.token, as); RESULT.setLine(tv.line); :};
+AccesoVariable ::= IDEN:tv Accesos:as       {: RESULT = new VariableAccess(tv.token, as); RESULT.setLine(tv.line); :}
+				|	POR AccesoVariable:av	{: RESULT = new Dereferencing(av); RESULT.setLine(av.getLine()); :};
 Accesos ::= Accesos:as CAP E0:e CCIERRE     {: RESULT = as; as.add(new ArrayAccess(e)); :}
         |   Accesos:as PUNTO ENT:tv        {: RESULT = as; as.add(new RegisterAccess(Integer.parseInt(tv.token))); :}
         |                                   {: RESULT = new ArrayList<Access>(); :};
@@ -199,5 +200,4 @@ Op2 ::= POR 		                {: RESULT = Operators.POR; :}
 	| AND 			                {: RESULT = Operators.AND; :};
 Op3 ::= MENOS 		                {: RESULT = Operators.MENOS; :}
 	| NOT 			                {: RESULT = Operators.NOT; :}
-	| AMPERSAND 	                {: RESULT = Operators.AMPERSAND; :}
-	| POR							{: RESULT = Operators.DEREF; :};
+	| AMPERSAND 	                {: RESULT = Operators.AMPERSAND; :};

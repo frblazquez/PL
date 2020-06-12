@@ -1,0 +1,13 @@
+void incrementar(*int y) {
+	*y = *y + 1;
+}
+
+int main() {
+	int x = 0;
+	*int y = &x;
+	incrementar(y);
+	incrementar(y);
+	incrementar(y);
+	*int z = null;
+	return 0;
+}

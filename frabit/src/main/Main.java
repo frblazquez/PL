@@ -42,7 +42,7 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = CODE_GENERATION_FOLDER + "concrete_testing.txt";
+	String input_file = CODE_GENERATION_FOLDER + "pointers.txt";
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);

@@ -52,7 +52,7 @@ public enum Operators {
 	    	case AND:	 	return BoolType.BOOL_TYPE;
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
-	    	//case AMPERSAND:	return OperationTypes.ARITHMETIC;
+	    	case AMPERSAND:	return new PointerType(); // TODO: Change this
 	    	case DEREF:		return IntType.INT_TYPE;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
@@ -73,7 +73,7 @@ public enum Operators {
 	    	case MENORIGUAL: 	return BoolType.BOOL_TYPE;
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
-	    	//case AMPERSAND:	return OperationTypes.ARITHMETIC;
+	    	case AMPERSAND:	return PointerType.INT_PTR;
 	    	case DEREF:		return PointerType.INT_PTR;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
