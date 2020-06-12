@@ -11,7 +11,9 @@ import ast.AstUtils;
 import ast.expressions.Constant;
 import ast.expressions.Expression;
 import ast.types.IntType;
+import code.CodeLine;
 import code.CodeLines;
+import code.PMachineInstructions;
 
 public class Switch extends Instruction {
 
@@ -71,7 +73,10 @@ public class Switch extends Instruction {
 	    default_case.getInstructions().produceCode(cls);
 
 	int switchEnd = cls.getNLines();
-	// TODO: Remove stack top! (Switch expression evalutaion has been duplicated)
+
+	cls.add(new CodeLine(PMachineInstructions.LDC, "0"));
+	cls.add(new CodeLine(PMachineInstructions.EQU));
+	cls.add(new CodeLine(PMachineInstructions.FJP, "" + (switchEnd + 1)));
 
 	for(int idx : jumpsToSwitchEnd)
 	    cls.modify(idx, switchEnd);

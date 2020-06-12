@@ -54,15 +54,4 @@ public class Function extends Procedure {
 	ret.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETF));
     }
-    
-    @Override
-    public int stackEvaluationSize() {
-	return Math.max(this.instructions.stackEvaluationSize(), this.ret.stackEvaluationSize());
-    }
-    
-    @Override
-    public int staticDataSize() {
-    	// Note that arguments' space will already be considered in instructions' symbol table
-    	return Math.max(this.st.getNextFreeAddress(), this.instructions.staticDataSize());
-    }
 }

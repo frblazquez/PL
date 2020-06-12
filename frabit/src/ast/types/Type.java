@@ -16,4 +16,15 @@ public abstract class Type extends AstNode {
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 	this.st = st;
     }
+
+    @Override
+    public int staticDataSize() {
+	// Types do not require size, variables do
+	return 0;
+    }
+
+    public int stackEvaluationSize() {
+	// Types do not require stack size
+	return 0;
+    }
 }

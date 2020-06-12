@@ -39,8 +39,8 @@ public class Arguments extends AstNode {
 	int max = 0;
 	int i = 0;
 	for (Expression ex : arguments) {
-		max = Math.max(max, i + ex.stackEvaluationSize());
-		++i;
+	    max = Math.max(Math.max(max, i + ex.stackEvaluationSize()), i + ex.getType().getSize());
+	    i += ex.getType().getSize();
 	}
 	return max;
     }

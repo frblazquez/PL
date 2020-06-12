@@ -39,6 +39,11 @@ public class Procedure extends AstNode {
     public Identifier getIdentifier()       { return identifier;            }
     public int getNumberOfArguments()       { return arguments.getNumber(); }
     public List<Type> getTypesOfArguments() { return arguments.getTypes();    }
+    public int getSizeOfArguments() {
+	int i = 0;
+	for(Type t: arguments.getTypes()) i += t.getSize();
+	return i;
+    }
 
     @Override
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
@@ -56,17 +61,6 @@ public class Procedure extends AstNode {
 	cls.add(new CodeLine(PMachineInstructions.SEP, "" + this.stackEvaluationSize()));
 	instructions.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETP));
-    }
-    
-    @Override
-    public int stackEvaluationSize() {
-	return this.instructions.stackEvaluationSize();
-    }
-    
-    @Override
-    public int staticDataSize() {
-    	// Note that arguments' space will already be considered in instructions' symbol table
-    	return Math.max(this.st.getNextFreeAddress(),this.instructions.staticDataSize());
     }
 }
 

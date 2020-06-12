@@ -80,9 +80,9 @@ public class AstNode {
      * @return static data size required for this subtree
      */
     public int staticDataSize() {
-	if (this.st == null) // TODO: Really necessary?
+	if (st == null)
 	    return 0;
-	
+
 	int max = this.st.getNextFreeAddress();
 	for(AstNode node : children) {
 	    if (node.staticDataSize() > max)
@@ -97,7 +97,6 @@ public class AstNode {
      */
     public int stackEvaluationSize() {
 	int max = 0;
-	
 	for(AstNode node : children) {
 	    if (node.stackEvaluationSize() > max)
 		max = node.stackEvaluationSize();

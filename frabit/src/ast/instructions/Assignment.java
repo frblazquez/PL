@@ -47,8 +47,4 @@ public class Assignment extends Instruction {
 	return Math.max(size0, size1);
     }
     
-    @Override
-    public int staticDataSize() {
-    	return this.st.getNextFreeAddress();
-    }
 }

@@ -17,9 +17,4 @@ public class Call extends Instruction {
     public void astToString(StringBuilder sb, String prefix, String children_prefix) {
 	expr.astToString(sb, prefix, children_prefix);
     }
-    
-    @Override
-    public int stackEvaluationSize() {
-    	return expr.stackEvaluationSize();
-    }
 }

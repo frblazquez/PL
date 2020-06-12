@@ -1,10 +1,4 @@
-int aux(int arg) {
-	int arg2 = 0;
-	return arg;
-}
-
 int main() {
-	int x = aux(5);
-	x = 1;
+	int x = 0 + 1;
 	return x;
 }

@@ -57,15 +57,4 @@ public class Definition extends Instruction {
 	    cls.add(new CodeLine(PMachineInstructions.STR, "0", Integer.toString(ste.getAddr())));
 	}
     }
-    
-    @Override
-    public int stackEvaluationSize() {
-	if (initialization != null) return initialization.stackEvaluationSize();
-	else return 0;
-    }
-    
-    @Override
-    public int staticDataSize() {
-	return this.st.getNextFreeAddress();
-    }
 }

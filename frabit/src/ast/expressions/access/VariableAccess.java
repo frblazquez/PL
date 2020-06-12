@@ -100,11 +100,7 @@ public class VariableAccess extends Expression {
     @Override
     public void produceCode(CodeLines cls) {
     	this.produceStoreCode(cls);
-    	int size = expression_type.getSize();
-    	if (size > 1)
-    		cls.add(new CodeLine(PMachineInstructions.MOVS,Integer.toString(size)));
-    	else	// TODO: MOVS 1 is equivalent to IND, shall we get rid of this or is it nicer
-    		cls.add(new CodeLine(PMachineInstructions.IND));
+	cls.add(new CodeLine(PMachineInstructions.MOVS, "" + expression_type.getSize()));
     }
     
     @Override

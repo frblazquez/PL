@@ -81,7 +81,7 @@ public enum Operators {
     	switch(this) {
     		case DIVISION:   	return PMachineInstructions.DIV;
     		case MAS:	 		return PMachineInstructions.ADD;
-    		case MENOS:	 		return PMachineInstructions.SUB; // TODO: This could be a negation!
+    		case MENOS:	 		return PMachineInstructions.SUB;
     		case POR:	 		return PMachineInstructions.MUL; 
 	    	case AND:	 		return PMachineInstructions.AND;
 	    	case OR:	 		return PMachineInstructions.OR;
@@ -100,7 +100,7 @@ public enum Operators {
     public int getArity(){
     	switch(this) {
 	    	case NOT:	 	return 1;
-	    	case MENOS: 		return 2; // TODO: MENOS can also be an unary operator!
+	    	case MENOS: 		return 2;
 	    	case AMPERSAND:	return 1;
 	    	case DEREF:		return 1;
 	    	default:	 	return 2;

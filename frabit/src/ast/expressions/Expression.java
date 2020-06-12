@@ -16,6 +16,7 @@ public class Expression extends AstNode {
     
     @Override
     public int staticDataSize() {
+	// Types do not require size, variables and blocks do
 	return 0;
     }
 }

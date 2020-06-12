@@ -10,11 +10,7 @@ public class CodeLines {
     private int nlines;
     private List<CodeLine> codelines;
 
-    // TODO: Check this!
-    // Methods can be here because their scope is the whole program!
     private HashMap<Identifier, Integer> method_firstInstruction;
-    // And we have this because we allow mutual recursion, we might have an
-    // invocation to a method even before this method is translated to pcode!
     private HashMap<Integer, Identifier> line_unsolvedJumpReference;
 
     public CodeLines() {
@@ -74,14 +70,7 @@ public class CodeLines {
 	return sb.toString();
     }
 
-	public void setCallAddresses() {
-	Integer i = 0;
-	for (CodeLine cl : codelines) {
-		if (cl.getInstruction() == PMachineInstructions.CUP) {
-			Identifier identifier = line_unsolvedJumpReference.get(i);
-			cl.setSecondParameter(Integer.toString(method_firstInstruction.get(identifier)));
-		}
-		i = i + 1;	
-	}
-	}
+    public void setCallAddresses() {
+	line_unsolvedJumpReference.forEach((k, v) -> this.modify(k, method_firstInstruction.get(v)));
+    }
 }

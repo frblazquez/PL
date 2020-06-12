@@ -63,11 +63,8 @@ public final class SymbolTable {
 	methods.put(p.getIdentifier(), p);
     }
 
-    public Procedure getMethod(Identifier id) throws SemanticErrorException {
-	if (methods.containsKey(id))
-	    return methods.get(id);
-	else
-	    throw new SemanticErrorException("Method \"" + id + "\" is not defined");
+    public Procedure getMethod(Identifier id) {
+	return methods.get(id);
     }
 
     public boolean containsMethod(Identifier id) {

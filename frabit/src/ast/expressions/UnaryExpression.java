@@ -6,6 +6,7 @@ import ast.expressions.access.VariableAccess;
 import ast.types.PointerType;
 import code.CodeLine;
 import code.CodeLines;
+import code.PMachineInstructions;
 
 public class UnaryExpression extends Expression {
 
@@ -27,7 +28,7 @@ public class UnaryExpression extends Expression {
     @Override
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
-	if (op.getArity() != 1)
+	if (op != Operators.MENOS && op.getArity() != 1)
 	    throw new SemanticErrorException("Operator \"" + op + "\" is not an unary operator", this.line);
 
 	exp.checkSemantics(st);
@@ -50,7 +51,11 @@ public class UnaryExpression extends Expression {
     	return;
     }
 	exp.produceCode(cls);
-	cls.add(new CodeLine(op.opInstruction()));
+
+	if (op == Operators.MENOS)
+	    cls.add(new CodeLine(PMachineInstructions.NEG));
+	else
+	    cls.add(new CodeLine(op.opInstruction()));
     }
     
     private void producePtrCode(CodeLines cls) {
