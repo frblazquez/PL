@@ -199,4 +199,5 @@ Op2 ::= POR 		                {: RESULT = Operators.POR; :}
 	| AND 			                {: RESULT = Operators.AND; :};
 Op3 ::= MENOS 		                {: RESULT = Operators.MENOS; :}
 	| NOT 			                {: RESULT = Operators.NOT; :}
-	| AMPERSAND 	                {: RESULT = Operators.AMPERSAND; :};
+	| AMPERSAND 	                {: RESULT = Operators.AMPERSAND; :}
+	| POR							{: RESULT = Operators.DEREF; :};

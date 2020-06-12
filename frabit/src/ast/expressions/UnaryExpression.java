@@ -3,6 +3,7 @@ package ast.expressions;
 import asem.SemanticErrorException;
 import asem.SymbolTable;
 import ast.AstNode;
+import ast.expressions.access.VariableAccess;
 import code.CodeLine;
 import code.CodeLines;
 
@@ -30,6 +31,10 @@ public class UnaryExpression extends Expression {
 	    throw new SemanticErrorException("Operator \"" + op + "\" is not an unary operator", this.line);
 
 	exp.checkSemantics(st);
+	
+	if ((op == Operators.AMPERSAND || op == Operators.DEREF) && !(exp instanceof VariableAccess)) {
+		throw new SemanticErrorException("Pointer operators demand a variable's name");
+	}
 
 	if (!op.operandType().equals(exp.getType()))
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);
@@ -40,8 +45,22 @@ public class UnaryExpression extends Expression {
 
     @Override
     public void produceCode(CodeLines cls) {
+    if (op == Operators.AMPERSAND || op == Operators.DEREF) {
+    	this.producePtrCode(cls);
+    	return;
+    }
 	exp.produceCode(cls);
 	cls.add(new CodeLine(op.opInstruction()));
+    }
+    
+    private void producePtrCode(CodeLines cls) {
+	VariableAccess va = (VariableAccess) exp; // Semantics check requires that this is doable
+	if (op == Operators.AMPERSAND) {
+		va.produceStoreCode(cls); // Puts address of variable access on stack
+	}
+	else {
+		va.produceCode(cls); // 
+	}
     }
 
     @Override

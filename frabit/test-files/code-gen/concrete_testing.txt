@@ -1,33 +1,10 @@
-int sum([[int, 3], 2] x){
-	int row; int col;
-	row = 0;
-	int suma = 0;
-	while (row < 2)
-	{
-		col = 0;
-		while (col < 3)
-		{
-			suma = suma + x[row][col];
-			col = col + 1;
-		}
-		row = row + 1;
-	}
-	return suma;
+int fact(int n) {
+	int retval;
+	if (n == 0) { retval = 1; }
+	else { retval = n * fact(n - 1); }
+	return retval;
 }
 
-int main(){
-	[[int, 3], 2] x;
-	int row; int col;
-	row = 0;
-	while (row < 2)
-	{
-		col = 0;
-		while (col < 3)
-		{
-			x[row][col] = row * 3 + col;
-			col = col + 1;
-		}
-		row = row + 1;
-	}
-	return sum(x);	
+int main() {
+	return fact(5);
 }

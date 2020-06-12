@@ -3,12 +3,15 @@ package ast.expressions;
 
 import ast.types.BoolType;
 import ast.types.IntType;
+import ast.types.PointerType;
 import ast.types.Type;
 import code.PMachineInstructions;
 
 public enum Operators {
 
-    MAYOR, MAYORIGUAL, MENOR, MENORIGUAL, IGUALIGUAL, DISTINTO, MAS, MENOS, POR, DIVISION, AND, OR, NOT, AMPERSAND;
+    MAYOR, MAYORIGUAL, MENOR, MENORIGUAL, 
+    IGUALIGUAL, DISTINTO, MAS, MENOS, POR, 
+    DIVISION, AND, OR, NOT, AMPERSAND, DEREF;
 
     @Override
     public String toString() {
@@ -27,6 +30,7 @@ public enum Operators {
         	case NOT:	 return "not";
         	case OR:	 return "or";
         	case POR:	 return "*";
+        	case DEREF:		return "*";	
         	default:	 throw new RuntimeException("Unknown operator!");
 	}
     }
@@ -49,6 +53,7 @@ public enum Operators {
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
 	    	//case AMPERSAND:	return OperationTypes.ARITHMETIC;
+	    	case DEREF:		return IntType.INT_TYPE;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
     }
@@ -69,6 +74,7 @@ public enum Operators {
 	    	case NOT:	 	return BoolType.BOOL_TYPE;
 	    	case OR:	 	return BoolType.BOOL_TYPE;
 	    	//case AMPERSAND:	return OperationTypes.ARITHMETIC;
+	    	case DEREF:		return PointerType.INT_PTR;
 	    	default:	 	throw new RuntimeException("Unknown operator!");
     	}
     }
@@ -96,7 +102,8 @@ public enum Operators {
     public int getArity(){
     	switch(this) {
 	    	case NOT:	 	return 1;
-	    	//case AMPERSAND:	return 1;
+	    	case AMPERSAND:	return 1;
+	    	case DEREF:		return 1;
 	    	default:	 	return 2;
     	}
     }
