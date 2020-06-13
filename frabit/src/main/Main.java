@@ -40,7 +40,11 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
-	String input_file = CODE_GENERATION_FOLDER + "concrete_testing.txt";
+	String input_file;
+	if (args.length > 0)
+		input_file = args[0];
+	else 
+		input_file = CODE_GENERATION_FOLDER + "concrete_testing.txt";
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
@@ -53,6 +57,8 @@ public class Main {
     }
 
     // TODO: REMAINING
+    // -> Consider removing null. What do we actually mean by *int x = null?
+    // 		we could simply get rid of it
     // -> Error recovery improvement
     // -> Semantic analysis review
     // -> Set lines properly (not -1 anymore)

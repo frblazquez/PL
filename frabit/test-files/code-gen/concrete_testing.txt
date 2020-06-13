@@ -1,13 +1,45 @@
-
-
-void quicksort(*int v, int iz, int de)
+void intercambiar(*int v, int i, int j)
 {
-    if (iz < de)
-    {
-        int p = particion(v,iz,de);
+    v[i] = v[i] + v[j];
+    v[j] = v[i] - v[j];
+    v[i] = v[i] - v[j];
+}
 
-        quicksort(v,iz,p-1);
-        quicksort(v,p+1,de);
+int busqbin(*int v, int clave, int iz, int de)
+{
+    int m = (iz + de) / 2;
+    int retval;
+    if (v[m] == clave)
+    {
+        retval = m;
+    }
+    else
+    {
+        if (v[m] < clave)
+        {
+            retval = busqbin(v,clave,m + 1,de);
+        }
+        else { retval = busqbin(v,clave,iz,m - 1); }
+    }
+    return retval;
+}
+
+void bubblesort(*int v, int iz, int de)
+{
+    bool swapped = true;
+    while (swapped)
+    {
+        swapped = false;
+        int i = iz + 1;
+        while (i <= de)
+        {
+            if (v[i - 1] > v[i])
+            {
+                intercambiar(v,i - 1,i);
+                swapped = true;
+            }
+            i = i + 1;
+        }
     }
 }
 
@@ -25,5 +57,6 @@ int main()
     v[7] = 2;
     v[8] = 10;
     v[9] = -5;
-	return 0;
+    bubblesort(v,0,9);
+    return busqbin(v,4,0,9);
 }

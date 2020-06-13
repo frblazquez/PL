@@ -8,6 +8,6 @@ int main() {
 	incrementar(y);
 	incrementar(y);
 	incrementar(y);
-	*int z = null;
-	return 0;
+	//*int z = null;jav
+	return x;
 }
