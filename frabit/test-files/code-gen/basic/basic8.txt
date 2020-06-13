@@ -1,0 +1,20 @@
+int main()
+{
+	int x = 0;
+	bool y = true;
+	y = false;
+
+	if(y) {
+		y = true;
+		y = false;
+		x = 7;
+		y = true;
+	} else {
+		y = false;
+		y = true;
+		x = 5;
+		y = false;
+	}
+	
+	return x;	// Should be 5
+}

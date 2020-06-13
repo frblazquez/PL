@@ -36,7 +36,7 @@ public class MainFunction extends Function{
 	ret.produceCode(cls);
 	cls.add(new CodeLine(PMachineInstructions.RETF));
 	cls.add(new CodeLine(PMachineInstructions.STP));
-	cls.modify(unsolvedline, 1, cls.getNLines() - 1);	
+	cls.modifyFirstParam(unsolvedline, cls.getNLines() - 1);
 	}
 	
 }

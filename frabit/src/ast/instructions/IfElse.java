@@ -67,11 +67,11 @@ public class IfElse extends Instruction {
 	    else_instructions.produceCode(cls);
 	    int endPC = cls.getNLines();
 
-	    cls.modify(ifPC, 1, elsePC);
-	    cls.modify(elsePC-1, 1, endPC);
+	    cls.modifyFirstParam(ifPC, elsePC);
+	    cls.modifyFirstParam(elsePC - 1, endPC);
 	} else {
 	    int endPC = cls.getNLines();
-	    cls.modify(ifPC,1, endPC);
+	    cls.modifyFirstParam(ifPC, endPC);
 	}
     }
 }

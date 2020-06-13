@@ -1,0 +1,19 @@
+int main()
+{
+	int x = 7;
+	
+	switch(x){
+		case 0: { x = -1; }
+		case 1: { x = -1; }
+		case 2: { x = -1; }
+		case 3: { x = -1; }
+		case 4: { x = -1; }
+		case 5: { x = -1; }
+		case 6: { x = -1; }
+		case 8: { x = -1; }
+		default: { x = 13; }
+	}
+
+
+	return x;	// Should be 13
+}

@@ -52,6 +52,6 @@ public class Case extends AstNode {
 	cls.add(new CodeLine(PMachineInstructions.UJP)); // Even last case finishes with unconditional Jump!
 	int nextCase = cls.getNLines();
 
-	cls.modify(caseCondition,1, nextCase);
+	cls.modifyFirstParam(caseCondition, nextCase);
     }
 }

@@ -56,6 +56,9 @@ public class Switch extends Instruction {
 	for(Case c : cases)
 	    c.checkSemantics(st);
 	
+	if (default_case != null)
+	    default_case.checkSemantics(st);
+
 	this.st = st;
     }
     
@@ -73,13 +76,12 @@ public class Switch extends Instruction {
 	    default_case.getInstructions().produceCode(cls);
 
 	int switchEnd = cls.getNLines();
-
 	cls.add(new CodeLine(PMachineInstructions.LDC, "0"));
 	cls.add(new CodeLine(PMachineInstructions.EQU));
-	cls.add(new CodeLine(PMachineInstructions.FJP, "" + (switchEnd + 1)));
+	cls.add(new CodeLine(PMachineInstructions.FJP, "" + (cls.getNLines() + 1)));
 
 	for(int idx : jumpsToSwitchEnd)
-	    cls.modify(idx, 1, switchEnd);
+	    cls.modifyFirstParam(idx, switchEnd);
     }
 
 }

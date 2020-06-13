@@ -1,0 +1,7 @@
+int main()
+{
+	bool y = true;
+	int x = 17;
+	bool z = false;
+	return x; // Should be 17
+}

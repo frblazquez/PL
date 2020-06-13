@@ -1,0 +1,13 @@
+int main()
+{
+	int x = 0;
+	
+	switch(5){
+		case -1: { x =  -7; }
+		case 1:  { x =  -7; }
+		case 5:  { x =  7; }
+	}
+
+	
+	return x;	// Should be 7
+}

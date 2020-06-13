@@ -1,0 +1,6 @@
+int main()
+{
+	int x;
+	x = 3;
+	return x; // Should be 3
+}

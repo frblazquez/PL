@@ -1,0 +1,12 @@
+int main()
+{
+	int x = 7;
+	
+	switch(x){
+		case 0: { x = -1; }
+		default: { x = 25; }
+	}
+
+	
+	return x;	// Should be 25
+}

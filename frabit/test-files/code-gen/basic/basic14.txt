@@ -1,0 +1,15 @@
+int main()
+{
+	int x = 1000;
+	bool y;
+	
+	while(x >= 10) {
+		y = true;
+		y = false;
+		y = true;
+		x = x - 1;
+		y = false;
+	}
+	
+	return x;	// Should be 9
+}

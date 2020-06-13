@@ -1,0 +1,12 @@
+int main()
+{
+	int x = 5;
+	bool y = true;
+	
+	while(y) {
+		x = 3;
+		y = false;
+	}
+	
+	return x;	// Should be 3
+}
