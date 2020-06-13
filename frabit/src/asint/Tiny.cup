@@ -34,7 +34,8 @@ terminal TokenValue MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,
 					COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
 					AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
 					DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
-					INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID, IDEN, ENT;
+					INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID, 
+					IDEN, ENT, NEW;
 
 non terminal Program S ;
 non terminal List<Procedure> Metodos ;
@@ -72,6 +73,7 @@ non terminal Operators Op2;
 non terminal Operators Op3;
 non terminal VariableAccess AccesoVariable;
 non terminal List<Access> Accesos;
+non terminal New New;
 
 // Estructura de un programa: definiciones de funciones/procedimientos y una función main.
 S ::= Metodos:fp Main:mf {: RESULT = new Program(fp,mf);:};
@@ -101,6 +103,7 @@ Instruccion ::= Asignacion:ass 				{: RESULT = ass; :}
 				 | While:wh					{: RESULT = wh; :} 
 				 | Llamada:ll 				{: RESULT = ll; :}
 				 | Switch:sw				{: RESULT = sw; :} 
+				 | New:nw					{: RESULT = nw; :}
 				 | error PUNTOCOMA			{: System.out.println("Incorrect instruction"); RESULT = null;:};
 
 
@@ -115,6 +118,7 @@ Invoke ::= IDEN:tv PAP Argumentos:args PCIERRE              {: RESULT = new Invo
 Llamada ::= Invoke:i PUNTOCOMA                              {: RESULT = new Call(i); :};
 Switch ::= SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs LLCIERRE           {: RESULT = new Switch(e,cs); RESULT.setLine(tv.line); :}
 		|  SWITCH:tv PAP E0:e PCIERRE LLAP Cases:cs Default:d LLCIERRE {: RESULT = new Switch(e,cs,d); RESULT.setLine(tv.line); :};                  
+New ::= NEW:tv PAP AccesoVariable:av COMA E0:exp PCIERRE PUNTOCOMA		{: RESULT = new New(av,exp); RESULT.setLine(exp.getLine()); :}; 
 
 AccesoVariable ::= IDEN:tv Accesos:as       {: RESULT = new VariableAccess(tv.token, as); RESULT.setLine(tv.line); :}
 				|	POR AccesoVariable:av	{: RESULT = new Dereferencing(av); RESULT.setLine(av.getLine()); :};

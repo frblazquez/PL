@@ -63,8 +63,14 @@ public final class SymbolTable {
 	methods.put(p.getIdentifier(), p);
     }
 
-    public Procedure getMethod(Identifier id) {
+    public Procedure getMethod(Identifier id) throws SemanticErrorException {
+	if (!methods.containsKey(id))
+		throw new SemanticErrorException(id + " is not a method in this scope", id.getLine());
 	return methods.get(id);
+    }
+    
+    public Procedure getMethodCertain(Identifier id) {
+    	return methods.get(id);
     }
 
     public boolean containsMethod(Identifier id) {

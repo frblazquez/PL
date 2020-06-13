@@ -65,7 +65,7 @@ public class InvokeExpression extends Expression {
     
     @Override
     public void produceCode(CodeLines cls) {
-	Procedure p = this.st.getMethod(identifier);
+	Procedure p = this.st.getMethodCertain(identifier);
 	cls.add(new CodeLine(PMachineInstructions.MST, "0"));
 	arguments.produceCode(cls);
 	cls.setUnsolvedReference(cls.getNLines(), identifier);

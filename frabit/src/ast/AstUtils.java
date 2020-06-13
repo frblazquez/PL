@@ -32,4 +32,5 @@ public final class AstUtils {
     public static final String ARRAY_ACCESS_HEADER 	= "[]: ";
     public static final String REGISTER_HEADER 		= "REGISTER ";
     public static final String CALL_HEADER 		= "CALL: ";
+    public static final String NEW_HEADER		= "NEW: ";
 }

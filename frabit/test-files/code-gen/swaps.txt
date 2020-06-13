@@ -1,0 +1,24 @@
+void intercambiar(*int v, int i, int j)
+{
+	v[i] = v[i] + v[j];
+	v[j] = v[i] - v[j];
+	v[i] = v[i] - v[j];
+}
+
+void prueba(*int v)
+{
+    intercambiar(v, 0, 1);
+    intercambiar(v, 2, 3);
+    intercambiar(v, 8, 9);
+    intercambiar(v, 4, 5);
+}
+
+int main() 
+{
+    [int, 10] v;	
+    v[0] = 1; v[1] = 32; v[2] = 5; v[3] = 13; v[4] = 11;
+	v[5] = 16; v[6] = 6; v[7] = 2; v[8] = 320; v[9] = 7;
+	prueba(&v);
+    //quicksort(&v,0,9);
+	return v[9];
+}

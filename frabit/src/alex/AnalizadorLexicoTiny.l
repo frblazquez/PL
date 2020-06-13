@@ -44,6 +44,7 @@ default = default
 void = void
 main = main
 null = null
+new = new
 letra  = ([A-Z]|[a-z])
 digito = [0-9]
 separador = [ \t\r\b\n]
@@ -93,6 +94,7 @@ llaveCierre = \}
 {void}					  {return ops.unidadVoid();}
 {main}					  {return ops.unidadMain();}
 {null}                    {return ops.unidadNull();}  
+{new}					  {return ops.unidadNew();}
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
 {operadorSuma}            {return ops.unidadSuma();}
