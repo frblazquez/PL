@@ -80,10 +80,12 @@ public class AstNode {
      * @return static data size required for this subtree
      */
     public int staticDataSize() {
+    int max;
 	if (st == null)
-	    return 0;
-
-	int max = this.st.getNextFreeAddress();
+	    max = 0;
+	else
+		max = this.st.getNextFreeAddress();
+	
 	for(AstNode node : children) {
 	    if (node.staticDataSize() > max)
 		max = node.staticDataSize();

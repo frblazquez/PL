@@ -40,7 +40,7 @@ non terminal Program S ;
 non terminal List<Procedure> Metodos ;
 non terminal Procedure Procedimiento;
 non terminal Function Funcion ;
-non terminal Function Main ;
+non terminal MainFunction Main ;
 non terminal Instructions Instrucciones;
 non terminal Instructions Bloque;
 non terminal Instruction Instruccion;
@@ -82,7 +82,7 @@ Metodos ::=                             {: RESULT = new ArrayList<Procedure>(); 
 
 
 Main ::= INT MAIN PAP PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE 
-        {: RESULT = new Function("main", new ArgumentsDefinition(), ins, new IntType(), e); :};
+        {: RESULT = new MainFunction("main", new ArgumentsDefinition(), ins, new IntType(), e); :};
 
 // Declaración de funciones y procedimientos
 Funcion ::= Tipo:t IDEN:tv PAP DefArgumentos:args PCIERRE LLAP Instrucciones:ins RETURN E0:e PUNTOCOMA LLCIERRE			

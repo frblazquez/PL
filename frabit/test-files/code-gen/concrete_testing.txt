@@ -1,4 +1,51 @@
-int main() {
-	int x = 0 + 1;
-	return x;
+void intercambiar(*int v, int i, int j)
+{
+	v[i] = v[i] + v[j];
+	v[j] = v[i] - v[j];
+	v[i] = v[i] - v[j];
+}
+
+int particion (*int v, int iz, int de) 
+{ 
+    int pivote = v[de];
+    int i = iz - 1;
+  
+  	int j = iz;
+    while (j < de) 
+    { 
+        // Elemento menor que pivote
+        if (v[j] < pivote) 
+        { 
+            i = i + 1;
+            intercambiar(v,i,j);
+        } 
+        j = j + 1;
+    } 
+    intercambiar(v,i + 1,de);
+    return (i + 1); 
+} 
+
+void quicksort(*int v, int iz, int de)
+{
+    if (iz < de)
+    {
+        int p = particion(v, iz, de);
+
+        quicksort(v, iz, p - 1);
+        quicksort(v, p + 1, de); 
+    }
+}
+
+int determinante([[int, 2], 2] x) 
+{
+	return x[0][0] * x[1][1] - x[0][1]*x[1][0];
+}
+
+int main() 
+{
+	[int, 10] v;
+	v[0] = 1; v[1] = 32; v[2] = 5; v[3] = 13; v[4] = 11;
+	v[5] = 16; v[6] = 6; v[7] = 2; v[8] = 130; v[9] = 7;
+	quicksort(&v,0,9);
+	return v[6];
 }

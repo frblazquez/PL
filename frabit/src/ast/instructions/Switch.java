@@ -79,7 +79,7 @@ public class Switch extends Instruction {
 	cls.add(new CodeLine(PMachineInstructions.FJP, "" + (switchEnd + 1)));
 
 	for(int idx : jumpsToSwitchEnd)
-	    cls.modify(idx, switchEnd);
+	    cls.modify(idx, 1, switchEnd);
     }
 
 }

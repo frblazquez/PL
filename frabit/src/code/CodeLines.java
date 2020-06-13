@@ -36,8 +36,11 @@ public class CodeLines {
 	return nlines;
     }
 
-    public void modify(int codeLine, int parameter) {
-	codelines.get(codeLine).setFirstParameter("" + parameter);
+    public void modify(int codeLine, int par_num, int parameter) {
+	if (par_num == 1)
+    	codelines.get(codeLine).setFirstParameter("" + parameter);
+	else if (par_num == 2)
+		codelines.get(codeLine).setSecondParameter("" + parameter);
     }
 
     public List<CodeLine> getCodeLines() {
@@ -71,6 +74,6 @@ public class CodeLines {
     }
 
     public void setCallAddresses() {
-	line_unsolvedJumpReference.forEach((k, v) -> this.modify(k, method_firstInstruction.get(v)));
+	line_unsolvedJumpReference.forEach((k, v) -> this.modify(k, 2, method_firstInstruction.get(v)));
     }
 }

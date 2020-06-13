@@ -13,12 +13,13 @@ import code.CodeLines;
 import code.PMachineInstructions;
 
 public class Function extends Procedure {
-    private Return ret;
-    private Type ret_type;
+    protected Return ret;
+    protected Type ret_type;
     
     public Function(String id, ArgumentsDefinition args, Instructions insts, Type t, Expression e) {
 	super(AstUtils.FUNCTION_HEADER, id, args, insts);
 	ret = new Return(e);
+	ret.setLine(e.getLine());
 	ret_type = t;
 
 	children.add(ret_type);
@@ -41,7 +42,7 @@ public class Function extends Procedure {
 	ret.checkSemantics(func_st);
 
 	if (!ret_type.equals(ret.getReturnType()))
-	    throw new SemanticErrorException("Function type and return expression type do not match");
+	    throw new SemanticErrorException("Function type and return expression type do not match", ret.line);
 	this.st = func_st;
     }
 

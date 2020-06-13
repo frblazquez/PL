@@ -44,7 +44,7 @@ public class While extends Instruction {
 	cls.add(new CodeLine(PMachineInstructions.UJP));
 	int endPC = cls.getNLines();
 
-	cls.modify(conditionJumpPC, endPC);
-	cls.modify(endWhileJumpPC, conditionEvaluationPC);
+	cls.modify(conditionJumpPC, 1, endPC);
+	cls.modify(endWhileJumpPC, 1, conditionEvaluationPC);
     }
 }

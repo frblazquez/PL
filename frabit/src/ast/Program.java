@@ -12,9 +12,9 @@ import errors.GestionErroresTiny;
 public class Program extends AstNode {
 
     private List<Procedure> methods;
-    private Function main_function;
+    private MainFunction main_function;
 
-    public Program(List<Procedure> methods, Function main) {
+    public Program(List<Procedure> methods, MainFunction main) {
 	super(AstUtils.PROGRAM_HEADER);
 	this.methods = methods;
 	this.main_function = main;
@@ -51,7 +51,7 @@ public class Program extends AstNode {
     @Override
     public void produceCode(CodeLines cls) {
 	main_function.produceCode(cls);
-	cls.add(new CodeLine(PMachineInstructions.STP));
+	
 	for(Procedure m : methods)
 	    m.produceCode(cls);
 

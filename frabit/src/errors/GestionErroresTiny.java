@@ -18,7 +18,7 @@ public class GestionErroresTiny {
     }
 
     public static void errorSintactico(UnidadLexica unidadLexica) {
-	System.out.print("Syntax error in line " + ((TokenValue) unidadLexica.value).line + ": Unexpected token \""+ unidadLexica.lexema() + "\" ");
+	System.out.print("Syntax error on line " + ((TokenValue) unidadLexica.value).line + ": Unexpected token \""+ unidadLexica.lexema() + "\" ");
 	syntax_errors++;
 	// System.exit(1);
     }

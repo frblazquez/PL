@@ -9,6 +9,7 @@ import ast.Identifier;
 import ast.expressions.Expression;
 import ast.types.ArrayType;
 import ast.types.IntType;
+import ast.types.PointerType;
 import ast.types.RegisterType;
 import ast.types.Type;
 import code.CodeLine;
@@ -19,12 +20,14 @@ public class VariableAccess extends Expression {
 
     protected Identifier identifier;
     protected List<Access> accesses;
-
+    boolean ispointer;
+    
     public VariableAccess(String id, List<Access> a) {
 	super(id);
 	identifier = new Identifier(id);
 	accesses = a;
 	children.addAll(accesses);
+	ispointer = false;
     }
 
     public Identifier getIdentifier() {
@@ -53,7 +56,19 @@ public class VariableAccess extends Expression {
 		    throw new SemanticErrorException("Register index out of bound", this.line);
 
 		t = taux.getEntryType(acaux.getIndex());
-	    } else
+	    } else if (t instanceof PointerType && ac instanceof ArrayAccess) {
+			PointerType taux = ((PointerType) t);
+			ArrayAccess acaux = ((ArrayAccess) ac);
+			acaux.getIndex().checkSemantics(st);
+			ispointer = true;
+			if (!acaux.getIndex().getType().equals(IntType.INT_TYPE))
+			    throw new SemanticErrorException("Array index must be an arithmetic expression", this.line);
+
+			t = taux.getBaseType();	
+	    }
+	    
+	    
+	    else
 		throw new SemanticErrorException("Illegal variable access to \"" + identifier + "\": " + ac, this.line);
 	}
 
@@ -67,19 +82,22 @@ public class VariableAccess extends Expression {
     	SymbolTableEntry ste = st.getCertain(identifier);
     	// Set start of memory position at identifier's base address
     	cls.add(new CodeLine(PMachineInstructions.LDA, "0", Integer.toString(ste.getAddr())));
+    	if (ispointer) cls.add(new CodeLine(PMachineInstructions.IND));
     	Type t = st.getCertain(identifier).getType();
     	for (Access ac : accesses) {
     		if (ac instanceof ArrayAccess) {
-    			ArrayType taux = ((ArrayType) t);
+    			Type basetype;
+    			if (ispointer) basetype = ((PointerType) t).getBaseType();
+    			else basetype = ((ArrayType) t).getBaseType();
     			ArrayAccess acaux = (ArrayAccess) ac;
 		acaux.getIndex().produceCode(cls); // Produce code of index expression
-    			int size_per_element = taux.getBaseType().getSize();
+    			int size_per_element = basetype.getSize();
     			// Multiply index by base type size
     			cls.add(new CodeLine(PMachineInstructions.LDC,Integer.toString(size_per_element)));
     			cls.add(new CodeLine(PMachineInstructions.MUL));
     			// Now add current shift with new shift
     			cls.add(new CodeLine(PMachineInstructions.ADD));
-    			t = taux.getBaseType();
+    			t = basetype;
     		} else if (ac instanceof RegisterAccess) {
     			RegisterType taux = ((RegisterType) t);
     			RegisterAccess acaux = ((RegisterAccess) ac);
@@ -100,7 +118,11 @@ public class VariableAccess extends Expression {
     @Override
     public void produceCode(CodeLines cls) {
     	this.produceStoreCode(cls);
-	cls.add(new CodeLine(PMachineInstructions.MOVS, "" + expression_type.getSize()));
+    	int size = expression_type.getSize();
+    	if (size > 1)
+    		cls.add(new CodeLine(PMachineInstructions.MOVS,Integer.toString(size)));
+    	else	// TODO: MOVS 1 is equivalent to IND, shall we get rid of this or is it nicer
+    		cls.add(new CodeLine(PMachineInstructions.IND));
     }
     
     @Override
