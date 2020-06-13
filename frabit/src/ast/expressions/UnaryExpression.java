@@ -35,7 +35,7 @@ public class UnaryExpression extends Expression {
 	
 	if (op == Operators.AMPERSAND) {
 	    if (!(exp instanceof VariableAccess))
-		throw new SemanticErrorException("Pointer operators demand a variable");
+		throw new SemanticErrorException("Pointer operators demand a variable",this.line);
 	    this.expression_type = new PointerType(((VariableAccess) exp).getType());
 	} else if (!op.operandType().equals(exp.getType()))
 	    throw new SemanticErrorException("Operand types do not match in expression", this.line);

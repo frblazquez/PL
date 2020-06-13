@@ -34,7 +34,7 @@ public final class SymbolTable {
 	else if (prevBlockST != null)
 	    return prevBlockST.get(id);
 	else
-	    throw new SemanticErrorException("Identifier not declared: " + id);
+	    throw new SemanticErrorException("Identifier not declared: " + id,id.getLine());
     }
 
     // Same as above but no exception guaranteed
