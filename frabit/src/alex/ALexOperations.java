@@ -92,9 +92,6 @@ public UnidadLexica unidadNot() {
 public UnidadLexica unidadInt() {
 	return new UnidadLexica(alex.fila(), ClaseLexica.INT, "int");
 }
-public UnidadLexica unidadNull() {
-    return new UnidadLexica(alex.fila(),ClaseLexica.NULL,"null"); 
-}
 public UnidadLexica unidadNew() {
     return new UnidadLexica(alex.fila(),ClaseLexica.NEW,"new"); 
 } 

@@ -93,7 +93,6 @@ llaveCierre = \}
 {default}				  {return ops.unidadDefault();}
 {void}					  {return ops.unidadVoid();}
 {main}					  {return ops.unidadMain();}
-{null}                    {return ops.unidadNull();}  
 {new}					  {return ops.unidadNew();}
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}

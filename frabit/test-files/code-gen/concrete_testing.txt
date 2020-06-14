@@ -5,24 +5,7 @@ void intercambiar(*int v, int i, int j)
     v[i] = v[i] - v[j];
 }
 
-int busqbin(*int v, int clave, int iz, int de)
-{
-    int m = (iz + de) / 2;
-    int retval;
-    if (v[m] == clave)
-    {
-        retval = m;
-    }
-    else
-    {
-        if (v[m] < clave)
-        {
-            retval = busqbin(v,clave,m + 1,de);
-        }
-        else { retval = busqbin(v,clave,iz,m - 1); }
-    }
-    return retval;
-}
+
 
 void bubblesort(*int v, int iz, int de)
 {
@@ -43,20 +26,24 @@ void bubblesort(*int v, int iz, int de)
     }
 }
 
+int incruntil(<int,bool> reg)
+{
+    while (reg.1)
+    {
+    	if (reg.0 < 5)
+    	{
+    		reg.0 = reg.0 + 1;
+    	}
+    	else { reg.1 = false; }
+    }
+    return reg.0;
+}
+
 int main() 
 {
-    *int v;
-    new(v,10);
-    v[0] = 4;
-    v[1] = -2;
-    v[2] = 9;
-    v[3] = 1;
-    v[4] = 0;
-    v[5] = 27;
-    v[6] = -4;
-    v[7] = 2;
-    v[8] = 10;
-    v[9] = -5;
-    bubblesort(v,0,9);
-    return busqbin(v,4,0,9);
+    <int,bool> reg;
+    reg.0 = 1;
+    reg.1 = true;
+    reg.2 = 3;
+    return incruntil(reg);
 }
