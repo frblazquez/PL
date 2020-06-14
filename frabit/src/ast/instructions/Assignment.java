@@ -30,6 +30,8 @@ public class Assignment extends Instruction {
 	
 	if (!variable.getType().equals(expression.getType()))
 	    throw new SemanticErrorException("Assignment types do not match", this.line);
+	if (variable.getType().getSize() != 1)
+		throw new SemanticErrorException("Only one word elements can be assigned at a time", this.line);
 	this.st = st;
     }
 

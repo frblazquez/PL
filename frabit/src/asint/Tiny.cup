@@ -31,7 +31,7 @@ parser code {:
 init with {: :};
 
 terminal TokenValue MAS, MENOS, POR, DIV, IGUAL, AMPERSAND, MAIN,  
-					COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE, NULL,
+					COMA, PAP, PCIERRE, CAP, CCIERRE, LLAP, LLCIERRE,
 					AND, OR, NOT, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, PUNTO,
 					DISTINTO, IGUALIGUAL, IF, ELSE, WHILE, PUNTOCOMA, DOSPUNTOS, 
 					INT, BOOL, TRUE, FALSE, RETURN, SWITCH, CASE, DEFAULT, VOID, 
@@ -169,7 +169,6 @@ E3 ::= Op3:op E3:exp	            {: RESULT = new UnaryExpression(op,exp); RESULT
 E4 ::= ENT:tv                      {: RESULT = new Constant(tv.token, new IntType()); RESULT.setLine(tv.line); :}
 	| TRUE:tv	                    {: RESULT = new Constant(tv.token, new BoolType()); RESULT.setLine(tv.line); :}
 	| FALSE:tv	                    {: RESULT = new Constant(tv.token, new BoolType()); RESULT.setLine(tv.line); :}
-	| NULL:tv 		                    {: RESULT = new Constant("null", new PointerType()); RESULT.setLine(tv.line); :}
 	| PAP E0:exp PCIERRE            {: RESULT = exp; :}
 	| AccesoVariable:av             {: RESULT = av; :}
 	| Invoke:in                     {: RESULT = in; :}

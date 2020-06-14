@@ -57,8 +57,6 @@ public class Main {
     }
 
     // TODO: REMAINING
-    // -> Consider removing null. What do we actually mean by *int x = null?
-    // 		we could simply get rid of it
     // -> Error recovery improvement
     // -> Semantic analysis review
     // -> Set lines properly (not -1 anymore)
