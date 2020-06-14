@@ -1,0 +1,17 @@
+int main()
+{
+	int x = 17;
+	int y = 12;
+	int z = 10;
+	int res = 0;
+	
+	bool u = z + 2 == y;
+	bool v = (x-y)*2 >= z;
+	bool w =  3*y <= 2*x;
+	
+	if(u) { res = res + 1; }
+	if(v) { res = res + 3; }
+	if(w) { res = res + 5; }
+	
+	return res;  // Should be 4
+}

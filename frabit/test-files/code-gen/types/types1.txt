@@ -1,0 +1,12 @@
+int main() 
+{
+	int x = 5;
+	int y = 1;
+	int z = x + y; 
+	z = z * x;
+	z = z / x;
+	z = z + 2 - y;
+	
+
+	return z; // Should be 7
+}

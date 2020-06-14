@@ -1,0 +1,11 @@
+int main()
+{
+	int x = 1;
+	bool y = true;
+	*bool ptr = &y;
+	*ptr = false;
+	
+	if(y) { x = - 1; }
+	
+	return x; // Should be 1
+}

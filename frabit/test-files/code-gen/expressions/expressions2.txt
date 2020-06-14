@@ -1,0 +1,8 @@
+int main()
+{
+	int x = 5;
+	int y = 7;
+	int z = 13;
+	
+	return x*5*z + 47 - (2*y*z)/14 + x*y - 21*z + 128/4;  // Should be 153
+}

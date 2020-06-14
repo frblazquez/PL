@@ -13,7 +13,7 @@ public class GestionErroresTiny {
 	System.out.println("Lexical error in line " + fila + ": Unexpected character: \"" + lexema + "\"");
 	lexical_errors++;
 
-	System.err.println("ERROR: Compilation process aborted");
+	System.err.println("ERROR: Compilation process aborted because lexical errors are present");
 	System.exit(1);
     }
 
@@ -23,7 +23,7 @@ public class GestionErroresTiny {
 	// System.exit(1);
     }
 
-    public static void errorSemántico(String msg, int line) {
+    public static void errorSemantico(String msg, int line) {
 	System.out.println("Semantic error on line " + line + ": " + msg);
 	semantic_errors++;
 	// System.exit(1);

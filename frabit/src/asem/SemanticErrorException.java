@@ -18,6 +18,6 @@ public class SemanticErrorException extends Exception {
 
     public void printSemanticError() {
 	// All the errors are being redirected to GestionErroresTiny
-	GestionErroresTiny.errorSemántico(this.getMessage(), line);
+	GestionErroresTiny.errorSemantico(this.getMessage(), line);
     }
 }
