@@ -44,6 +44,5 @@ int main()
     <int,bool> reg;
     reg.0 = 1;
     reg.1 = true;
-    reg.2 = 3;
     return incruntil(reg);
 }
