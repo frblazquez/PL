@@ -44,7 +44,7 @@ public class Main {
 	if (args.length > 0)
 		input_file = args[0];
 	else 
-		input_file = CODE_GENERATION_FOLDER + "concrete_testing.txt";
+	    input_file = CODE_GENERATION_FOLDER + "pointers/pointers3.txt";
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
@@ -58,7 +58,7 @@ public class Main {
 
     // TODO: REMAINING
     // -> Error recovery improvement
-    // -> Semantic analysis review
-    // -> Set lines properly (not -1 anymore)
+    // -> Set lines properly (not -1 in "Identifier not declared")
     // -> P-code generation review
+    // -> Testing
 }

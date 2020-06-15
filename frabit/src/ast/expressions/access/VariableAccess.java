@@ -128,7 +128,6 @@ public class VariableAccess extends Expression {
     @Override
     public int stackEvaluationSize() {
     	// First consider the expressions to find address, then the stacking of result
-	// TODO: Null pointer exception!
 	return Math.max(2 + accesses.size(), expression_type.getSize());
     }
 }

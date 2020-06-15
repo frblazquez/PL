@@ -4,9 +4,7 @@ import java.util.List;
 
 import asem.SemanticErrorException;
 import asem.SymbolTable;
-import code.CodeLine;
 import code.CodeLines;
-import code.PMachineInstructions;
 import errors.GestionErroresTiny;
 
 public class Program extends AstNode {
@@ -68,7 +66,7 @@ public class Program extends AstNode {
 
     public void checkSemantics() {
 	if (GestionErroresTiny.getSyntacticErrors() > 0) {
-	    System.out.println("ERROR: Aborting semantic analysis because syntax errors are present");
+	    System.err.println("ERROR: Aborting semantic analysis because syntax errors are present");
 	    return;
 	}
 
@@ -78,12 +76,12 @@ public class Program extends AstNode {
 
     public void printPCode() {
 	if (GestionErroresTiny.getSyntacticErrors() > 0) {
-	    System.out.println("ERROR: Aborting p-code generation because syntax errors are present");
+	    System.err.println("ERROR: Aborting p-code generation because syntax errors are present");
 	    return;
 	}
 
 	if (GestionErroresTiny.getSemanticErrors() > 0) {
-	    System.out.println("ERROR: Aborting p-code generation because semantic errors are present");
+	    System.err.println("ERROR: Aborting p-code generation because semantic errors are present");
 	    return;
 	}
 

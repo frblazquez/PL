@@ -1,0 +1,19 @@
+int main()
+{
+	int x = 23;
+	int y = 13;
+	int z = 7;
+	int res = 0;
+	
+	bool u = z*2 <  y - 1;		// False
+	bool v = z*2 == y + 1;		// True
+	bool w =  3*y != 2*x;		// True
+	bool s =  3*y > 2*x;		// False
+	bool t = not u and w or s;  // True
+	
+	if(t) 			{ res = res + 1; }
+	if(not u and v) { res = res + 3; }
+	if((not u or s) and (v and w or s) and not u) { res = res + 5; }
+	
+	return res;  // Should be 9
+}

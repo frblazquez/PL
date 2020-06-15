@@ -1,0 +1,18 @@
+int main() 
+{
+	<int, int> reg_int;
+	<bool, bool> reg_bool;
+	
+	reg_int.0 = 1;
+	reg_int.1 = 10;
+	
+	reg_bool.0 = true;
+	reg_bool.1 = false;
+	
+	reg_int.1  = reg_int.1 + reg_int.0;
+	reg_bool.1 = reg_int.1 == 11;
+
+	if(reg_bool.0 and reg_bool.1) { reg_int.0 = 7; }
+
+	return reg_int.0; // Should be 7
+}
