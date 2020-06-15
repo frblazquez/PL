@@ -130,4 +130,10 @@ public class VariableAccess extends Expression {
     	// First consider the expressions to find address, then the stacking of result
 	return Math.max(2 + accesses.size(), expression_type.getSize());
     }
+    
+    @Override
+    public void setLine(int line) {
+	super.setLine(line);
+	this.identifier.setLine(line);
+    }
 }

@@ -76,4 +76,11 @@ public class InvokeExpression extends Expression {
     public int stackEvaluationSize() {
     	return 5 + arguments.stackEvaluationSize(); // Space for MST plus for arguments
     }
+    
+    @Override
+    public void setLine(int line)
+    {
+	super.setLine(line);
+	this.identifier.setLine(line);
+    }
 }

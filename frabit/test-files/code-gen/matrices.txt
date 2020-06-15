@@ -1,0 +1,53 @@
+int at(int f, int c, int columnas)
+{
+	return f * columnas + c;
+}
+
+// Inicialización de la matriz pasándola por puntero
+void inicializar(*int m, int filas, int columnas)
+{
+	int ff; int cc;
+	ff = 0;
+	while (ff < filas)
+	{
+		cc = 0;
+		while (cc < columnas)
+		{
+			m[at(ff,cc,columnas)] = ff + 2 * cc * cc;
+			cc = cc + 1;
+		}
+		ff = ff + 1;
+	}
+}
+
+// Eleva una matriz al cuadrado
+void cuadrado(*int matrizin, *int matrizout, int size)
+{
+	int ff = 0; int cc = 0; int k;
+	while (ff < size)
+	{
+		cc = 0;
+		while (cc < size)
+		{
+			k = 0;
+			matrizout[at(ff,cc,size)] = 0;
+			while (k < size)
+			{
+				matrizout[at(ff,cc,size)] = matrizout[at(ff,cc,size)] + matrizin[at(ff,k,size)] * matrizin[at(k,cc,size)];
+				k = k + 1;
+			}
+			cc = cc + 1;
+		}
+		ff = ff + 1;
+	}
+}
+
+int main()
+{
+	[[int, 3], 3] matriz;
+	inicializar(&matriz, 3, 3);
+	*int res;
+	new(res,9);
+	cuadrado(&matriz,res,3);
+	return 0;
+}
