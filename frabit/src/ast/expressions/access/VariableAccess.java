@@ -145,4 +145,10 @@ public class VariableAccess extends Expression {
 
 	return t;
     }
+    
+    @Override
+    public void setLine(int line) {
+	super.setLine(line);
+	this.identifier.setLine(line);
+    }
 }
