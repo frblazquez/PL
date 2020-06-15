@@ -20,7 +20,7 @@ void inicializar(*int m, int filas, int columnas)
 	}
 }
 
-// Eleva una matriz al cuadrado
+// Eleva una matriz cuadrada al cuadrado
 void cuadrado(*int matrizin, *int matrizout, int size)
 {
 	int ff = 0; int cc = 0; int k;
@@ -45,7 +45,8 @@ void cuadrado(*int matrizin, *int matrizout, int size)
 int main()
 {
 	[[int, 3], 3] matriz;
-	inicializar(&matriz, 3, 3);
+	matriz[0][0] = 3; matriz[2][1] = -2; // Asignaciones normales en la matriz
+	inicializar(&matriz, 3, 3);		// Inicializar la matriz viéndola como un puntero a enteros
 	*int res;
 	new(res,9);
 	cuadrado(&matriz,res,3);

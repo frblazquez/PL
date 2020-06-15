@@ -1,0 +1,16 @@
+int euclides(int a, int b)	// Halla el máximo común divisor de dos números
+{
+	int retval = 1;
+	if (a == b) { retval = a; }
+	else 
+	{
+		if (a < b) { retval = euclides(a,b-a); }
+		else { retval = euclides(a-b, b); }
+	}
+	return retval;
+}
+
+int main()
+{
+	return euclides(7,13);
+}

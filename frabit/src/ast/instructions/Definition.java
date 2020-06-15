@@ -62,4 +62,10 @@ public class Definition extends Instruction {
 	    cls.add(new CodeLine(PMachineInstructions.STR, "0", Integer.toString(ste.getAddr())));
 	}
     }
+    
+    @Override
+    public void setLine(int line) {
+	super.setLine(line);
+	this.identifier.setLine(line);
+    }
 }
