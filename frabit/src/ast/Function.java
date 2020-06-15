@@ -41,6 +41,8 @@ public class Function extends Procedure {
 	
 	ret.checkSemantics(func_st);
 
+	if (ret_type.getSize() != 1)
+		throw new SemanticErrorException("Return type must have size of one word", this.line);
 	if (!ret_type.equals(ret.getReturnType()))
 	    throw new SemanticErrorException("Function type and return expression type do not match", ret.line);
 	this.st = func_st;
