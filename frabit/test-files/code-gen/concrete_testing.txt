@@ -42,7 +42,10 @@ int incruntil(<int,bool> reg)
 int main() 
 {
     <int,bool> reg;
+    <int,bool> regg;
+    reg = regg;
     reg.0 = 1;
     reg.1 = true;
+    reg.2 = true;
     return incruntil(reg);
 }
