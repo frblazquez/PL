@@ -1,0 +1,14 @@
+int main()
+{
+	int x = 0;
+	*int ptr;
+	
+	new(ptr, 10);
+	
+	while(x<10) {
+		ptr[x] = x;
+		x = x + 1;
+	}
+	
+	return ptr[5] + ptr[9]; // Should be 14
+}

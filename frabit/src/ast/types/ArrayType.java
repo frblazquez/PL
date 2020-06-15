@@ -40,4 +40,11 @@ public class ArrayType extends Type {
 		// CAUTION: This is the total size (amount of mem words) that array takes, not its number of elements
 		return size * base_type.getSize();
 	}
+
+    public Type getDeepestType() {
+	if (base_type instanceof ArrayType)
+	    return ((ArrayType) base_type).getDeepestType();
+	else
+	    return base_type;
+    }
 }

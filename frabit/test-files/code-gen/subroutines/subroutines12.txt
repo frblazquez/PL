@@ -1,0 +1,65 @@
+void swap(*int v,int i, int j)
+{
+	v[i] = v[i] + v[j];
+	v[j] = v[i] - v[j];
+	v[i] = v[i] - v[j];
+}
+
+void quicksort(*int v,int first,int last)
+{
+   int i; int j; int pivot; int temp;
+
+   if(first<last)
+   {
+	  pivot=first;
+	  i=first;
+	  j=last;
+
+    while(i<j){
+        while((v[i] <= v[pivot]) and (i<last))
+         {
+         	i = i + 1;
+         }
+        while(v[j] > v[pivot])
+        { j = j - 1; }
+         if(i < j)
+         {
+         	swap(v,i,j);
+         }
+      }
+
+      swap(v,j,pivot);
+      quicksort(v,first,j- 1);
+      quicksort(v,j+ 1,last);
+
+   }
+}
+
+int busqbin(*int v, int clave, int iz, int de)
+{
+    int m = (iz + de) / 2;
+    int retval;
+    if (v[m] == clave)
+    {
+        retval = m;
+    }
+    else
+    {
+        if (v[m] < clave)
+        {
+            retval = busqbin(v,clave,m + 1,de);
+        }
+        else { retval = busqbin(v,clave,iz,m - 1); }
+    }
+    return retval;
+}
+
+int main()
+{
+	*int y;
+	new(y,7);
+	y[0] = 16; y[1] = -2; y[2] = 13; y[3] = 1; y[4] = 9;
+	y[5] = 4; y[6] = 0;
+	quicksort(y,0,6);
+	return busqbin(y,13,0,6); // Should be 5
+}

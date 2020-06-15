@@ -2,14 +2,19 @@ int main()
 {
 	int x = 0;
 	[int,5] arr;
-	*[int,5] ptr1 = &arr;
-	*int ptr2 = &arr;
+	*int ptr = &arr;
 	
-	*ptr1[0] = 1;
-	*ptr2[1] = 1;
-	ptr1[2] = 2;
-	ptr2[3] = 2;
-	arr[4] = 3;
+	arr[0] = 5;
+	ptr[1] = 1;
+	arr[2] = 2;
+	ptr[3] = 3;
+	arr[4] = 4;
 	
-	return x; // Should be 1
+	int i = 0;
+	while(i<5) {
+		x = x + arr[i];
+		i = i + 1;
+	}
+	
+	return x; // Should be 15
 }

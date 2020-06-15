@@ -1,0 +1,15 @@
+bool greaterThan(int n1, int n2) {
+	return n1 > n2;
+}
+int main() {
+	int res = 0;
+	int x = 5;
+	int y = 100;
+	
+	if(greaterThan(x,x)) { res = -1; }
+	else                 { res = res + 1; }
+	
+	if(greaterThan(x,100)) { res = res + 10;}
+	
+	return res; // Should be 1
+}

@@ -1,0 +1,148 @@
+*bool arrayAllFalses(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses2(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses3(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses4(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses5(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses6(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllFalses7(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+
+*bool arrayAllTrues(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues2(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues3(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues4(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues5(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues6(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+*bool arrayAllTrues7(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = true; i = i + 1; }
+
+	return ptr;
+}
+
+int main() {
+	int res = 1;
+	*bool ptr = arrayAllFalses5(5);
+	
+	if(ptr[0] or ptr[1] or ptr[2] or ptr[3] or ptr[4]) { res = -1; }
+	
+	ptr = arrayAllFalses2(5);
+	
+	if(ptr[0] or ptr[1] or ptr[2] or ptr[3] or ptr[4]) { res = -1; }
+	
+	ptr = arrayAllTrues3(5);
+	
+	if(not ptr[0] or not ptr[1] or not ptr[2] or not ptr[3] or not ptr[4]) { res = -1; }
+	
+	ptr = arrayAllTrues7(5);
+	
+	if(not ptr[0] or not ptr[1] or not ptr[2] or not ptr[3] or not ptr[4]) { res = -1; }
+
+	return res; // Should be 1
+}

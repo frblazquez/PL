@@ -1,0 +1,16 @@
+int main()
+{
+	int x = 0;
+	[bool,5] arr;
+	*bool ptr = &arr;
+	
+	arr[0] = true;
+	ptr[1] = false;
+	arr[2] = true;
+	ptr[3] = false;
+	arr[4] = true;
+	
+	if(not arr[1] and not arr[3] and ptr[0] and ptr[2] and ptr[4]) { x = 7; }
+	
+	return x; // Should be 7
+}

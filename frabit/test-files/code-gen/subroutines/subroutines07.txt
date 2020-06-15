@@ -1,0 +1,32 @@
+bool isPositiveEvenLowerThanTwelve(int n) {
+	bool ret;
+	
+	switch(n) {
+		case 0: { ret = true; }
+		case 2: { ret = true; }
+		case 4: { ret = true; }
+		case 6: { ret = true; }
+		case 8: { ret = true; }
+		case 10:{ ret = true; }
+		default:{ ret = false; }
+	}
+	
+	return ret;
+}
+int main() {
+	int res = 1;
+	
+	if(isPositiveEvenLowerThanTwelve(1)  or
+	   isPositiveEvenLowerThanTwelve(3)  or
+	   isPositiveEvenLowerThanTwelve(5)  or
+	   isPositiveEvenLowerThanTwelve(7)  or
+	   isPositiveEvenLowerThanTwelve(12) or
+	   isPositiveEvenLowerThanTwelve(1)  or
+	   isPositiveEvenLowerThanTwelve(-2) or
+	   isPositiveEvenLowerThanTwelve(14) or
+	   not isPositiveEvenLowerThanTwelve(2) or
+	   not isPositiveEvenLowerThanTwelve(6) or
+	   not isPositiveEvenLowerThanTwelve(10)) {res = -1; }
+	   
+	return res; // Should be 1
+}

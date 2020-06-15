@@ -1,0 +1,24 @@
+int returnOne() {
+	return 1;
+}
+int returnN(int n) {
+	int aux = 0;
+	while(n > 0) {
+		aux = aux +  returnOne();
+		n = n - 1;
+	}
+	return aux;
+}
+int main() {
+	int res = 1;
+	int n = 5;
+	
+	int aux = returnN(n);
+	if(aux != 5) { res = -1; }
+	if(n != 5) { res = -1; }
+	
+	aux = returnN(10);
+	if(aux != 10) { res = -1; }
+	
+	return res; // Should be 1
+}

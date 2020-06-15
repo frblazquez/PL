@@ -1,0 +1,6 @@
+int returnOne() {
+	return 1;
+}
+int main() {
+	return returnOne(); // Should return 1
+}

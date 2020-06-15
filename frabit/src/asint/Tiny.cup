@@ -145,11 +145,13 @@ Instrucciones ::= Instrucciones:insts Instruccion:ins 	{: RESULT = insts; insts.
 // Tipos permitidos
 Tipo ::= INT                                        {: RESULT = new IntType(); :}
     | BOOL                                          {: RESULT = new BoolType(); :}
-    | POR Tipo:t                                    {: RESULT = new PointerType(t); :}
+    | POR:tv INT	                                {: RESULT = new PointerType(IntType.INT_TYPE); RESULT.setLine(tv.line); :}
+    | POR:tv BOOL									{: RESULT = new PointerType(BoolType.BOOL_TYPE); RESULT.setLine(tv.line); :}
     | CAP Tipo:t COMA ENT:tv CCIERRE               {: RESULT = new ArrayType(t, Integer.parseInt(tv.token)); :}
     | MENOR Tipos:ts MAYOR                          {: RESULT = new RegisterType(ts); :}
     | CAP Tipo error ENT CCIERRE 					{: System.out.println("Type and size must be separated by comma in arrays"); RESULT = null; :}
-	| error 										{: System.out.println("Was expecting a valid type"); RESULT = null; :};
+	| error 										{: System.out.println("Was expecting a valid type"); RESULT = null; :}
+	| POR error 									{: System.out.println("only basic types (int, bool) pointers are allowed"); RESULT = null; :};
 
 Tipos ::= Tipos:ts COMA Tipo:t                      {: RESULT = ts; ts.add(t); :}
     | Tipo:t                                        {: RESULT = new ArrayList<Type>(); RESULT.add(t); :};

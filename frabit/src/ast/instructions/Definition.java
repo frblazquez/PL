@@ -36,14 +36,19 @@ public class Definition extends Instruction {
     @Override
     public void checkSemantics(SymbolTable st) throws SemanticErrorException {
 
+	// Having this before the initialization semantic check makes our program to consider
+	// the variable is defined even if initialization expression errors are present
+	st.makeBinding(identifier, new SymbolTableEntry(type));
+
 	if (initialization != null) {
 	    initialization.checkSemantics(st);
 
 	    if (!type.equals(initialization.getType()))
 		throw new SemanticErrorException("Definition type and initialization expression type do not match", this.line);
+	    if (initialization.getType().getSize() != 1)
+		throw new SemanticErrorException("Only one word elements can be assigned at a time", this.line);
 	}
 
-	st.makeBinding(identifier, new SymbolTableEntry(type));
 	this.st = st;
     }
     

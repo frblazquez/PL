@@ -1,0 +1,28 @@
+int main()
+{
+	int x = 1;
+	int i = 0;
+	
+	[int,4]  arr_int;
+	
+	*int  ptr_int  = &arr_int;
+	
+	while(i<4) { arr_int[i] = 5; 	  i = i + 1;}
+	
+	i = 0;
+
+	while(i<4) { if(ptr_int[i] != 5) {x = -1000;} i = i + 1; }
+	
+	
+	new(ptr_int,  4);
+	
+	i = 0;
+	
+	while(i<4) { ptr_int[i] = 1; i = i + 1;}
+	
+	i = 0;
+	
+	while(i<4) { if(arr_int[i] != 5) {x = -1000;} i = i + 1;}
+	
+	return x; // Should be 1
+}

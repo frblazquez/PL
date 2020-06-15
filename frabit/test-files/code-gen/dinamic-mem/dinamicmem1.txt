@@ -1,0 +1,10 @@
+int main()
+{
+	int x = 0;
+	*int ptr;
+	
+	new(ptr, 1);
+	*ptr = 1;
+	 
+	return ptr[0]; // Should be 1
+}

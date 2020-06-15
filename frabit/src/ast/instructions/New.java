@@ -5,13 +5,12 @@ import asem.SymbolTable;
 import ast.AstUtils;
 import ast.expressions.Expression;
 import ast.expressions.access.VariableAccess;
+import ast.types.IntType;
+import ast.types.PointerType;
 import ast.types.Type;
 import code.CodeLine;
 import code.CodeLines;
 import code.PMachineInstructions;
-import ast.types.BoolType;
-import ast.types.IntType;
-import ast.types.PointerType;
 
 public class New extends Instruction{
 	private VariableAccess va;
@@ -30,12 +29,10 @@ public class New extends Instruction{
 	super.checkSemantics(st);
 	Type type = va.getType();
 	if (!(type instanceof PointerType))
-		throw new SemanticErrorException("First argument of new must be a pointer", this.line);
+	    throw new SemanticErrorException("First argument of \"new\" instruction must be a pointer", this.line);
 	
-	PointerType pt = (PointerType) type;
-	if (!pt.getBaseType().equals(IntType.INT_TYPE) && !pt.getBaseType().equals(BoolType.BOOL_TYPE))
-		throw new SemanticErrorException("Pointer in new must point at primitive types", this.line);
-	
+	if (!size.getType().equals(IntType.INT_TYPE))
+	    throw new SemanticErrorException("Second argument of \"new\" instruction must be the size of the memory block", this.line);
 	this.st = st;
 	}
 	

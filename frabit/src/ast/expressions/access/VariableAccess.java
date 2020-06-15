@@ -130,4 +130,19 @@ public class VariableAccess extends Expression {
     	// First consider the expressions to find address, then the stacking of result
 	return Math.max(2 + accesses.size(), expression_type.getSize());
     }
+
+    public Type getPointerType() throws SemanticErrorException {
+	Type t = expression_type;
+
+	if (t instanceof ArrayType)
+	    t = ((ArrayType) t).getDeepestType();
+
+	if (t instanceof RegisterType)
+	    throw new SemanticErrorException("Can not reference via pointer a register variable", this.line);
+
+	if (t instanceof PointerType)
+	    throw new SemanticErrorException("Can not reference via pointer another pointer variable", this.line);
+
+	return t;
+    }
 }

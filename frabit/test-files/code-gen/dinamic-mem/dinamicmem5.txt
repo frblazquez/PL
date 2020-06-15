@@ -1,0 +1,27 @@
+int main()
+{
+	int x = 1;
+	int j = 0;
+	
+	[bool,4] arr_bool;
+	
+	*bool ptr_bool = &arr_bool;
+	
+	while(j<4) { arr_bool[j] = false; j = j + 1;}
+	
+	j = 0;
+
+	while(j<4) { if(ptr_bool[j])     {x = -1000;} j = j + 1;}
+	
+	new(ptr_bool, 4);
+	
+	j = 0;
+	
+	while(j<4) { ptr_bool[j] = true; j = j + 1; }
+	
+	j = 0;
+	
+	while(j<4) { if(arr_bool[j])     {x = -1000;} j = j + 1;}
+	
+	return x; // Should be 1
+}

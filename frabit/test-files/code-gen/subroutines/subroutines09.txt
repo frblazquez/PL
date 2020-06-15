@@ -1,0 +1,26 @@
+void incrementOne(*int arr, int size) {
+	int i = 0;
+	while(i<size) {
+		arr[i] = arr[i] + 1;
+		i = i + 1;
+	}
+}
+
+int main() {
+	int res = 1;
+
+	[int,10] arr;
+	int i = 0;
+	bool b = true;
+	
+	while(i<10) { arr[i] = i; i = i + 1;}
+	
+	incrementOne(&arr, 10);
+	
+	i = 0;
+	while(i<10) { b = b and (arr[i] == i + 1); i = i + 1;}
+	
+	if(not b) {res = -1;}
+	   
+	return res; // Should be 1
+}

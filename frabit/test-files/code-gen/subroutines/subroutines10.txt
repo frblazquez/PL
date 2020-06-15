@@ -1,0 +1,18 @@
+*bool arrayAllFalses(int size) {
+	*bool ptr;
+	new(ptr, size);
+	
+	int i = 0;
+	while(i<size) { ptr[i] = false; i = i + 1; }
+
+	return ptr;
+}
+
+int main() {
+	int res = 1;
+	*bool ptr = arrayAllFalses(5);
+	
+	if(ptr[0] or ptr[1] or ptr[2] or ptr[3] or ptr[4]) { res = -1; }
+
+	return res; // Should be 1
+}

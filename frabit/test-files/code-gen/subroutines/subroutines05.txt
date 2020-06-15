@@ -1,0 +1,20 @@
+bool greaterThanOrBoolean(int n1, int n2, bool cond) {
+	bool localBool;
+	
+	if(cond) {localBool = true; }
+	else     {localBool = n1 > n2; }
+	
+	return localBool;
+}
+int main() {
+	int res = 0;
+	int x = 5;
+	int y = 100;
+	
+	if(greaterThanOrBoolean(x,x,true)) { res = 1; }
+	else                 			   { res =-1; }
+	
+	if(greaterThanOrBoolean(100,x,false)) { res = res + 10;}
+	
+	return res; // Should be 11
+}

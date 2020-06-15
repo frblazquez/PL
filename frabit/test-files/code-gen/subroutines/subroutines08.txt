@@ -1,0 +1,34 @@
+bool even(int n) {
+	bool aux;
+	
+	if(n == 0) { aux = true;}
+	if(n < 0)  { aux = odd(n + 1); }
+	if(n > 0)  { aux = odd(n - 1); }
+
+	return aux;	
+}
+bool odd(int n) {
+	bool aux;
+	
+	if(n == 0) { aux = false;}
+	if(n < 0)  { aux = even(n + 1); }
+	if(n > 0)  { aux = even(n - 1); }
+
+	return aux;	
+}
+
+int main() {
+	int res = 1;
+	
+	if(even(1)  or
+	   even(3)  or
+	   even(5)  or
+	   even(7)  or
+	   even(-1) or
+	   odd(-2)  or
+	   not even(2) or
+	   not even(6) or
+	   not odd(5)) {res = -1; }
+	   
+	return res; // Should be 1
+}

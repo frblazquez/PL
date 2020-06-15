@@ -1,0 +1,9 @@
+int returnOne() {
+	return 1;
+}
+int returnTwo() {
+	return returnOne() + returnOne();
+}
+int main() {
+	return returnTwo(); // Should return 2
+}

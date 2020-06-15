@@ -1,0 +1,22 @@
+int main()
+{
+	int x = 0;
+	*bool ptr;
+	
+	new(ptr, 10);
+	
+	while(x<10) {
+		ptr[x] = true;
+		x = x + 2;
+	}
+
+	x = 1;
+	while(x<10) {
+		ptr[x] = false;
+		x = x + 2;
+	}
+		
+	if(ptr[0] and not ptr[3] and ptr[6] and not ptr[9]) { x = 1; }
+	
+	return x; // Should be 1
+}

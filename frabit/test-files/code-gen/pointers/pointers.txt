@@ -1,0 +1,48 @@
+int main()
+{
+	int x = 0;
+	
+	[bool,5] arr_bool;
+	[int, 10] arr_int;
+	
+	*bool ptr_bool1 = &arr_bool;
+	*bool ptr_bool2 = ptr_bool1;
+	
+	*int ptr_int1 = &arr_int;
+	*int ptr_int2 = ptr_int1;
+	
+	int i = 0;
+	int j = 0;
+	
+	while(i<5) {
+		ptr_bool1[i] = true;
+		i = i + 2;
+	}
+	while(j<10) {
+		ptr_int1[j] = 1;
+		j = j + 2;
+	}
+
+	*int ptr_i = &i;
+	*int ptr_j = &j; 
+	*ptr_i = 1;
+	*ptr_j = 1;
+	
+	while(i<5) {
+		ptr_bool2[i] = false;
+		*ptr_i = *ptr_i + 2;
+	}
+	while(j<10) {
+		ptr_int2[j] = 2;
+		*ptr_j = *ptr_j + 2;
+	}
+	
+	if(arr_bool[0] and not arr_bool[3] and arr_bool[4]) {
+		x = x + 1; 
+	}
+	if((arr_int[0] == 1) and (arr_int[1] == 2) and (arr_int[8] == 1) and (arr_int[9] == 2)) {
+		x = x + 10;
+	}
+			
+	return x; // Should be 11
+}
