@@ -1,8 +1,11 @@
 void swap(*int v,int i, int j)
 {
-	v[i] = v[i] + v[j];
-	v[j] = v[i] - v[j];
-	v[i] = v[i] - v[j];
+  if (i != j)
+  {
+    v[i] = v[i] + v[j];
+    v[j] = v[i] - v[j];
+    v[i] = v[i] - v[j];
+  }
 }
 
 void quicksort(*int v,int first,int last)

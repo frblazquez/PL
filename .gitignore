@@ -16,3 +16,9 @@ AnalizadorLexicoTiny.java
 ClaseLexica.java
 AnalizadorSintacticoTiny.java
 
+# P Machine's compilation files
+frabit/p-machine/*.hi
+frabit/p-machine/*.o
+frabit/p-machine/Main
+frabit/p-machine/input.txt
+frabit/p-machine/output.txt

@@ -1,5 +1,6 @@
 package ast;
 
+import java.io.PrintStream;
 import java.util.List;
 
 import asem.SemanticErrorException;
@@ -74,7 +75,7 @@ public class Program extends AstNode {
 	catch (SemanticErrorException se) { se.printSemanticError(); }
     }
 
-    public void printPCode() {
+    public void printPCode(PrintStream stream) {
 	if (GestionErroresTiny.getSyntacticErrors() > 0) {
 	    System.err.println("ERROR: Aborting p-code generation because syntax errors are present");
 	    return;
@@ -87,6 +88,7 @@ public class Program extends AstNode {
 
 	CodeLines pcode = new CodeLines();
 	this.produceCode(pcode);
-	System.out.println(pcode.toString());
+	stream.print(pcode.toString());
     }
+    
 }

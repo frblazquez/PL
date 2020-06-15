@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.Reader;
 
 import alex.AnalizadorLexicoTiny;
@@ -44,19 +45,24 @@ public class Main {
 	if (args.length > 0)
 		input_file = args[0];
 	else 
-	    input_file = CODE_GENERATION_FOLDER + "subroutines/subroutines12.txt";
+	    input_file = CODE_GENERATION_FOLDER + "quicksortybusqbin.txt";
 	
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
 
 	Program pr = (Program) asint.parseInput();
-	// pr.printAST();
 	pr.checkSemantics();
-	pr.printPCode();
+	PrintStream stream;
+	if (args.length == 2)
+	{
+		pr.printAST();
+		stream = new PrintStream(args[1]);
+	}
+	else
+		stream = System.out;
+		
+	pr.printPCode(stream);
+	stream.close();
     }
-
-    // TODO: REMAINING
-    // -> Error recovery improvement
-    // -> Set lines properly (not -1 in "Identifier not declared")
 }
