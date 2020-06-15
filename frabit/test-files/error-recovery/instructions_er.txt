@@ -1,83 +1,59 @@
 // File for testing errors in instructions display and recovery
-// (alt + shift + a for block edition in eclipse can be usefull to remove the comments)
 
 int main(){
 
-//	int x;
-//	int y;
-//	int x,y;		// invalid declaration - TODO
-//	
-//	int x;
-//	int y;
-//	int x;;		    // ';' duplicated - TODO
-//	
-//	int x = 5;
-//	int x = 6		// ';' forgotten - TODO
-//	int j = 8;
-//	
-//    x = 5;
-//    x = = 6;   	 	// invalid asignation expression - TODO
-//	j = 8;
-//	
-//	x = 5;
-//	x == 6;			// '==' can not be applied there
-//	j = 8;
-//
-//	x = funcion(x,y,j);
-//	x = funcion(x,y,j;		// parenthesis mismatch - TODO
-//	x = funcion(x,y,j);
-//	x = funcion(x,y,j));    // parenthesis mismatch - TODO
-//	
-//	procedure(x,y+j+(3*2)); 
-//	procedure(x,y+j+(3*2);  // parenthesis mismatch - TODO
-//	procedure(); 
-//	procedure(x,);      	// argument forgotten - TODO
-//	procedure(x,y);      
-//	procedure(x,y+j+*);     // argument expression error - TODO
-//	
-//	if(x<y) { x = x + 1; }
-//	if(x<y  { x = x + 1; }	// parenthesis mismatch - TODO
-//	if(x<y) { x = x + 1; }
-//	//if x<y) { x = x + 1;} // Breaks!
-//	//iff(x<y){ x = x + 1;}	// Explodes!
-//	
-//	if(x==0) {x = x + 1;}
-//	else     {y = y + 1;}
-//	//if(x==0) {x = x + 1;}	// Breaks!
-//	//elses    {y = y + 1;}	
-//	if(x==0) {x = x + 1;}
-//	else     {y = y + 1;}
-//	
-//	while(true) { x = 1;}	
-//	//whiles(true){ x = 1;} // Explodes!
-//
-//
-//	switch(x+y){
-//		case 0: { x = 5;}
-//		case 1: { y = 3;}
-//		default:{ x = -1;}
-//	}
-//	
-//	switch(x+y){
-//		case 0  { x = 5;}	// ':' forgotten, explodes!
-//		case 1: { y = 3;}
-//		default:{ x = -1;}
-//	}
-//
-//	switch(x+y){
-//		case : { x = 5;}	// case value forgotten, explodes!
-//		case 1: { y = 3;}
-//		default:{ x = -1;}
-//	}
-//	
-//	switch(x+){
-//		case : { x = 5;}	// case value forgotten, explodes!
-//		case 1: { y = 3;}
-//		default:{ x = -1;}
-//	}
-//	
-//	int x = 0;
-//	int y = 1;
-//	
+	int x;
+	int y;
+	int x,y;		// invalid declaration 
+	
+	int x;
+	int y;
+	int x;;		    // ';' duplicated 
+	
+	int x = 5;
+	int x = 6		// ';' forgotten 
+	int j = 8;
+	
+    x = 5;
+    x = = 6;   	 	// invalid asignation expression
+	j = 8;
+	
+	x = 5;
+	x == 6;			// '==' can not be applied there
+	j = 8;
+
+	x = funcion(x,y,j);
+	x = funcion(x,y,j;		// parenthesis mismatch 
+	x = funcion(x,y,j);
+	x = funcion(x,y,j));    // parenthesis mismatch 
+	
+	procedure(x,y+j+(3*2)); 
+	procedure(x,y+j+(3*2);  // parenthesis mismatch
+	procedure(); 
+	procedure(x,);      	// argument forgotten
+	procedure(x,y);      
+	procedure(x,y+j+*);     // argument expression error
+	
+	if(x<y) { x = x + 1; }
+	if(x<y  { x = x + 1; }	// parenthesis mismatch 
+	if(x<y) { x = x + 1; }
+	
+	if(x==0) {x = x + 1;}
+	else     {y = y + 1;}
+	if(x==0) {x = x + 1;}
+	else     {y = y + 1;}
+	
+	while(true) { x = 1;}	
+
+
+	switch(x+y){
+		case 0: { x = 5;}
+		case 1: { y = 3;}
+		default:{ x = -1;}
+	}
+
+	int x = 0;
+	int y = 1;
+	
 	return 0;
 }

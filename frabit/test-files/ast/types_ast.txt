@@ -14,8 +14,8 @@ int main(){
 	[[*bool,100],10] matrix_ptr_bool;
 	
 	// Complex types multi-dimensional arrays
-	[[*[bool,100], 20],10] matrix_ptr_array_bool;
-	[[*[[int,100],8], 20],10] matrix_ptr_matrix_int;
+	[[[*bool,100], 20],10] matrix_ptr_array_bool;
+	[[[[*int,100],8], 20],10] matrix_ptr_matrix_int;
 
 	return 0;
 }

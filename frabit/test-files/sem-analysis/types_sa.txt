@@ -1,16 +1,16 @@
 // File for testing type errors in semantic analysis
 
 int fun1() {
-	return true;			// Type coherence error - TODO
+	return true;			// Type coherence error
 }
 
 bool fun2() {
 	*int ptr = null;
-	return ptr;				// Type coherence error - TODO
+	return ptr;				// Type coherence error
 }
 
 *int fun3() {
-	return (1 + 2)*3*4/4;	// Type coherence error - TODO
+	return (1 + 2)*3*4/4;	// Type coherence error
 }
 
 <int,int> fun4() {
@@ -53,12 +53,12 @@ int main(){
 	x = true;						
 	y = 1;							
 	reg2 = fun4();					
-	arr1   = fun5();				// Different array size - TODO?
+	arr1   = fun5();				
 	reg2 = fun5();			
 	arr2  = fun4();			
 	reg1  = &x;				
-	arr32  = null;					// Is an array a pointer? - TODO
-	ptr1   = &y;					// Int pointer =?= Bool pointer - TODO
+	arr32  = null;					
+	ptr1   = &y;					
 	ptr2 = &x;
 	ptr1 = fun4();					
 	ptr2 = fun4();					
@@ -67,7 +67,7 @@ int main(){
 	ptr1 = fun3();					
 	ptr2 = fun3();					
 	
-	x = proc1(x,y);					// Procedure is not returning anything! - TODO
+	x = proc1(x,y);					
 	proc1(y,x);
 	proc2(reg1, arr1);
 	proc2(reg2, arr1);

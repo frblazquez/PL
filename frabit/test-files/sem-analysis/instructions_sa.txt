@@ -40,24 +40,24 @@ int main(){
 	bool y;
 	*int ptr;
 	
-	int  y = true and false or true;	// Repeated identifier 
-	bool x = (1 + 5) * 3 / 2;			// Repeated identifier
-	<int,bool> reg  = fun4();			// Type coherence error - TODO
-	[int, 10] arr   = fun5();			// Type coherence error - TODO
-	<int,bool> reg2 = fun5();			// Type coherence error - TODO
-	[int, 10] arr2  = fun4();			// Type coherence error - TODO
-	<int,int> reg3  = &x;				// Type coherence error - TODO
-	[int, 5]  arr3  = null;				// Type coherence error - TODO
-	*int ptr2 = fun4();					// Type coherence error - TODO
+	int  y = true and false or true;
+	bool x = (1 + 5) * 3 / 2;		
+	<int,bool> reg  = fun4();		
+	[int, 10] arr   = fun5();		
+	<int,bool> reg2 = fun5();		
+	[int, 10] arr2  = fun4();		
+	<int,int> reg3  = &x;			
+	[int, 5]  arr3  = null;			
+	*int ptr2 = fun4();				
 	
-	x = true;						// Type coherence error - TODO
-	y = 1;							// Type coherence error - TODO
+	x = true;				
+	y = 1;					
 	ptr  = &x;
 	x = true and false or true;
 	y = (1 + 5) * 3 / 2;
-	x = &y;								// Explodes!
-	reg = fun4();						// Explodes! <int,bool> != <int,int> - TODO
-	arr = fun5();						// Explodes! - TODO
+	x = &y;							
+	reg = fun4();					
+	arr = fun5();						
 	
 	x = fun1(x);
 	y = fun2(x,y);
@@ -66,7 +66,7 @@ int main(){
 	
 	
 	if(x<y) { x = x + 1; }
-	if(x<y  { x = x + 1; }	// parenthesis mismatch - TODO
+	if(x<y) { x = x + 1; }	
 	if(x<y) { x = x + 1; }
 	if(x+1)  {x = x + 1;}
 	else     {y = y + 1;}

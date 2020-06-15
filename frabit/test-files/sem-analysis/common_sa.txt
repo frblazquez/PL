@@ -96,17 +96,3 @@ int main() {
 	return 0;
 }
 
-
-// TODO:
-// -> Test mutual recursion ~ now working
-// -> Check the visibility of a variable in a block two/three levels deeper ~ now working
-// -> Program with two main functions ~ Everything after first main seems to be discarded
-// -> Test main method invocation ~ It could be necessary to modify checkSemantics in Program class
-// -> Reserved word as identifiers ~ Which error do we get?
-// -> An argument is called as a method defined ~ What would happend?
-// -> Proper way of taking the type of an expression
-// -> Exceptions management is for a later stage
-// -> Are *int and [int, k] the same type?!?! ~ No with the current implementation
-// -> Rethink which types can actually be arguments of a function 
-// -> Void type? ~ As the code is, void expression type is null, however it works!
-

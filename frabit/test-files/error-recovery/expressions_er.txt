@@ -4,14 +4,22 @@ int main(){
 
 	int x = 1;
 	
-	x = 1 + ;			// Operating is missing - TODO
+	x = 1 + 2;
 	x = x + 1;
-	x = true xor false;	// Operator is not accepted - TODO
+	x = true xor false;	// Operator is not accepted
 	x = x + 1;
-	x = (1 + 2)*3); 	// Parenthesis mismatch - TODO
+	x = (1 + 2)*3); 	// Parenthesis mismatch
 	x = x + 1;
-	//x = (((1 + 2)*3);	// Explodes! - TODO
 	x = x + 1;
+	
+	x = 1 xnor 2;
+	x = x + 5;
+	x = true & false;	// Operator is not accepted
+	x = x + 1;
+	x = (1 + 2)*3); 	// Parenthesis mismatch
+	x = &x and 1;
+	x = x + 1;
+
 	
 	return 0;
 }
