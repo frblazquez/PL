@@ -41,26 +41,29 @@ public class Main {
     //@formatter:on
 
     public static void main(String[] args) throws Exception {
+
+	// Input file
 	String input_file;
 	if (args.length > 0)
 		input_file = args[0];
 	else 
 	    input_file = "test-files/input.txt";
 	
+	// Read and parse the input
 	Reader input = new InputStreamReader(new FileInputStream(input_file));
 	AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
 	AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
-
 	Program pr = (Program) asint.parseInput();
 	pr.checkSemantics();
+
+	// Generate code for p-machine and print it to the desired output
 	PrintStream stream;
-	if (args.length == 2)
-	{
-		pr.printAST();
-		stream = new PrintStream(args[1]);
+	if (args.length == 2) {
+	    pr.printAST();
+	    stream = new PrintStream(args[1]);
 	}
 	else
-		stream = System.out;
+	    stream = System.out;
 		
 	pr.printPCode(stream);
 	stream.close();
